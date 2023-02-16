@@ -11,53 +11,28 @@ function showTime() {
     day.textContent = `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.toLocaleDateString('be-Be', options2)}`;
     setTimeout(showTime, 1000);
     const greetimg = document.querySelector('.greeting');
-    date.getHours() < 6 ? greetimg.textContent = 'Добрай ночы '
-        : date.getHours() >= 6 && date.getHours() < 12 ? greetimg.textContent = 'Добрай раніцы '
-            : date.getHours() >= 12 && date.getHours() < 18 ? greetimg.textContent = 'Добры дзень '
-                : greetimg.textContent = 'Добры вечар ';
+    date.getHours() < 6 ? greetimg.textContent = 'Добрай ночы, '
+        : date.getHours() >= 6 && date.getHours() < 12 ? greetimg.textContent = 'Добрай раніцы, '
+            : date.getHours() >= 12 && date.getHours() < 18 ? greetimg.textContent = 'Добры дзень, '
+                : greetimg.textContent = 'Добры вечар, ';
 }
+
 showTime();
 
+document.getElementById('optic').addEventListener('click', () => {
+    document.getElementById('optic').classList.remove('name-optic');
+});
 
+function setLocalStorage() {
+    localStorage.setItem('name', document.getElementById('optic').value);
+}
 
+window.addEventListener('beforeunload', setLocalStorage);
 
-// function setLocalStorage() {
-// (function () {
-//
-//     document.getElementById('optic').addEventListener('click', () => {
-//         document.getElementById('optic').classList.remove('name-optic');
-//     });
-//     // document.getElementById('optic').value.length > 0 && !document.getElementById('optic').onfocus
-//     //     document.getElementById('optic').classList.remove('name-optic');
-//     // }
-// }());
+function getLocalStorage() {
+    if (localStorage.getItem('name')) {
+        document.getElementById('optic').value = localStorage.getItem('name');
+    }
+}
 
-(function () {
-
-    document.getElementById('optic').addEventListener('click', () => {
-        document.getElementById('optic').classList.remove('name-optic');
-    });
-    // document.getElementById('optic').value.length > 0 && !document.getElementById('optic').onfocus
-    //     document.getElementById('optic').classList.remove('name-optic');
-    // }
-}());
-
-
-
-// document.getElementsByName('.name').
-//
-//         document.getElementById('optic').classList.remove('name-optic');
-//     }
-//
-//     //     = () => {
-//     //     document.querySelectorAll('.name-optic').remove('name-optic');
-//     // }
-//     localStorage.setItem('name', name.value);
-// }
-// window.addEventListener('beforeunload', setLocalStorage)
-// function getLocalStorage() {
-//     if(localStorage.getItem('name')) {
-//         name.value = localStorage.getItem('name');
-//     }
-// }
-// window.addEventListener('load', getLocalStorage)
+window.addEventListener('load', getLocalStorage)
