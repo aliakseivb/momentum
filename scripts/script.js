@@ -135,7 +135,7 @@ prev.addEventListener('click', function getSlidePrev() {
         randomNum = (parseInt(randomNum) - 1).toString();
     }
     if (parseInt(randomNum) === 0) {
-        randomNum = (23).toString();
+        randomNum = (22).toString();
     }
     setBg();
 });
@@ -180,7 +180,7 @@ async function getWeather() {
     const data = await res.json();
     weatherIcon.className = 'weather-icon owf';
     weatherIcon.classList.add(`owf-${data.weather[0].id}`);
-    temperature.textContent = `${data.main.temp}°C`;
+    temperature.textContent = Math.ceil(`${data.main.temp}`) + '°C';
     weatherDescription.textContent = data.weather[0].description;
     wind.textContent = `Wind: ${data.wind.speed} m/s`;
     humidity.textContent = `Humidity: ${data.main.humidity}%`;
@@ -193,6 +193,7 @@ city.addEventListener('change', function setCity() {
     getWeather(city.value);
 });
 
+// ---- > высказывания
 
 async function getQuotes() {
     const quotes = 'https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/date.json';
@@ -218,25 +219,31 @@ function setQuote(min, max) {
     return randomNum
 }
 
-function setText (data){
+function setText(data) {
     let textNum = setQuote(0, 23);
     document.querySelector('.quote').textContent = `"${data[textNum].text}"`;
     document.querySelector('.author').textContent = data[textNum].author;
 }
 
 
+// --- > плеер
+
 let isPlay = false;
 const audio = new Audio();
+let playNum = 0;
+
 
 document.querySelector('.play').addEventListener('click', () => {
-    if (!isPlay){
+    if (!isPlay) {
         playAudio()
-    } else{
+    } else {
         pauseAudio()
     }
+    document.querySelector('.play').classList.toggle('pause');
 });
+
 function playAudio() {
-    audio.src = 'https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/sounds/Jozsef Lendvay - Libertango.mp3';
+    audio.src = playList[playNum].src;
     audio.currentTime = 0;
     audio.play();
     isPlay = true;
@@ -247,7 +254,35 @@ function pauseAudio() {
     isPlay = false;
 }
 
+document.querySelector('.play-next').addEventListener('click', () => {
+    playNext();
+});
+document.querySelector('.play-prev').addEventListener('click', () => {
+    playPrev();
+});
 
+function playNext() {
+    if (playNum === playList.length - 1) {
+        playNum = 0;
+        playAudio(playNum);
+    } else {
+        playNum += 1;
+        playAudio(playNum)
+    }
+}
 
+function playPrev() {
+    if (playNum === 0) {
+        playNum = playList.length - 1;
+        playAudio(playNum);
+    } else {
+        playNum -= 1;
+        playAudio(playNum)
+    }
+}
+
+import playList from './playList.js';
+
+console.log(playList);
 
 
