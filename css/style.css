@@ -274,10 +274,12 @@ body {
 .change-quote {
     margin-bottom: 30px;
     background-image: url("../assets/svg/reload.svg");
+    transition: all .5s linear;
 }
 
 .quote {
     min-height: 32px;
+    font-size: 18px;
 }
 
 .author {

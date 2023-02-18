@@ -71,6 +71,7 @@ function getLocalStorage() {
         document.getElementById('optic').value = localStorage.getItem('name');
         document.querySelector('.city').value = localStorage.getItem('city');
         document.getElementById('optic').classList.remove('name-optic');
+        getWeather(localStorage.getItem('city'));
         for (let key in winLarg) {
             if (window.innerWidth > 5000 && localStorage.getItem('name').length === parseInt(key)) {
                 document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winLarg[key]}vw`;
@@ -153,7 +154,7 @@ next.addEventListener('click', function getSlideNext() {
     setBg();
 });
 
-window.onresize = function (event) {
+window.onresize = () => {
     for (let key in winLarg) {
         if (window.innerWidth > 5000 && localStorage.getItem('name').length === parseInt(key)) {
             document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winLarg[key]}vw`;
@@ -165,7 +166,6 @@ window.onresize = function (event) {
     }
 };
 
-// const weatherLink = 'https://api.openweathermap.org/data/2.5/weather?q=Минск&lang=en&appid=260d225c65e849f7ad9e4bef2b25de91&units=metric'
 const weatherIcon = document.querySelector('.weather-icon');
 const temperature = document.querySelector('.temperature');
 const weatherDescription = document.querySelector('.weather-description');
@@ -195,9 +195,36 @@ city.addEventListener('change', function setCity() {
 
 
 async function getQuotes() {
-    const quotes = './assets/date.json';
+    const quotes = 'https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/date.json';
     const res = await fetch(quotes);
     const data = await res.json();
-    console.log(data);
+    setText(data);
 }
+
 getQuotes();
+
+let rotate = 0;
+
+document.querySelector('.change-quote').addEventListener('click', () => {
+    rotate += 360;
+    document.querySelector('.change-quote').style.transform = "rotate(" + rotate + "deg)";
+    getQuotes();
+});
+
+function setQuote(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    randomNum = (Math.floor(Math.random() * (max - min)) + min).toString();
+    return randomNum
+}
+
+function setText (data){
+    let textNum = setQuote(0, 23);
+    document.querySelector('.quote').textContent = `"${data[textNum].text}"`;
+    document.querySelector('.author').textContent = data[textNum].author;
+}
+
+
+
+
+
