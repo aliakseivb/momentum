@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Arial-MT';
-    src: url("../assets/fonts/Arial-MT.woff"); /* Путь к файлу со шрифтом */
+    src: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/fonts/Arial-MT.woff"); /* Путь к файлу со шрифтом */
 }
 
 * {
@@ -16,7 +16,7 @@ body {
     font-size: 16px;
     color: #fff;
     text-align: center;
-    background: url("../assets/img/evening/21.webp") center/cover, rgba(0, 0, 0, 0.5);
+    background: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/evening/21.webp") center/cover, rgba(0, 0, 0, 0.5);
     background-blend-mode: multiply;
     transition: background-image 1s ease-in-out;
 }
@@ -103,19 +103,19 @@ body {
     width: 40px;
     height: 40px;
     background-size: 40px 40px;
-    background-image: url("../assets/svg/play.svg");
+    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/play.svg");
 }
 
 .pause {
-    background-image: url("../assets/svg/pause.svg");
+    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/pause.svg");
 }
 
 .play-prev {
-    background-image: url("../assets/svg/play-prev.svg");
+    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/play-prev.svg");
 }
 
 .play-next {
-    background-image: url("../assets/svg/play-next.svg");
+    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/play-next.svg");
 }
 
 .weather {
@@ -185,18 +185,18 @@ body {
 
 .slide-prev {
     left: 20px;
-    background-image: url("../assets/svg/slider-prev.svg");
+    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/slider-prev.svg");
 }
 
 .slide-next {
     right: 20px;
-    background-image: url("../assets/svg/slider-next.svg");
+    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/slider-next.svg");
 }
 
 .time {
     min-height: 124px;
     margin-bottom: 10px;
-    font-family: 'Arial-MT';
+    font-family: 'Arial-MT', sans-serif;
     font-size: 150px;
     letter-spacing: -4px;
 }
@@ -273,7 +273,7 @@ body {
 
 .change-quote {
     margin-bottom: 30px;
-    background-image: url("../assets/svg/reload.svg");
+    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/reload.svg");
     transition: all .5s linear;
 }
 

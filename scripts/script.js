@@ -225,6 +225,29 @@ function setText (data){
 }
 
 
+let isPlay = false;
+const audio = new Audio();
+
+document.querySelector('.play').addEventListener('click', () => {
+    if (!isPlay){
+        playAudio()
+    } else{
+        pauseAudio()
+    }
+});
+function playAudio() {
+    audio.src = 'https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/sounds/Jozsef Lendvay - Libertango.mp3';
+    audio.currentTime = 0;
+    audio.play();
+    isPlay = true;
+}
+
+function pauseAudio() {
+    audio.pause();
+    isPlay = false;
+}
+
+
 
 
 
