@@ -31,12 +31,13 @@ body {
     padding: 20px;
 }
 
+
 .player-controls {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 120px;
-    margin-bottom: 28px;
+    margin-bottom: 15px;
 }
 
 .play-list {
@@ -50,7 +51,7 @@ body {
     list-style: none;
     opacity: .8;
     cursor: pointer;
-    transition: .3s;
+    transition: .7s;
 }
 
 .play-item:hover {
@@ -82,7 +83,7 @@ body {
     outline: 0;
     opacity: .8;
     cursor: pointer;
-    transition: .3s;
+    transition: .5s;
 }
 
 .player-icon:hover,
@@ -117,15 +118,84 @@ body {
 .play-next {
     background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/play-next.svg");
 }
+.playLine{
+    background: transparent;
+    width: 120px;
+    height: 4px;
+    transition: all 2s linear;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.playLine.visible {
+    background: #f6d1d1;
+}
+
+.play-time {
+    font-size: 12px;
+    color: transparent;
+    display: inline-block;
+    vertical-align: middle;
+    transition: all 2s linear;
+    margin-left: 10px;
+}
+
+.play-time.visible{
+    color: #f6d1d1;
+}
+
+.progress {
+    display: inline-block;
+    outline: none;
+    width: 0;
+    height: 4px;
+    background: transparent;
+    transition: all 2s linear;
+    /*appearance: none;*/
+    cursor: pointer;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.progress.visible {
+    background: #796767;
+    display: block;
+}
+
+/*.progress::-webkit-slider-thumb {*/
+/*    background: #544949;*/
+/*    !*background: #645555;*!*/
+/*    cursor: pointer;*/
+/*    width:10px;*/
+/*    height: 3px;*/
+/*    -webkit-appearance: none;*/
+/*    !*border-radius: 50%;*!*/
+/*    margin-left: -3px;*/
+/*}*/
+
+/*.progress::-webkit-slider-thumb:active {*/
+
+/*    background: #645555;*/
+/*    cursor: pointer;*/
+/*    width:4px;*/
+/*    height: 4px;*/
+/*    -webkit-appearance: none;*/
+/*    border-radius: 50%;*/
+/*    margin-left: -10px;*/
+/*}*/
 
 .play-list {
     list-style: none;
+    margin-top: 10px;
 }
 
 .play__list__item {
     cursor: pointer;
     margin-bottom: 5px;
     vertical-align: middle;
+    transition: all .7s linear;
 }
 
 .play__list__item::before {
@@ -141,7 +211,7 @@ body {
     background-image: url("../assets/img/play-icon.png");
     background-size: cover;
     vertical-align: baseline;
-    transition: all .3s linear;
+    transition: all .7s linear;
 }
 
 .active::before{
@@ -157,7 +227,7 @@ body {
     background-image: url("../assets/img/pause-icon.png");
     background-size: cover;
     vertical-align: baseline;
-    transition: all .3s linear;
+    transition: all .7s linear;
 }
 
 .weather {
@@ -332,7 +402,7 @@ body {
 .change-quote {
     margin-bottom: 30px;
     background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/reload.svg");
-    transition: all .5s linear;
+    transition: all .7s linear;
 }
 
 .quote {

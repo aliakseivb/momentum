@@ -241,18 +241,36 @@ function setText(data) {
 
 
 // --- > ПЛЕЕР
-import playList from './playList.js';
+import playList from './playList.js';  // импортируем дынные по названию трека, его местоположении и продолжительности
 
-let isPlay = false;
-const audio = new Audio();
-let playNum = 0;
+let isPlay = false; // устанавливаем начальный флаг для логики стар/стоп
+const audio = new Audio(); // создаем объект
+let playNum = 0; // устанавлтиваем стартовый номер трека при загрузке страницы
 
+// средствами JS создаем элементы HTML для отображения предустановленного плейлиста
 playList.forEach(el => {
     const li = document.createElement('li');
     document.querySelector('.play-list').append(li);
     li.classList.add('play__list__item');
     li.textContent = el["title"];
 })
+//создаем прогресс-бар
+let line = document.createElement('div');
+line.classList.add('playLine');
+let lastElem = document.querySelector('.player').lastChild.previousSibling;
+document.querySelector('.player').insertBefore(line, lastElem);
+// создаем прогресс-лайн
+let progress = document.createElement('div');
+progress.classList.add('progress');
+document.querySelector('.playLine').append(progress);
+progress.setAttribute('type', 'range');
+progress.setAttribute('value', '0');
+progress.setAttribute('step', '0.001');
+// создаем элемент для отображения времени для плей и дюрейшн
+let time = document.createElement('span');
+time.classList.add('play-time');
+document.querySelector('.player').insertBefore(time, lastElem);
+
 
 document.querySelector('.play').addEventListener('click', () => {
     if (!isPlay) {
@@ -264,13 +282,45 @@ document.querySelector('.play').addEventListener('click', () => {
     }
     document.querySelector('.play').classList.toggle('pause');
 });
-let audioPlay = 0;
+
 function playAudio() {
     audio.src = playList[playNum].src;
-    audio.currentTime = 0;
     audio.play(playNum);
     colorText(playNum);
+    let outTime
+    audio.addEventListener('timeupdate', () => {
+        audio.currentTime.toFixed(0) < 10 ?
+            outTime = `0:0${audio.currentTime.toFixed(0)}`
+            : audio.currentTime.toFixed(0) < 60 ?
+                outTime = `0:${audio.currentTime.toFixed(0)}`
+                : outTime = `${Math.floor((audio.currentTime.toFixed(0) / 60)).toString().padStart(2, '0')}:${(audio.currentTime.toFixed(0) % 60).toString().padStart(2, '0')}`
+        time.textContent = `${outTime} / ${playList[playNum].duration}`;
+        progress.value = audio.currentTime.toFixed(0) / (parseInt(playList[playNum].duration.split(':')[0])*60 + parseInt(playList[playNum].duration.split(':')[1])) * 100;
+        progress.style.width = `${audio.currentTime.toFixed(0) / (parseInt(playList[playNum].duration.split(':')[0])*60 + parseInt(playList[playNum].duration.split(':')[1])) * 100}px`;
 
+    })
+    document.querySelector('.play-time').classList.add('visible');
+    document.querySelector('.progress').classList.add('visible');
+    document.querySelector('.playLine').classList.add('visible');
+
+    // let audioPlay = setInterval(function() { // Запуск интервала
+    //
+    //     let audioTime = Math.round(playList[playNum].currentTime);  // Получаем значение на какой секунде песня
+    //
+    //     let audioLength = Math.round(playList[playNum].duration)  // Получаем всё время песни
+    //
+    //     time.style.width = (audioTime * 100) / audioLength + '%'; // Назначаем ширину элементу time
+    //     // Сравниваем, на какой секунде сейчас трек и всего сколько времени длится
+    //     // И проверяем что переменная playNum меньше плейлиста
+    //     if (audioTime == audioLength && playNum < playList.length) {
+    //         playNum++; // То Увеличиваем переменную
+    //         playAudio(playNum); // Меняем трек
+    //         // Иначе проверяем тоже самое, но переменная playNum больше или равна плейлисту
+    //     } else if (audioTime == audioLength && playNum >= playList.length) {
+    //         playNum = 0; // То присваиваем playNum ноль
+    //         playAudio(playNum);// Меняем трек
+    //     }
+    // }, 10)
 }
 
 function pauseAudio() {
@@ -278,8 +328,6 @@ function pauseAudio() {
     document.querySelector('.play-list').children[playNum].classList.remove('active');
     document.querySelector('.play-list').children[playNum].style.color = 'white';
     document.querySelector('.play-list').children[playNum].style.textShadow = "none";
-    // document.querySelector('.play').classList.toggle('pause');
-    // isPlay = !isPlay;
 }
 
 document.querySelector('.play-next').addEventListener('click', () => {
@@ -338,79 +386,23 @@ function colorText() {
 }
 
 document.querySelector('.play-list').addEventListener('click', function (event) {
-    if(event.target.classList.contains('active')){
+    if (event.target.classList.contains('active')) {
         pauseAudio();
         document.querySelector('.play').classList.toggle('pause');
-    }else if(!event.target.classList.contains('active')){
-        if(!event.target) {
+    } else if (!event.target.classList.contains('active')) {
+        if (!event.target) {
             event.target.classList.add('active')
         }
-
-            document.querySelector('.play').classList.add('pause');
-
+        document.querySelector('.play').classList.add('pause');
         playList.forEach(function (e, i) {
-                    if (event.target.textContent === e["title"]) {
-
-                        playNum = i;
-                    }
-                })
-                playAudio(playNum);
-
-                isPlay = !isPlay;
+            if (event.target.textContent === e["title"]) {
+                playNum = i;
+            }
+        })
+        playAudio(playNum);
+        isPlay = !isPlay;
     }
 })
-// let item = document.querySelectorAll('.play__list__item');
-//
-// document.querySelector('.play-list').addEventListener('click', function (event) {
-//     item.forEach(function (el, index) {
-//         if (event.target.textContent === el.textContent && !isPlay) {
-//             playNum = index;
-//             playAudio(playNum);
-//             isPlay = !isPlay;
-//             document.querySelector('.play').classList.toggle('pause');
-//         } else if (event.target.textContent === el.textContent && isPlay) {
-//             playNum = index;
-//             pauseAudio(playNum);
-//             document.querySelector('.play').classList.toggle('pause');
-//             isPlay = !isPlay;
-//         }
-        // } else if (event.target.textContent !== x) {
-        //     playList.forEach(function (e, i) {
-        //         if (event.target.textContent === e["title"]) {
-        //             let tmp = playNum;
-        //             playNum = i;
-        //         }
-        //     })
-        //     playAudio(playNum);
-        //     isPlay = !isPlay;
-        //     // // document.querySelector('.play').classList.toggle('pause');
-        //     document.querySelector('.play-list').children[tmp].style.color = 'white';
-        //     document.querySelector('.play-list').children[tmp].style.textShadow = "none";
-        //     document.querySelector('.play-list').children[tmp].classList.remove('active');
-        //     document.querySelector('.play-list').children[playNum].style.color = '#f6d1d1';
-        //     document.querySelector('.play-list').children[playNum].style.textShadow = "0 0 10px white";
-        //     document.querySelector('.play-list').children[playNum].classList.add('active');
-        // }
-//     })
-//
-//
-// })
-
-
-// })
-//     for (let i = 0; i <= playList.length - 1; i++) {
-//         if(document.querySelector('.play-list').children[i].textContent === )
-//         if (!isPlay) {
-//             playAudio();
-//             isPlay = false;
-//             document.querySelector('.play').classList.add('pause');
-//         } else if (isPlay === false) {
-//             pauseAudio();
-//             isPlay = false;
-//         }
-//         document.querySelector('.play').classList.remove('pause');
-//     }
-// })
 
 
 
