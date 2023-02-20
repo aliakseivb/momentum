@@ -118,6 +118,48 @@ body {
     background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/play-next.svg");
 }
 
+.play-list {
+    list-style: none;
+}
+
+.play__list__item {
+    cursor: pointer;
+    margin-bottom: 5px;
+    vertical-align: middle;
+}
+
+.play__list__item::before {
+    display: inline-block;
+    content: '';
+    width: 12px;
+    height: 12px;
+    outline: none;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 1px solid white;
+    margin-right: 10px;
+    background-image: url("../assets/img/play-icon.png");
+    background-size: cover;
+    vertical-align: baseline;
+    transition: all .3s linear;
+}
+
+.active::before{
+    display: inline-block;
+    content: '';
+    width: 12px;
+    height: 12px;
+    outline: none;
+    border-radius: 50%;
+    background-color: #f6d1d1;
+    border: 1px solid white;
+    margin-right: 10px;
+    background-image: url("../assets/img/pause-icon.png");
+    background-size: cover;
+    vertical-align: baseline;
+    transition: all .3s linear;
+}
+
 .weather {
     display: flex;
     flex-direction: column;
@@ -250,14 +292,30 @@ body {
 }
 
 @keyframes optic {
-    81% { opacity: .3; }
-    85% { opacity: .7; }
-    91% { opacity: 0; }
-    94% { opacity: .6; }
-    96% { opacity: 0; }
-    97% { opacity: .2; }
-    98% { opacity: .3; }
-    99% { opacity: .4; }
+    81% {
+        opacity: .3;
+    }
+    85% {
+        opacity: .7;
+    }
+    91% {
+        opacity: 0;
+    }
+    94% {
+        opacity: .6;
+    }
+    96% {
+        opacity: 0;
+    }
+    97% {
+        opacity: .2;
+    }
+    98% {
+        opacity: .3;
+    }
+    99% {
+        opacity: .4;
+    }
 }
 
 .footer {
