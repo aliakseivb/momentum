@@ -37,7 +37,7 @@ body {
     align-items: center;
     justify-content: space-between;
     width: 120px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .play-list {
@@ -118,15 +118,90 @@ body {
 .play-next {
     background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/play-next.svg");
 }
+
+.bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    width: 120px;
+    background: transparent;
+    position: relative;
+}
+
 .playLine{
     background: transparent;
     width: 120px;
     height: 4px;
-    transition: all 2s linear;
-    display: inline-block;
-    position: relative;
+    transition: all 1s linear;
+    display: flex;
     vertical-align: middle;
     cursor: pointer;
+    justify-items: start;
+    position: relative;
+    margin-top: 5px;
+    margin-bottom: 3px;
+}
+
+.pres {
+    display: flex;
+    width: 120px;
+    height: 11px;
+    justify-content: left;
+    font-size: 10px;
+    background: transparent;
+    color: #f6d1d1;
+    transition: all 1s linear;
+}
+
+.volume-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    /*left: 1px;*/
+    /*top: 1px;*/
+    width: 40%;
+}
+
+.volume {
+    display: inline-block;
+    width: 11px;
+    height: 10px;
+    background-size: cover;
+    transition: all 1s linear;
+    cursor: pointer;
+}
+
+.volume.visible{
+    background-image: url(../assets/img/soun-on.png);
+}
+.volume.off {
+    background-image: url(../assets/img/soun-off.png);
+}
+
+.volchange {
+    display: inline-block;
+    width: 35px;
+    background: transparent;
+    height: 4px;
+    cursor: pointer;
+    transition: all .5s linear;
+}
+
+.volume-container:hover .volchange {
+    background: #f6d1d1;
+}
+
+.change {
+    background: transparent;
+    height: 100%;
+    width: 75%;
+    position: relative;
+}
+
+.volume-container:hover .change{
+    background: #3d3535;
+    transition: all .5s linear;
 }
 
 .playLine.visible {
@@ -134,12 +209,15 @@ body {
 }
 
 .play-time {
-    font-size: 12px;
+    font-size: 10px;
     color: transparent;
-    display: inline-block;
+    display: flex;
     vertical-align: middle;
-    transition: all 2s linear;
-    margin-left: 10px;
+    transition: all 1s linear;
+    position: relative;
+    bottom: 9px;
+    height: 10px;
+    left: 72px;
 }
 
 .play-time.visible{
@@ -147,48 +225,21 @@ body {
 }
 
 .progress {
-    display: inline-block;
+    display: block;
     outline: none;
-    width: 0;
+    max-width: 100%;
     height: 4px;
-    background: transparent;
-    transition: all 2s linear;
-    /*appearance: none;*/
     cursor: pointer;
-    margin-right: 10px;
     vertical-align: middle;
 }
 
 .progress.visible {
     background: #796767;
-    display: block;
 }
-
-/*.progress::-webkit-slider-thumb {*/
-/*    background: #544949;*/
-/*    !*background: #645555;*!*/
-/*    cursor: pointer;*/
-/*    width:10px;*/
-/*    height: 3px;*/
-/*    -webkit-appearance: none;*/
-/*    !*border-radius: 50%;*!*/
-/*    margin-left: -3px;*/
-/*}*/
-
-/*.progress::-webkit-slider-thumb:active {*/
-
-/*    background: #645555;*/
-/*    cursor: pointer;*/
-/*    width:4px;*/
-/*    height: 4px;*/
-/*    -webkit-appearance: none;*/
-/*    border-radius: 50%;*/
-/*    margin-left: -10px;*/
-/*}*/
 
 .play-list {
     list-style: none;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .play__list__item {
@@ -196,6 +247,10 @@ body {
     margin-bottom: 5px;
     vertical-align: middle;
     transition: all .7s linear;
+}
+.play__list__item.active {
+    text-shadow: 0 0 10px white;
+    color: #f6d1d1;
 }
 
 .play__list__item::before {
