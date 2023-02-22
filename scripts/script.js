@@ -1,13 +1,14 @@
+const timeNow = document.querySelector('.time')
+const day = document.querySelector('.date');
+const greetimg = document.querySelector('.greeting');
 function showTime() {
     const date = new Date();
     let days = ['Нядзеля', 'Панядзелак', 'Аўторак', 'Серада', 'Чацвер', 'Пятніца', 'Субота'];
     let months = ['Cтудзень', 'Люты', 'Сакавік', 'Красавік', 'Май', 'Чэрвень', 'Ліпень', 'Жнівень', 'Верасень', 'Кастрычнік', 'Лістапад', 'Снежань'];
-    document.querySelector('.time').textContent = date.toLocaleTimeString();
-    const day = document.querySelector('.date');
-    const options2 = {day: 'numeric'};
+    timeNow.textContent = date.toLocaleTimeString();
+    let options2 = {day: 'numeric'};
     day.textContent = `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.toLocaleDateString('be-Be', options2)}`;
     setTimeout(showTime, 1000);
-    const greetimg = document.querySelector('.greeting');
     date.getHours() >= 0 && date.getHours() < 6 ? greetimg.textContent = 'Добрай ночы, '
         : date.getHours() >= 6 && date.getHours() < 12 ? greetimg.textContent = 'Добрай раніцы, '
             : date.getHours() >= 12 && date.getHours() < 18 ? greetimg.textContent = 'Добры дзень, '
@@ -254,21 +255,21 @@ playList.forEach(el => {
     li.classList.add('play__list__item');
     li.textContent = el["title"];
 })
-let lastElem = document.querySelector('.player').lastChild.previousSibling;
+const lastElem = document.querySelector('.player').lastChild.previousSibling;
 // bar
-let bar = document.createElement('div');
+const bar = document.createElement('div');
 bar.classList.add('bar');
 document.querySelector('.player').insertBefore(bar, lastElem);
 // табло
-let pres = document.createElement('div');
+const pres = document.createElement('div');
 pres.classList.add('pres');
 document.querySelector('.bar').append(pres);
 //создаем прогресс-бар
-let playLine = document.createElement('div');
+const playLine = document.createElement('div');
 playLine.classList.add('playLine');
 document.querySelector('.bar').append(playLine);
 // создаем прогресс-лайн
-let progress = document.createElement('div');
+const progress = document.createElement('div');
 progress.classList.add('progress');
 progress.setAttribute('id', 'line');
 document.querySelector('.playLine').append(progress);
@@ -276,46 +277,48 @@ progress.setAttribute('type', 'range');
 progress.setAttribute('value', '0');
 progress.setAttribute('step', '0.001');
 // звук
-let volumeContainer = document.createElement('div');
+const volumeContainer = document.createElement('div');
 volumeContainer.classList.add('volume-container');
 document.querySelector('.bar').append(volumeContainer);
-let volume = document.createElement('div');
+const volume = document.createElement('div');
 volume.classList.add('volume');
 document.querySelector('.volume-container').append(volume);
 // volchange
-let volchange = document.createElement('div');
+const volchange = document.createElement('div');
 volchange.classList.add('volchange');
 document.querySelector('.volume-container').append(volchange);
-let change = document.createElement('div');
+const change = document.createElement('div');
 change.classList.add('change');
 document.querySelector('.volchange').append(change);
 // создаем элемент для отображения времени для плей и дюрейшн
-let time = document.createElement('span');
+const time = document.createElement('span');
 time.classList.add('play-time');
 document.querySelector('.bar').append(time);
 // логика воспроизведения - паузы + анимация
 document.querySelector('.play').addEventListener('click', () => {
     if (!isPlay) {
-        playAudio()
-        isPlay = !isPlay;
-    } else {
-        pauseAudio()
-        isPlay = !isPlay;
+        playAudio();
+        isPlay = true;
+    } else if (document.querySelector('.play').classList.contains('pause')){
+        pauseAudio();
     }
     document.querySelector('.play').classList.toggle('pause');
 });
 
 const timeChange = bar.querySelector('.playLine');
-
+let currentTime = 0;
 timeChange.addEventListener('click', e => {
     const sliderWidth = window.getComputedStyle(timeChange).width;
-    audio.currentTime =  e.offsetX /
-        parseInt(sliderWidth)*(parseInt(playList[playNum].duration.split(':')[0]) * 60 + parseInt(playList[playNum].duration.split(':')[1]));
+    audio.currentTime = e.offsetX /
+        parseInt(sliderWidth) * (parseInt(playList[playNum].duration.split(':')[0]) * 60 + parseInt(playList[playNum].duration.split(':')[1]));
     bar.querySelector(".progress").style.width = e.offsetX + '%';
-}, false)
+    currentTime = audio.currentTime;
+}, false);
+
 function playAudio() {
     audio.src = playList[playNum].src;
     audio.play(playNum);
+    audio.currentTime = currentTime;
     colorText(playNum);
     let outTime
     audio.addEventListener('timeupdate', () => {
@@ -323,7 +326,7 @@ function playAudio() {
             outTime = `0:0${audio.currentTime.toFixed(0)}`
             : audio.currentTime.toFixed(0) < 60 ?
                 outTime = `0:${audio.currentTime.toFixed(0)}`
-                : outTime = `${Math.floor((audio.currentTime.toFixed(0) / 60)).toString().padStart(2, '0')}:${(audio.currentTime.toFixed(0) % 60).toString().padStart(2, '0')}`
+                : outTime = `${Math.floor((audio.currentTime.toFixed(0) / 60)).toString()}:${(audio.currentTime.toFixed(0) % 60).toString().padStart(2, '0')}`
         time.textContent = `${outTime} / ${playList[playNum].duration}`;
         progress.style.width = `${audio.currentTime.toFixed(0) / (parseInt(playList[playNum].duration.split(':')[0]) * 60 + parseInt(playList[playNum].duration.split(':')[1])) * 100}%`;
         if (progress.style.width === '100%') {
@@ -343,6 +346,7 @@ function pauseAudio() {
     document.querySelector('.play-list').children[playNum].classList.remove('active');
     document.querySelector('.play-list').children[playNum].style.color = 'white';
     document.querySelector('.play-list').children[playNum].style.textShadow = "none";
+    isPlay = false;
 }
 
 document.querySelector('.play-next').addEventListener('click', () => {
@@ -359,6 +363,7 @@ function playNext() {
         } else {
             playNum += 1;
         }
+        currentTime = 0;
         playAudio(playNum);
         colorText(playNum);
     }
@@ -371,6 +376,7 @@ function playPrev() {
         } else {
             playNum -= 1;
         }
+        currentTime = 0;
         playAudio(playNum);
         colorText(playNum);
     }
@@ -390,6 +396,7 @@ document.querySelector('.play-list').addEventListener('click', function (event) 
                 playNum = i;
             }
         })
+        currentTime = 0;
         playAudio(playNum);
         isPlay = !isPlay;
     }
@@ -420,7 +427,7 @@ volumeChange.addEventListener('click', e => {
 }, false)
 
 document.querySelector('.volume').addEventListener('click', (e) => {
-    if (e.target.classList.contains('off')){
+    if (e.target.classList.contains('off')) {
         audio.volume = .75;
         bar.querySelector(".change").style.width = '75%';
         document.querySelector('.volume').classList.remove('off');
@@ -431,6 +438,11 @@ document.querySelector('.volume').addEventListener('click', (e) => {
     }
 });
 
+const greetingTranslation =  {en: 'en', be: 'be'}
+
+function chengGreetingLang (lang = 'be'){
+
+}
 
 
 
