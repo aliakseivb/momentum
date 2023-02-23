@@ -255,10 +255,10 @@ body {
 }
 
 .volume.visible{
-    background-image: url('https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/sound-on.png');
+    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/sound-on.png");
 }
 .volume.off {
-    background-image: url('https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/sound-off.png');
+    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/sound-off.png");
 }
 
 .volchange {
@@ -575,9 +575,9 @@ body {
     flex-direction: column;
     justify-content: start;
     position: absolute;
-    bottom: 5px;
+    bottom: 10px;
     left: -210px;
-    width: 200px;
+    width: 170px;
     height: 250px;
     opacity: 0;
     /*background: #f8e2e2;*/
@@ -589,7 +589,7 @@ body {
     box-shadow: 0 0 20px 4px rgb(255 255 255 / 80%);
 }
 .set.open {
-    opacity: 70%;
+    opacity: 80%;
     transform: translateX(215px);
 }
 
@@ -604,10 +604,9 @@ body {
     font-size: 18px;
     font-weight: 700;
     box-sizing: border-box;
-    border-bottom: 2px solid #2e3035;
+    border-bottom: 1px solid #2e3035;
     cursor: pointer;
 }
-
 
 .languageEl:hover{
     border-top-left-radius: 5px;
@@ -621,13 +620,6 @@ body {
     background: #2e3035;
     color: white;
 }
-
-/*.lang-opasity,*/
-/*.api-opasity,*/
-/*.todo-opasity{*/
-/*    opacity: 0;*/
-/*    transition: all .2s linear;*/
-/*}*/
 
 .wrapLanguage {
     position: relative;
@@ -644,25 +636,39 @@ body {
     transition: all 1s ease-out;
 }
 
+.wrapBe {
+    display: flex;
+    border-right: 1px solid #2e3035;
+    color: black;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.wrapBe:hover {
+    background: #796767;
+    color: white;
+}
 .setClose {
-    width: 20px;
-    height: 35px;
+    width: 15px;
+    height: 15px;
     display: block;
     position: absolute;
-    right: 15px;
-    bottom: 5px;
+    right: 10px;
+    bottom: 10px;
     background-image: url("../assets/img/angle-down-white.png");
     background-size: 100%;
     background-repeat: no-repeat;
     transform: rotate(90deg);
-    opacity: 50%;
+    opacity: 30%;
     cursor: pointer;
     transition: all .3s ease-out;
+    border-radius: 50%;
 }
 
 .setClose:hover {
     opacity: 80%;
-
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 50%)
 }
 
 

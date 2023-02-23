@@ -53,15 +53,20 @@ document.querySelector('.set').append(setClose);
 const wrapBe = document.createElement('div');
 wrapBe.classList.add('wrapBe');
 document.querySelector('.wrapLanguage').append(wrapBe);
+wrapBe.textContent = 'be';
 const wrapEn = document.createElement('div');
 wrapEn.classList.add('wrapEn');
 document.querySelector('.wrapLanguage').append(wrapEn);
+wrapEn.textContent = 'en';
 const todo = document.createElement('div');
 todo.classList.add('todo');
 document.querySelector('.footer').append(todo);
 
-document.querySelector('.languageEl').addEventListener('click', function (e) {
-    document.querySelector('.wrapLanguage').classList.toggle('lang-opasity');
+languageEl.addEventListener('click', function (e) {
+    wrapLanguage.classList.toggle('lang-opasity');
+    languageEl.classList.toggle('lang-active');
+
+
     // document.querySelector('.apiEl').classList.add('api-opasity');
     // document.querySelector('.todoEl').classList.add('todo-opasity');
 })
