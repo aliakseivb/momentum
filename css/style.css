@@ -1,5 +1,5 @@
 @font-face {
-    font-family: Arial-MT;
+    font-family: Arial-MT, sans-serif;
     src: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/fonts/Arial-MT.woff"); /* Путь к файлу со шрифтом */
 }
 
@@ -12,7 +12,6 @@
 body {
     min-width: 480px;
     min-height: 100vh;
-    font-family: 'Arial', sans-serif;
     font-size: 16px;
     color: #fff;
     text-align: center;
@@ -160,7 +159,7 @@ body {
     right: 0;
     background: #f8e2e2;
     box-sizing: border-box;
-    border-radius: 5px;
+    border-radius: 6px;
     transition: all .3s ease-out;
     opacity: 0;
 }
@@ -178,6 +177,7 @@ body {
     cursor: pointer;
     color: transparent;
     order: 2;
+    box-sizing: border-box;
 }
 
 .optionLanguageEn {
@@ -189,14 +189,14 @@ body {
     color: #796767;
 }
 .optionLanguageBe:hover {
-    background: #2e3035;
+    background: #1b1b1c;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     color: white;
 }
 
 .optionLanguageEn:hover {
-    background: #2e3035;
+    background: #1b1b1c;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     color: white;
@@ -444,7 +444,6 @@ body {
 .time {
     min-height: 124px;
     margin-bottom: 10px;
-    font-family: 'Arial-MT', sans-serif;
     font-size: 150px;
     letter-spacing: -4px;
 }
@@ -580,7 +579,6 @@ body {
     width: 170px;
     height: 250px;
     opacity: 0;
-    /*background: #f8e2e2;*/
     cursor: pointer;
     box-sizing: border-box;
     border: none;
@@ -593,6 +591,28 @@ body {
     transform: translateX(215px);
 }
 
+.setClose {
+    width: 15px;
+    height: 15px;
+    display: block;
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    background-image: url("../assets/img/angle-down-white.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    transform: rotate(90deg);
+    opacity: 70%;
+    cursor: pointer;
+    transition: all .3s ease-out;
+    border-radius: 50%;
+}
+
+.setClose:hover {
+    opacity: 100%;
+    transform: rotate(-270deg);
+}
+
 .languageEl,
 .apiEl,
 .todoEl {
@@ -601,7 +621,7 @@ body {
     padding: 10px 10px;
     text-align: left;
     color: white;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
     box-sizing: border-box;
     border-bottom: 1px solid #2e3035;
@@ -611,13 +631,17 @@ body {
 .languageEl:hover{
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    background: #2e3035;
+    background: #1b1b1c;
     color: white;
+}
+
+.lang-active {
+    background: #2e3035;
 }
 
 .apiEl:hover,
 .todoEl:hover {
-    background: #2e3035;
+    background: #1b1b1c;
     color: white;
 }
 
@@ -626,7 +650,7 @@ body {
     display: none;
     grid-template-columns: 1fr 1fr;
     justify-content: center;
-    height: 40px;
+    height: 30px;
     background: #f8e2e2;
     transition: all 1s linear;
 }
@@ -643,32 +667,27 @@ body {
     align-items: center;
     justify-content: center;
     font-weight: 800;
+    font-size: 18px;
 }
 
 .wrapBe:hover {
     background: #796767;
     color: white;
 }
-.setClose {
-    width: 15px;
-    height: 15px;
-    display: block;
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    background-image: url("../assets/img/angle-down-white.png");
-    background-size: 100%;
-    background-repeat: no-repeat;
-    transform: rotate(90deg);
-    opacity: 30%;
-    cursor: pointer;
-    transition: all .3s ease-out;
-    border-radius: 50%;
+
+.wrapEn {
+    display: flex;
+    border-right: 1px solid #2e3035;
+    color: black;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 18px;
 }
 
-.setClose:hover {
-    opacity: 80%;
-    box-shadow: 0 0 0 1px rgb(255 255 255 / 50%)
+.wrapEn:hover {
+    background: #796767;
+    color: white;
 }
 
 
