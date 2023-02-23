@@ -15,6 +15,7 @@ document.querySelector('.footer').append(setbtn);
 const set = document.createElement('div');
 set.classList.add('set');
 document.querySelector('.footer').append(set);
+
 const languageEl = document.createElement('div');
 languageEl.classList.add('languageEl');
 document.querySelector('.set').append(languageEl);
@@ -22,10 +23,52 @@ languageEl.textContent = 'Select language';
 const wrapLanguage = document.createElement('div');
 wrapLanguage.classList.add('wrapLanguage');
 document.querySelector('.set').append(wrapLanguage);
-const apiEl = document.createElement('div');
-apiEl.classList.add('apiEl');
-document.querySelector('.set').append(apiEl);
-apiEl.textContent = 'Select source';
+wrapLanguage.addEventListener('click', (e) => {
+    language = e.target.textContent;
+    changeGreetingLang(language);
+    wrapLanguage.classList.toggle('lang-opacity');
+    languageEl.classList.toggle('lang-active');
+
+})
+languageEl.addEventListener('click', function (e) {
+    wrapLanguage.classList.toggle('lang-opacity');
+    languageEl.classList.toggle('lang-active');
+    sourceEl.classList.remove('api-active');
+    todoEl.classList.remove('todo-active');
+})
+
+const sourceEl = document.createElement('div');
+sourceEl.classList.add('sourceEl');
+document.querySelector('.set').append(sourceEl);
+sourceEl.textContent = 'Image source';
+const wrapSource = document.createElement('div');
+wrapSource.classList.add('wrap-source');
+document.querySelector('.set').append(wrapSource);
+// const gits = document.createElement('div');
+// gits.classList.add('git');
+// document.querySelector('.wrapSource').append(gits);
+// gits.textContent = 'GIT';
+// const unsplash = document.createElement('div');
+// unsplash.classList.add('unsplash');
+// document.querySelector('.wrapSource').append(unsplash);
+// unsplash.textContent = 'Unsplash';
+// const flickr = document.createElement('div');
+// flickr.classList.add('flickr');
+// document.querySelector('.wrapSource').append(flickr);
+// flickr.textContent = 'Flickr';
+// wrapLanguage.addEventListener('click', (e) => {
+//     language = e.target.textContent;
+//     changeGreetingLang(language);
+//     wrapLanguage.classList.toggle('lang-opasity');
+//     languageEl.classList.toggle('lang-active');
+//
+// })
+sourceEl.addEventListener('click', function (e) {
+    wrapSource.classList.toggle('source-opacity');
+    sourceEl.classList.toggle('source-active');
+    languageEl.classList.remove('api-active');
+    todoEl.classList.remove('todo-active');
+})
 
 
 const todoEl = document.createElement('div');
@@ -50,19 +93,7 @@ todo.classList.add('todo');
 document.querySelector('.footer').append(todo);
 
 
-wrapLanguage.addEventListener('click', (e) => {
-    language = e.target.textContent;
-    changeGreetingLang(language);
-    wrapLanguage.classList.toggle('lang-opasity');
-    languageEl.classList.toggle('lang-active');
 
-})
-languageEl.addEventListener('click', function (e) {
-    wrapLanguage.classList.toggle('lang-opasity');
-    languageEl.classList.toggle('lang-active');
-    apiEl.classList.remove('api-active');
-    todoEl.classList.remove('todo-active');
-})
 
 // закрыть меню по клику вне его
 document.addEventListener('click', e => {
@@ -77,6 +108,7 @@ document.addEventListener('click', e => {
         // if (!its_menu && !its_hamburger && menu_is_active) {
         document.querySelector('.set').classList.remove('open');
         document.querySelector('.set-btn').classList.remove('close');
+        languageEl.classList.toggle('lang-active');
     }
 })
 setbtn.addEventListener('click', e => {
@@ -193,7 +225,7 @@ document.getElementById('optic').addEventListener('click', () => {
 });
 
 const winWidth = {
-    '2': 2.5,
+    '2': 2.2,
     '3': 1.7,
     '4': 1.1,
     '5': 0.8,
@@ -205,7 +237,7 @@ const winWidth = {
     '11': 0.12
 };
 const winMid = {
-    '2': 3.4,
+    '2': 2.8,
     '3': 2,
     '4': 1.4,
     '5': 1,
@@ -217,12 +249,12 @@ const winMid = {
     '11': 0.17
 };
 const winSmall = {
-    '2': 4.1,
+    '2': 4,
     '3': 2.3,
     '4': 1.5,
     '5': 1.2,
     '6': 0.9,
-    '7': 0.7,
+    '7': 0.5,
     '8': 0.5,
     '9': 0.4,
     '10': 0.17,

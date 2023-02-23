@@ -28,6 +28,6 @@ const playList = [
         title: 'Siempre hay esperanza',
         src: 'https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/sounds/Sade - Siempre hay esperanza.mp3',
         duration: '5:18'
-    }
+    },
 ]
 export default playList
