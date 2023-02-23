@@ -1,18 +1,145 @@
+let days
+let months
+let conditions
+let toDo
+let timeOfDay
+let enter
+let language
 const timeNow = document.querySelector('.time')
 const day = document.querySelector('.date');
-const greetimg = document.querySelector('.greeting');
+const greeting = document.querySelector('.greeting');
+
+const wrapOption = document.createElement('div');
+wrapOption.classList.add('wrapOption');
+document.querySelector('.header').append(wrapOption);
+const angle = document.createElement('div');
+angle.classList.add('angle');
+document.querySelector('.wrapOption').append(angle);
+const optionLanguage = document.createElement('div');
+optionLanguage.classList.add('optionLanguage');
+document.querySelector('.wrapOption').append(optionLanguage);
+const optionLanguageBe = document.createElement('div');
+optionLanguageBe.classList.add('optionLanguageBe');
+document.querySelector('.optionLanguage').append(optionLanguageBe);
+optionLanguageBe.textContent = 'be';
+const optionLanguageEn = document.createElement('div');
+optionLanguageEn.classList.add('optionLanguageEn');
+document.querySelector('.optionLanguage').append(optionLanguageEn);
+optionLanguageEn.textContent = 'en';
+const setbtn = document.createElement('div');
+setbtn.classList.add('set-btn');
+document.querySelector('.footer').append(setbtn);
+const set = document.createElement('div');
+set.classList.add('set');
+document.querySelector('.footer').append(set);
+const languageEl = document.createElement('div');
+languageEl.classList.add('languageEl');
+document.querySelector('.set').append(languageEl);
+languageEl.textContent = 'Select language';
+const wrapLanguage = document.createElement('div');
+wrapLanguage.classList.add('wrapLanguage');
+document.querySelector('.set').append(wrapLanguage);
+const apiEl = document.createElement('div');
+apiEl.classList.add('apiEl');
+document.querySelector('.set').append(apiEl);
+apiEl.textContent = 'Select source';
+const todoEl = document.createElement('div');
+todoEl.classList.add('todoEl');
+todoEl.textContent = 'ToDo';
+document.querySelector('.set').append(todoEl);
+const setClose = document.createElement('div');
+setClose.classList.add('setClose');
+document.querySelector('.set').append(setClose);
+const wrapBe = document.createElement('div');
+wrapBe.classList.add('wrapBe');
+document.querySelector('.wrapLanguage').append(wrapBe);
+const wrapEn = document.createElement('div');
+wrapEn.classList.add('wrapEn');
+document.querySelector('.wrapLanguage').append(wrapEn);
+const todo = document.createElement('div');
+todo.classList.add('todo');
+document.querySelector('.footer').append(todo);
+
+document.querySelector('.languageEl').addEventListener('click', function (e) {
+    document.querySelector('.wrapLanguage').classList.toggle('lang-opasity');
+    // document.querySelector('.apiEl').classList.add('api-opasity');
+    // document.querySelector('.todoEl').classList.add('todo-opasity');
+})
+
+const settingEl = document.querySelector('.set-btn');
+settingEl.addEventListener('click', () => {
+    document.querySelector('.set').classList.add('open');
+    document.querySelector('.set-btn').classList.add('close');
+})
+
+setClose.addEventListener('click', ()=>{
+    document.querySelector('.set').classList.remove('open')
+    document.querySelector('.set-btn').classList.remove('close');
+})
+
+
+document.querySelector('.angle').addEventListener('click', function (e) {
+    document.querySelector('.optionLanguage').classList.toggle('open');
+})
+
+document.querySelector('.optionLanguage').addEventListener('click', function (e) {
+    language = e.target.textContent;
+    changeGreetingLang(language);
+    document.querySelector('.optionLanguage').classList.toggle('open')
+    getWeather(city.value, language)
+    document.querySelector('.name').placeholder = enter;
+
+})
+const greetingTranslation =
+    {
+        'be': [
+            ['Добрай ранiцы', 'Добры дзень', 'Добры вечар', 'Добрай ночы'],
+            ['Вецер', 'Вiльготнасць'],
+            'Зрабiць',
+            ['Нядзеля', 'Панядзелак', 'Аўторак', 'Серада', 'Чацвер', 'Пятніца', 'Субота'],
+            ['Cтудзень', 'Люты', 'Сакавік', 'Красавік', 'Май', 'Чэрвень', 'Ліпень', 'Жнівень', 'Верасень', 'Кастрычнік', 'Лістапад', 'Снежань'],
+            'назавiце сябе...'
+        ],
+        'en': [['Good morning', 'Good afternoon', 'Good evening', 'Good night'],
+            ['Wind', 'Humidity'],
+            'Todo',
+            ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+            ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            'enter your name...'
+        ]
+    }
+
+function changeGreetingLang(lang = 'be') {
+    if (lang === 'en') {
+        days = greetingTranslation.en[3];
+        months = greetingTranslation.en[4];
+        conditions = greetingTranslation.en[1];
+        toDo = greetingTranslation.en[2];
+        timeOfDay = greetingTranslation.en[0];
+        enter = greetingTranslation.en;
+    } else {
+        days = greetingTranslation.be[3];
+        months = greetingTranslation.be[4];
+        conditions = greetingTranslation.be[1];
+        toDo = greetingTranslation.be[2];
+        timeOfDay = greetingTranslation.be[0];
+        enter = greetingTranslation.be[5];
+    }
+    getWeather();
+}
+
+changeGreetingLang()
+
 function showTime() {
     const date = new Date();
-    let days = ['Нядзеля', 'Панядзелак', 'Аўторак', 'Серада', 'Чацвер', 'Пятніца', 'Субота'];
-    let months = ['Cтудзень', 'Люты', 'Сакавік', 'Красавік', 'Май', 'Чэрвень', 'Ліпень', 'Жнівень', 'Верасень', 'Кастрычнік', 'Лістапад', 'Снежань'];
     timeNow.textContent = date.toLocaleTimeString();
-    let options2 = {day: 'numeric'};
-    day.textContent = `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.toLocaleDateString('be-Be', options2)}`;
+    let options = {day: 'numeric'};
+    day.textContent = `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.toLocaleDateString('be-Be', options)}`;
     setTimeout(showTime, 1000);
-    date.getHours() >= 0 && date.getHours() < 6 ? greetimg.textContent = 'Добрай ночы, '
-        : date.getHours() >= 6 && date.getHours() < 12 ? greetimg.textContent = 'Добрай раніцы, '
-            : date.getHours() >= 12 && date.getHours() < 18 ? greetimg.textContent = 'Добры дзень, '
-                : greetimg.textContent = 'Добры вечар, ';
+    date.getHours() >= 0 && date.getHours() < 6 ? greeting.textContent = `${timeOfDay[3]}, `
+        : date.getHours() >= 6 && date.getHours() < 12 ? greeting.textContent = `${timeOfDay[0]}, `
+            : date.getHours() >= 12 && date.getHours() < 18 ? greeting.textContent = `${timeOfDay[1]}, `
+                : greeting.textContent = `${timeOfDay[2]}, `;
 
     window.partOfDay = Math.ceil(date.getHours() / 6);
 }
@@ -23,85 +150,88 @@ document.getElementById('optic').addEventListener('click', () => {
     document.getElementById('optic').classList.remove('name-optic');
 });
 
+const winWidth = {
+    '2': 2.5,
+    '3': 1.7,
+    '4': 1.1,
+    '5': 0.8,
+    '6': 0.6,
+    '7': 0.45,
+    '8': 0.31,
+    '9': 0.25,
+    '10': 0.15,
+    '11': 0.12
+};
+const winMid = {
+    '2': 3.4,
+    '3': 2,
+    '4': 1.4,
+    '5': 1,
+    '6': 0.8,
+    '7': 0.55,
+    '8': 0.45,
+    '9': 0.35,
+    '10': 0.24,
+    '11': 0.17
+};
+const winSmall = {
+    '2': 4.1,
+    '3': 2.3,
+    '4': 1.5,
+    '5': 1.2,
+    '6': 0.9,
+    '7': 0.7,
+    '8': 0.5,
+    '9': 0.4,
+    '10': 0.17,
+    '11': 0.14
+};
 
 function setLocalStorage() {
     localStorage.setItem('name', document.getElementById('optic').value);
     localStorage.setItem('city', document.querySelector('.city').value);
+    localStorage.setItem('placeholder', enter);
+    localStorage.setItem('language', language);
 }
 
 window.addEventListener('beforeunload', setLocalStorage);
-const winLarg = {
-    '2': 1.2,
-    '3': 0.9,
-    '4': 0.6,
-    '5': 0.4,
-    '6': 0.3,
-    '7': 0.2,
-    '8': 0.16,
-    '9': 0.11,
-    '10': 0.09,
-    '11': 0.008
-};
-const winMid = {
-    '2': 1.7,
-    '3': 1.1,
-    '4': 0.72,
-    '5': 0.47,
-    '6': 0.35,
-    '7': 0.26,
-    '8': 0.2,
-    '9': 0.15,
-    '10': 0.1,
-    '11': 0.07
-};
-const winSmall = {
-    '2': 3.5,
-    '3': 2.1,
-    '4': 1.4,
-    '5': 1,
-    '6': 0.7,
-    '7': 0.5,
-    '8': 0.35,
-    '9': 0.23,
-    '10': 0.17,
-    '11': 0.05
-};
-const winLLL = {
-    '2': 7,
-    '3': 4.5,
-    '4': 3,
-    '5': 2,
-    '6': 1.5,
-    '7': 1.1,
-    '8': 0.8,
-    '9': 0.6,
-    '10': 0.3,
-    '11': 0.2
-};
 
 function getLocalStorage() {
     if (localStorage.getItem('name') || localStorage.getItem('city')) {
         document.getElementById('optic').value = localStorage.getItem('name');
         document.querySelector('.city').value = localStorage.getItem('city');
         document.getElementById('optic').classList.remove('name-optic');
-        getWeather(localStorage.getItem('city'));
-        for (let key in winLarg) {
-            if (window.innerWidth > 5000 && localStorage.getItem('name').length === parseInt(key)) {
-                document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winLarg[key]}vw`;
-            } else if (window.innerWidth > 2000 && window.innerWidth < 3000 && localStorage.getItem('name').length === parseInt(key)) {
-                document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winSmall[key]}vw`;
-            } else if (window.innerWidth > 3000 && window.innerWidth < 5000 && localStorage.getItem('name').length === parseInt(key)) {
-                document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winMid[key]}vw`
+        getWeather(localStorage.getItem('city'), localStorage.getItem('language'));
+        document.querySelector('.name').placeholder = localStorage.getItem('placeholder');
+        changeGreetingLang(localStorage.getItem('language'))
+        for (let key in winWidth) {
+            if (window.innerWidth > 2500 && localStorage.getItem('name').length === parseInt(key)) {
+                document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winWidth[key]}vw`
+            } else if (window.innerWidth > 2000 && window.innerWidth < 2500 && localStorage.getItem('name').length === parseInt(key)) {
+                document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winMid[key]}vw`;
             } else if (window.innerWidth < 2000 && localStorage.getItem('name').length === parseInt(key)) {
-                document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winLLL[key]}vw`
+                document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winSmall[key]}vw`
             }
         }
     }
+    // localStorage.getItem('placeholder', enter);
+    // localStorage.setItem('language', language);
 }
 
+window.onresize = () => {
+    for (let key in winWidth) {
+        if (window.innerWidth > 2500 && localStorage.getItem('name').length === parseInt(key)) {
+            document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winWidth[key]}vw`
+        } else if (window.innerWidth > 2000 && window.innerWidth < 2500 && localStorage.getItem('name').length === parseInt(key)) {
+            document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winMid[key]}vw`;
+        } else if (window.innerWidth < 2000 && localStorage.getItem('name').length === parseInt(key)) {
+            document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winSmall[key]}vw`
+        }
+
+    }
+};
+
 window.addEventListener('load', getLocalStorage)
-
-
 let randomNum = 0;
 
 function getRandomNum(min, max) {
@@ -169,18 +299,6 @@ next.addEventListener('click', function getSlideNext() {
     setBg();
 });
 
-window.onresize = () => {
-    for (let key in winLarg) {
-        if (window.innerWidth > 5000 && localStorage.getItem('name').length === parseInt(key)) {
-            document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winLarg[key]}vw`;
-        } else if (window.innerWidth < 3000 && localStorage.getItem('name').length === parseInt(key)) {
-            document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winSmall[key]}vw`;
-        } else if (window.innerWidth > 3000 && window.innerWidth < 5000 && localStorage.getItem('name').length === parseInt(key)) {
-            document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winMid[key]}vw`
-        }
-    }
-};
-
 const weatherIcon = document.querySelector('.weather-icon');
 const temperature = document.querySelector('.temperature');
 const weatherDescription = document.querySelector('.weather-description');
@@ -189,16 +307,16 @@ const wind = document.querySelector('.wind');
 const city = document.querySelector('.city');
 city.value = 'Минск';
 
-async function getWeather() {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&lang=be&appid=ca3165c4315a2e6a8d6f02c0a5de77ca&units=metric`;
+async function getWeather(city, lang = 'be') {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=${lang}&appid=260d225c65e849f7ad9e4bef2b25de91&units=metric`;
     const res = await fetch(url);
     const data = await res.json();
     weatherIcon.className = 'weather-icon owf';
     weatherIcon.classList.add(`owf-${data.weather[0].id}`);
     temperature.textContent = Math.ceil(`${data.main.temp}`) + '°C';
     weatherDescription.textContent = data.weather[0].description;
-    wind.textContent = `Wind: ${data.wind.speed} m/s`;
-    humidity.textContent = `Humidity: ${data.main.humidity}%`;
+    wind.textContent = `${conditions[0]}: ${data.wind.speed} m/s`;
+    humidity.textContent = `${conditions[1]}: ${data.main.humidity}%`;
 }
 
 getWeather();
@@ -299,7 +417,7 @@ document.querySelector('.play').addEventListener('click', () => {
     if (!isPlay) {
         playAudio();
         isPlay = true;
-    } else if (document.querySelector('.play').classList.contains('pause')){
+    } else if (document.querySelector('.play').classList.contains('pause')) {
         pauseAudio();
     }
     document.querySelector('.play').classList.toggle('pause');
@@ -438,11 +556,7 @@ document.querySelector('.volume').addEventListener('click', (e) => {
     }
 });
 
-const greetingTranslation =  {en: 'en', be: 'be'}
 
-function chengGreetingLang (lang = 'be'){
-
-}
 
 
 

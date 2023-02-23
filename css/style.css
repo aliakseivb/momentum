@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'Arial-MT';
+    font-family: Arial-MT;
     src: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/fonts/Arial-MT.woff"); /* Путь к файлу со шрифтом */
 }
 
@@ -118,6 +118,90 @@ body {
 .play-next {
     background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/play-next.svg");
 }
+.wrapOption{
+    display: flex;
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    background: transparent;
+    top: 25px;
+    right: 250px;
+}
+
+.wrapOption:hover .angle{
+    opacity: 50%;
+    transition: .6s ease-out;
+}
+.angle {
+    background-image: url("../assets/img/angle-down-white.png");
+    color: transparent;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    opacity: 10%;
+    right: 0;
+    cursor: pointer;
+}
+
+.wrapOption .angle:hover {
+    opacity: 100%;
+}
+
+.optionLanguage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: absolute;
+    width: 50px;
+    height: 25px;
+    top: 30px;
+    right: 0;
+    background: #f8e2e2;
+    box-sizing: border-box;
+    border-radius: 5px;
+    transition: all .3s ease-out;
+    opacity: 0;
+}
+
+.open {
+    opacity: 100%;
+}
+
+.optionLanguageBe,
+.optionLanguageEn {
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: transparent;
+    order: 2;
+}
+
+.optionLanguageEn {
+    border-left: 1px solid #796767;
+    color: #796767;
+}
+.optionLanguageBe {
+    border-right: 1px solid #796767;
+    color: #796767;
+}
+.optionLanguageBe:hover {
+    background: #2e3035;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    color: white;
+}
+
+.optionLanguageEn:hover {
+    background: #2e3035;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: white;
+}
+
 
 .bar {
     display: flex;
@@ -158,8 +242,6 @@ body {
     justify-content: space-between;
     align-items: center;
     position: relative;
-    /*left: 1px;*/
-    /*top: 1px;*/
     width: 40%;
 }
 
@@ -173,10 +255,10 @@ body {
 }
 
 .volume.visible{
-    background-image: url(../assets/img/soun-on.png);
+    background-image: url('https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/sound-on.png');
 }
 .volume.off {
-    background-image: url(../assets/img/soun-off.png);
+    background-image: url('https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/sound-off.png');
 }
 
 .volchange {
@@ -185,7 +267,7 @@ body {
     background: transparent;
     height: 4px;
     cursor: pointer;
-    transition: all .5s linear;
+    transition: all .2s ease-out;
 }
 
 .volume-container:hover .volchange {
@@ -201,7 +283,6 @@ body {
 
 .volume-container:hover .change{
     background: #3d3535;
-    transition: all .5s linear;
 }
 
 .playLine.visible {
@@ -370,7 +451,7 @@ body {
 
 .date {
     min-height: 28px;
-    font-size: 40px;
+    font-size: 45px;
     margin-bottom: 20px;
 }
 
@@ -415,6 +496,7 @@ body {
 .name:hover {
     animation: none;
 }
+
 
 @keyframes optic {
     81% {
@@ -468,6 +550,121 @@ body {
 .author {
     min-height: 20px;
 }
+
+.set-btn{
+    display: block;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    width: 25px;
+    height: 25px;
+    background-image: url("../assets/img/set.png");
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+    transition: all 1s ease-out;
+}
+
+.set-btn.close {
+    transform: rotate(180deg);
+    opacity: 0;
+}
+
+.set {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    position: absolute;
+    bottom: 5px;
+    left: -210px;
+    width: 200px;
+    height: 250px;
+    opacity: 0;
+    /*background: #f8e2e2;*/
+    cursor: pointer;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 5px;
+    transition: all .7s ease-out;
+    box-shadow: 0 0 20px 4px rgb(255 255 255 / 80%);
+}
+.set.open {
+    opacity: 70%;
+    transform: translateX(215px);
+}
+
+.languageEl,
+.apiEl,
+.todoEl {
+    display: inline-block;
+    width: 100%;
+    padding: 10px 10px;
+    text-align: left;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    box-sizing: border-box;
+    border-bottom: 2px solid #2e3035;
+    cursor: pointer;
+}
+
+
+.languageEl:hover{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background: #2e3035;
+    color: white;
+}
+
+.apiEl:hover,
+.todoEl:hover {
+    background: #2e3035;
+    color: white;
+}
+
+/*.lang-opasity,*/
+/*.api-opasity,*/
+/*.todo-opasity{*/
+/*    opacity: 0;*/
+/*    transition: all .2s linear;*/
+/*}*/
+
+.wrapLanguage {
+    position: relative;
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    height: 40px;
+    background: #f8e2e2;
+    transition: all 1s linear;
+}
+
+.lang-opasity {
+    display: grid;
+    transition: all 1s ease-out;
+}
+
+.setClose {
+    width: 20px;
+    height: 35px;
+    display: block;
+    position: absolute;
+    right: 15px;
+    bottom: 5px;
+    background-image: url("../assets/img/angle-down-white.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    transform: rotate(90deg);
+    opacity: 50%;
+    cursor: pointer;
+    transition: all .3s ease-out;
+}
+
+.setClose:hover {
+    opacity: 80%;
+
+}
+
 
 @media (max-width: 768px) {
     .time {
