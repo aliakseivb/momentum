@@ -4,7 +4,7 @@ let conditions
 let toDo
 let timeOfDay
 let enter
-let language
+let language = localStorage.getItem('language');
 const timeNow = document.querySelector('.time')
 const day = document.querySelector('.date');
 const greeting = document.querySelector('.greeting');
@@ -153,7 +153,7 @@ window.onclick = function (event) {
         document.querySelector('.optionLanguage').addEventListener("click", function (e) {
             language = e.target.textContent;
             changeGreetingLang(language);
-            getWeather(city.value, language)
+            getWeather(localStorage.getItem('city'), localStorage.getItem('language'));
             document.querySelector('.name').placeholder = enter;
             document.querySelector('.optionLanguage').classList.toggle('open')
         })
@@ -185,7 +185,7 @@ function changeGreetingLang(lang = 'be') {
         conditions = greetingTranslation.en[1];
         toDo = greetingTranslation.en[2];
         timeOfDay = greetingTranslation.en[0];
-        enter = greetingTranslation.en;
+        enter = greetingTranslation.en[5];
     } else {
         days = greetingTranslation.be[3];
         months = greetingTranslation.be[4];
@@ -194,7 +194,7 @@ function changeGreetingLang(lang = 'be') {
         timeOfDay = greetingTranslation.be[0];
         enter = greetingTranslation.be[5];
     }
-    getWeather();
+    getWeather(localStorage.getItem('city'), localStorage.getItem('language'));
 }
 
 changeGreetingLang()
@@ -407,8 +407,13 @@ const weatherDescription = document.querySelector('.weather-description');
 const humidity = document.querySelector('.humidity');
 const wind = document.querySelector('.wind');
 const city = document.querySelector('.city');
-city.textContent = 'Минск';
-
+if(localStorage.getItem('city') === ''){
+    city.textContent = 'Мiнск';
+}else {
+    city.textContent = localStorage.getItem('city');
+}
+console.log(localStorage.getItem('city'))
+// city.textContent = getWeather(localStorage.getItem('city') || 'Минск')
 async function getWeather(city, lang = 'be') {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=${lang}&appid=260d225c65e849f7ad9e4bef2b25de91&units=metric`;
     const res = await fetch(url);
@@ -436,8 +441,7 @@ async function getQuotes() {
     const data = await res.json();
     setText(data);
 }
-console.log(data)
-console.log(Object.keys(data[0]))
+
 getQuotes();
 
 let rotate = 0;
@@ -456,13 +460,16 @@ function setQuote(min, max) {
 }
 
 function setText(data) {
-    if (language === 'be') {
+    if (language === 'en') {
         let textNum = setQuote(0, Object.keys(data[0]).length);
+        document.querySelector('.quote').textContent = `"${data[1][textNum].text}"`;
+        document.querySelector('.author').textContent = data[1][textNum].author;
     } else {
-        let textNum = setQuote(0, Object.keys(data[1]).length)
+        let textNum = setQuote(0, Object.keys(data[1]).length);
+        document.querySelector('.quote').textContent = `"${data[0][textNum].text}"`;
+        document.querySelector('.author').textContent = data[0][textNum].author;
     }
-    document.querySelector('.quote').textContent = `"${data[textNum].text}"`;
-    document.querySelector('.author').textContent = data[textNum].author;
+
 }
 
 
