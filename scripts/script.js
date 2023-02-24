@@ -413,7 +413,7 @@ const city = document.querySelector('.city');
 //     city.textContent = localStorage.getItem('city');
 // }
 // console.log(localStorage.getItem('city'))
-city.textContent = localStorage.getItem('city') || 'Мiнск'
+city.textContent = localStorage.getItem('city') || 'Минск'
 async function getWeather(city, lang = 'be') {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=${lang}&appid=260d225c65e849f7ad9e4bef2b25de91&units=metric`;
     const res = await fetch(url);
