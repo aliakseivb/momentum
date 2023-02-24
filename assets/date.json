@@ -1,94 +1,190 @@
 [
-  {
-    "text": "Пишите код так, как будто сопровождать его будет склонный к насилию психопат, который знает, где вы живете",
-    "author": "Стив Макконнелл"
-  },
-  {
-    "text": "Сложность программы растет до тех пор, пока не превысит способности программиста",
-    "author": "Артур Блох. Законы Мэрфи"
-  },
-  {
-    "text": "Бывает, что не хочется жить, но это еще не значит, что хочется не жить.",
-    "author": "Станислав Ежи Лец"
-  },
-  {
-    "text": "Многое мы охотно бросили бы, если бы не боязнь, что кто-нибудь другой это подберет.",
-    "author": "Оскар Уайльд"
-  },
-  {
-    "text": "Почему Вы рассуждаете о жизни, вместо того, чтобы ощущать ее?",
-    "author": "Эрих Мария Ремарк"
-  },
-  {
-    "text": "Безвыходным мы называем положение, выход из которого нам не нравится.",
-    "author": "Станислав Ежи Лец"
-  },
-  {
-    "text": "Лучше хранить молчание и считаться дураком, чем раскрыть рот и оказаться им.",
-    "author": "Марк Твен"
-  },
-  {
-    "text": "Дайте человеку всё, чего он желает, и в ту же минуту он почувствует, что это всё не есть всё.",
-    "author": "Иммануил Кант"
-  },
-  {
-    "text": "Глуп тот человек, который никогда не меняет своего мнения.",
-    "author": "Уинстон Черчилль"
-  },
-  {
-    "text": "Секрет быть скучным состоит в умении рассказать о себе всё.",
-    "author": "Оскар Уайльд"
-  },
-  {
-    "text": "Стремитесь не к успеху, а к ценностям, которые он дает.",
-    "author": "Альберт Эйнштейн"
-  },
-  {
-    "text": "Логика может привести Вас от пункта А к пункту Б, а воображение — куда угодно.",
-    "author": "Альберт Эйнштейн"
-  },
-  {
-    "text": "Ваше время ограничено, не тратьте его, живя чужой жизнью.",
-    "author": "Стив Джобс"
-  },
-  {
-    "text": "Вы никогда не пересечете океан, если не наберетесь мужества потерять берег из виду.",
-    "author": "Христофор Колумб"
-  },
-  {
-    "text": "Свобода ничего не стоит, если она не включает в себя свободу ошибаться.",
-    "author": "Махатма Ганди"
-  },
-  {
-    "text": "Есть только один способ избежать критики: ничего не делайте, ничего не говорите и будьте никем.",
-    "author": "Аристотель"
-  },
-  {
-    "text": "Стоит только поверить, что вы можете – и вы уже на полпути к цели.",
-    "author": "Теодор Рузвельт"
-  },
-  {
-    "text": "Когда я освобождаюсь от того, кто я есть, я становлюсь тем, кем я могу быть.",
-    "author": "Лао Цзы"
-  },
-  {
-    "text": "Каждый хочет изменить человечество, но никто не задумывается о том, как изменить себя.",
-    "author": "Лев Толстой"
-  },
-  {
-    "text": "Неудача – это просто возможность начать снова, но уже более мудро.",
-    "author": "Генри Форд"
-  },
-  {
-    "text": "Всегда выбирайте самый трудный путь - на нем вы не встретите конкурентов.",
-    "author": "Шарль де Голль"
-  },
-  {
-    "text": "Либо напиши что-нибудь стоящее, либо делай что-нибудь, о чем стоит написать.",
-    "author": "Бенджамин Франклин"
-  },
-  {
-    "text": "Единственный способ сделать что-то очень хорошо – любить то, что ты делаешь.",
-    "author": "Стив Джобс"
-  }
+  [
+    {
+      "text": "Пишите код так, как будто сопровождать его будет склонный к насилию психопат, который знает, где вы живете",
+      "author": "Стив Макконнелл"
+    },
+    {
+      "text": "Сложность программы растет до тех пор, пока не превысит способности программиста",
+      "author": "Артур Блох. Законы Мэрфи"
+    },
+    {
+      "text": "Бывает, что не хочется жить, но это еще не значит, что хочется не жить.",
+      "author": "Станислав Ежи Лец"
+    },
+    {
+      "text": "Многое мы охотно бросили бы, если бы не боязнь, что кто-нибудь другой это подберет.",
+      "author": "Оскар Уайльд"
+    },
+    {
+      "text": "Почему Вы рассуждаете о жизни, вместо того, чтобы ощущать ее?",
+      "author": "Эрих Мария Ремарк"
+    },
+    {
+      "text": "Безвыходным мы называем положение, выход из которого нам не нравится.",
+      "author": "Станислав Ежи Лец"
+    },
+    {
+      "text": "Лучше хранить молчание и считаться дураком, чем раскрыть рот и оказаться им.",
+      "author": "Марк Твен"
+    },
+    {
+      "text": "Дайте человеку всё, чего он желает, и в ту же минуту он почувствует, что это всё не есть всё.",
+      "author": "Иммануил Кант"
+    },
+    {
+      "text": "Глуп тот человек, который никогда не меняет своего мнения.",
+      "author": "Уинстон Черчилль"
+    },
+    {
+      "text": "Секрет быть скучным состоит в умении рассказать о себе всё.",
+      "author": "Оскар Уайльд"
+    },
+    {
+      "text": "Стремитесь не к успеху, а к ценностям, которые он дает.",
+      "author": "Альберт Эйнштейн"
+    },
+    {
+      "text": "Логика может привести Вас от пункта А к пункту Б, а воображение — куда угодно.",
+      "author": "Альберт Эйнштейн"
+    },
+    {
+      "text": "Ваше время ограничено, не тратьте его, живя чужой жизнью.",
+      "author": "Стив Джобс"
+    },
+    {
+      "text": "Вы никогда не пересечете океан, если не наберетесь мужества потерять берег из виду.",
+      "author": "Христофор Колумб"
+    },
+    {
+      "text": "Свобода ничего не стоит, если она не включает в себя свободу ошибаться.",
+      "author": "Махатма Ганди"
+    },
+    {
+      "text": "Есть только один способ избежать критики: ничего не делайте, ничего не говорите и будьте никем.",
+      "author": "Аристотель"
+    },
+    {
+      "text": "Стоит только поверить, что вы можете – и вы уже на полпути к цели.",
+      "author": "Теодор Рузвельт"
+    },
+    {
+      "text": "Когда я освобождаюсь от того, кто я есть, я становлюсь тем, кем я могу быть.",
+      "author": "Лао Цзы"
+    },
+    {
+      "text": "Каждый хочет изменить человечество, но никто не задумывается о том, как изменить себя.",
+      "author": "Лев Толстой"
+    },
+    {
+      "text": "Неудача – это просто возможность начать снова, но уже более мудро.",
+      "author": "Генри Форд"
+    },
+    {
+      "text": "Всегда выбирайте самый трудный путь - на нем вы не встретите конкурентов.",
+      "author": "Шарль де Голль"
+    },
+    {
+      "text": "Либо напиши что-нибудь стоящее, либо делай что-нибудь, о чем стоит написать.",
+      "author": "Бенджамин Франклин"
+    },
+    {
+      "text": "Единственный способ сделать что-то очень хорошо – любить то, что ты делаешь.",
+      "author": "Стив Джобс"
+    }
+  ],
+  [
+    {
+      "text": "Write code to be accompanied by a violent psychopath who knows where you live",
+      "author": "Steve McConnell"
+    },
+    {
+      "text": "Program complexity develops until it exceeds the programmer's ability",
+      "author": "Arthur Bloch. Murphy's Laws"
+    },
+    {
+      "text": "Sometimes you don't want to live, but that doesn't mean you don't want to live.",
+      "author": "Stanislav Jerzy Lec"
+    },
+    {
+      "text": "A lot of things we would gladly give up if we weren't afraid someone else would pick it up.",
+      "author": "Oscar Wilde"
+    },
+    {
+      "text": "Why do you question life instead of experiencing it?",
+      "author": "Erich Maria Remarque"
+    },
+    {
+      "text": "We call a situation hopeless if we don't like the way out.",
+      "author": "Stanislav Jerzy Lec"
+    },
+    {
+      "text": "It's better to remain silent and be considered a fool than to open your mouth and find out.",
+      "author": "Mark Twain"
+    },
+    {
+      "text": "Give a man everything he wants, and in that very moment he will feel that this is not everything.",
+      "author": "Immanuel Kant"
+    },
+    {
+      "text": "Stupid is the man who never changes his mind.",
+      "author": "Winston Churchill"
+    },
+    {
+      "text": "The secret was boring in Total Recall.",
+      "author": "Oscar Wilde"
+    },
+    {
+      "text": "Strive not for success, but for the values it gives.",
+      "author": "Albert Einstein"
+    },
+    {
+      "text": "Logic can see you from point A to point B, imagination can see you anywhere.",
+      "author": "Albert Einstein"
+    },
+    {
+      "text": "Your time is limited, don't waste it living someone else's life.",
+      "author": "Steve Jobs"
+    },
+    {
+      "text": "You never cross an ocean unless you have the courage to lose sight of the shore.",
+      "author": "Christopher Columbia"
+    },
+    {
+      "text": "Freedom is worthless unless it includes the freedom to make mistakes.",
+      "author": "Mahatma Gandhi"
+    },
+    {
+      "text": "There is only one way to avoid criticism: do nothing, say nothing, and be careful.",
+      "author": "Aristotle"
+    },
+    {
+      "text": "It's only worth communicating what you can and you're already halfway there.",
+      "author": "Theodore Roosevelt"
+    },
+    {
+      "text": "When I let go of who I am, I become who I can be.",
+      "author": "Lao Tzu"
+    },
+    {
+      "text": "Everyone wants to change, but no one thinks about how to change themselves.",
+      "author": "Leo Tolstoy"
+    },
+    {
+      "text": "Failure is just an opportunity to start again, but more wisely.",
+      "author": "Henry Ford"
+    },
+    {
+      "text": "The most difficult path is always found - you didn't meet any participants on it.",
+      "author": "Charles de Gaulle"
+    },
+    {
+      "text": "Either write something worthwhile or do something worth writing about.",
+      "author": "Benjamin Franklin"
+    },
+    {
+      "text": "The only way to do something very well is to love what you do.",
+      "author": "Steve Jobs"
+    }
+  ]
 ]

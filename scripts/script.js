@@ -33,7 +33,8 @@ wrapLanguage.addEventListener('click', (e) => {
 languageEl.addEventListener('click', function (e) {
     wrapLanguage.classList.toggle('lang-opacity');
     languageEl.classList.toggle('lang-active');
-    sourceEl.classList.remove('api-active');
+    wrapSource.classList.remove('source-opacity');
+    sourceEl.classList.remove('source-active');
     todoEl.classList.remove('todo-active');
 })
 
@@ -42,31 +43,26 @@ sourceEl.classList.add('sourceEl');
 document.querySelector('.set').append(sourceEl);
 sourceEl.textContent = 'Image source';
 const wrapSource = document.createElement('div');
-wrapSource.classList.add('wrap-source');
+wrapSource.classList.add('wrapSource');
 document.querySelector('.set').append(wrapSource);
-// const gits = document.createElement('div');
-// gits.classList.add('git');
-// document.querySelector('.wrapSource').append(gits);
-// gits.textContent = 'GIT';
-// const unsplash = document.createElement('div');
-// unsplash.classList.add('unsplash');
-// document.querySelector('.wrapSource').append(unsplash);
-// unsplash.textContent = 'Unsplash';
-// const flickr = document.createElement('div');
-// flickr.classList.add('flickr');
-// document.querySelector('.wrapSource').append(flickr);
-// flickr.textContent = 'Flickr';
-// wrapLanguage.addEventListener('click', (e) => {
-//     language = e.target.textContent;
-//     changeGreetingLang(language);
-//     wrapLanguage.classList.toggle('lang-opasity');
-//     languageEl.classList.toggle('lang-active');
-//
-// })
+const git = document.createElement('div');
+git.classList.add('git');
+git.textContent = 'GIT';
+document.querySelector('.wrapSource').append(git);
+const unsplash = document.createElement('div');
+unsplash.classList.add('unsplash');
+document.querySelector('.wrapSource').append(unsplash);
+unsplash.textContent = 'Unsplash';
+const flickr = document.createElement('div');
+flickr.classList.add('flickr');
+flickr.textContent = 'Flickr';
+document.querySelector('.wrapSource').append(flickr);
+
 sourceEl.addEventListener('click', function (e) {
     wrapSource.classList.toggle('source-opacity');
     sourceEl.classList.toggle('source-active');
-    languageEl.classList.remove('api-active');
+    wrapLanguage.classList.remove('lang-opacity');
+    languageEl.classList.remove('lang-active');
     todoEl.classList.remove('todo-active');
 })
 
@@ -74,8 +70,8 @@ sourceEl.addEventListener('click', function (e) {
 const todoEl = document.createElement('div');
 todoEl.classList.add('todoEl');
 todoEl.textContent = 'ToDo';
-
 document.querySelector('.set').append(todoEl);
+
 const setClose = document.createElement('div');
 setClose.classList.add('setClose');
 document.querySelector('.set').append(setClose);
@@ -93,8 +89,6 @@ todo.classList.add('todo');
 document.querySelector('.footer').append(todo);
 
 
-
-
 // закрыть меню по клику вне его
 document.addEventListener('click', e => {
     if (!e.target === set || !e.target === set.contains(e.target)
@@ -108,7 +102,8 @@ document.addEventListener('click', e => {
         // if (!its_menu && !its_hamburger && menu_is_active) {
         document.querySelector('.set').classList.remove('open');
         document.querySelector('.set-btn').classList.remove('close');
-        languageEl.classList.toggle('lang-active');
+        languageEl.classList.remove('lang-active');
+        wrapSource.classList.remove('source-opacity');
     }
 })
 setbtn.addEventListener('click', e => {
@@ -342,6 +337,34 @@ function setBg() {
 
 setBg();
 
+/// работа с API
+let linkSource = 1;
+window.addEventListener('click', function (event) {
+    if (event.target === document.querySelector('.unsplash')) {
+        linkSource = 2;
+        console.log(linkSource)
+    } else if (event.target === document.querySelector('.flickr')) {
+        linkSource = 3;
+        console.log(linkSource)
+    }
+})
+
+async function getLinkToImageSplash() {
+    const url = 'https://api.unsplash.com/photos/random?query=morning&client_id=zk44jRDumDM_lYXQWII3tA7WzyuDpAEzvaQWXY4241c';
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data.urls.regular)
+}
+
+async function getLinkToImageFlickr() {
+    const url = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=cb7ce9acd1c422b0032c76710eee008e&tags=nature&extras=url_l&format=json&nojsoncallback=1';
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data.urls.regular)
+}
+
+getLinkToImageFlickr()
+
 const prev = document.querySelector('.slide-prev');
 const next = document.querySelector('.slide-next');
 prev.addEventListener('click', function getSlidePrev() {
@@ -359,18 +382,23 @@ prev.addEventListener('click', function getSlidePrev() {
     setBg();
 });
 next.addEventListener('click', function getSlideNext() {
-    if (parseInt(randomNum) < 10) {
-        randomNum = (parseInt(randomNum) + 1).toString();
-        if (randomNum.length === 1) {
-            randomNum = `0${randomNum}`;
+    if (linkSource === 1) {
+        if (parseInt(randomNum) < 10) {
+            randomNum = (parseInt(randomNum) + 1).toString();
+            if (randomNum.length === 1) {
+                randomNum = `0${randomNum}`;
+            }
+        } else {
+            randomNum = (parseInt(randomNum) + 1).toString();
         }
-    } else {
-        randomNum = (parseInt(randomNum) + 1).toString();
+        if (parseInt(randomNum) === 23) {
+            randomNum = 0 + (1).toString();
+        }
+        setBg();
+    } else if (linkSource === 2) {
+        getLinkToImage();
     }
-    if (parseInt(randomNum) === 23) {
-        randomNum = 0 + (1).toString();
-    }
-    setBg();
+
 });
 
 const weatherIcon = document.querySelector('.weather-icon');
@@ -408,7 +436,8 @@ async function getQuotes() {
     const data = await res.json();
     setText(data);
 }
-
+console.log(data)
+console.log(Object.keys(data[0]))
 getQuotes();
 
 let rotate = 0;
@@ -427,7 +456,11 @@ function setQuote(min, max) {
 }
 
 function setText(data) {
-    let textNum = setQuote(0, 23);
+    if (language === 'be') {
+        let textNum = setQuote(0, Object.keys(data[0]).length);
+    } else {
+        let textNum = setQuote(0, Object.keys(data[1]).length)
+    }
     document.querySelector('.quote').textContent = `"${data[textNum].text}"`;
     document.querySelector('.author').textContent = data[textNum].author;
 }
@@ -486,7 +519,6 @@ document.querySelector('.volchange').append(change);
 const time = document.createElement('span');
 time.classList.add('play-time');
 document.querySelector('.bar').append(time);
-
 
 
 // логика воспроизведения - паузы + анимация
@@ -581,7 +613,7 @@ function playPrev() {
 
 document.querySelector('.play-list').addEventListener('click', function (event) {
     if (event.target.classList.contains('active')
-        || (event.target.classList.contains('active') && (event.target.classList.contains('pause')))){
+        || (event.target.classList.contains('active') && (event.target.classList.contains('pause')))) {
         pauseAudio();
         document.querySelector('.play').classList.remove('pause');
         document.querySelector('.active').classList.remove('active');
@@ -596,31 +628,31 @@ document.querySelector('.play-list').addEventListener('click', function (event) 
                 playAudio(playNum);
             }
         })
-    }else if (!event.target.classList.contains('active') && document.querySelector('.play').classList.contains('pause')) {
-                playList.forEach(function (e, i) {
-                    if (e["title"] === event.target.textContent) {
-                        event.target.classList.add('active');
-                        document.querySelector('.pres').textContent = event.target.textContent;
-                        currentTime = 0;
-                        playNum = i;
-                        playAudio(playNum);
-                    }
+    } else if (!event.target.classList.contains('active') && document.querySelector('.play').classList.contains('pause')) {
+        playList.forEach(function (e, i) {
+            if (e["title"] === event.target.textContent) {
+                event.target.classList.add('active');
+                document.querySelector('.pres').textContent = event.target.textContent;
+                currentTime = 0;
+                playNum = i;
+                playAudio(playNum);
+            }
         })
     }
 })
 // event.target.classList.contains('play__list__item')) {
-    // document.querySelector('.play').classList.add('pause');
-    // playList.forEach(function (e, i) {
-    //     if (e["title"] === document.querySelector('.active').textContent) {
-    //         document.querySelector('.active').classList.remove('active');
-    //         event.target.textContent === e["title"]
-    //         currentTime = 0;
-    //         playAudio(i);
-    //         isPlay = !isPlay;
-    //         event.target.classList.add('active')
-    //     }
-    //
-    //
+// document.querySelector('.play').classList.add('pause');
+// playList.forEach(function (e, i) {
+//     if (e["title"] === document.querySelector('.active').textContent) {
+//         document.querySelector('.active').classList.remove('active');
+//         event.target.textContent === e["title"]
+//         currentTime = 0;
+//         playAudio(i);
+//         isPlay = !isPlay;
+//         event.target.classList.add('active')
+//     }
+//
+//
 function colorText() {
     for (let i = 0; i <= playList.length - 1; i++) {
         if (i === playNum) {
@@ -656,6 +688,8 @@ document.querySelector('.volume').addEventListener('click', (e) => {
         document.querySelector('.volume').classList.add('off');
     }
 });
+
+
 
 
 

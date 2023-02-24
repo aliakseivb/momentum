@@ -623,7 +623,7 @@ body {
 }
 
 .languageEl,
-.sourceEL,
+.sourceEl,
 .todoEl {
     width: 100%;
     padding: 10px 10px;
@@ -639,18 +639,19 @@ body {
 .languageEl:hover {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    background: #1b1b1c;
+    background: black;
     color: white;
 }
 
-.lang-active,
-.source-active {
-    background: #1b1b1c;
+.lang-active {
+    background: black;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
-.sourceEL:hover,
+.sourceEl:hover,
 .todoEl:hover {
-    background: #1b1b1c;
+    background: black;
     color: white;
 }
 
@@ -659,14 +660,12 @@ body {
     display: none;
     grid-template-columns: 1fr 1fr;
     justify-content: center;
-    height: 30px;
     background: #f8e2e2;
-    transition: all 1s linear;
+    height: 30px;
 }
 
 .lang-opacity {
     display: grid;
-    transition: all 1s ease-out;
 }
 
 .wrapBe,
@@ -676,8 +675,8 @@ body {
     color: black;
     align-items: center;
     justify-content: center;
-    font-weight: 800;
-    font-size: 18px;
+    font-weight: 600;
+    font-size: 16px;
 }
 
 .wrapBe:hover,
@@ -689,38 +688,47 @@ body {
 .wrapSource {
     position: relative;
     display: none;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 100px;
+    grid-template-rows: repeat(3, 30px);
     justify-content: center;
-    height: 30px;
-    background: #f8e2e2;
     transition: all 1s linear;
 }
 
-.gits,
+.source-active {
+    background: black;
+}
+
+.source-opacity {
+    display: grid;
+}
+
+.git,
 .unsplash,
 .flickr {
     display: flex;
     color: black;
+    padding: 10px 10px;
     align-items: center;
     justify-content: center;
     font-weight: 800;
-    font-size: 18px;
+    font-size: 20px;
+    background: #f8e2e2;
 }
 
-.gits {
-    border-right: 1px solid #2e3035;
+.git {
+    border-bottom: 1px solid #2e3035;
 }
 
 .unsplash {
-    border-right: 1px solid #2e3035;
-    border-left: 1px solid #2e3035;
+    border-top: 1px solid #2e3035;
+    border-bottom: 1px solid #2e3035;
 }
 
 .flickr {
-    border-left: 1px solid #2e3035;
+    border-top: 1px solid #2e3035;
 }
 
-.gits:hover,
+.git:hover,
 .unsplash:hover,
 .flickr:hover {
     background: #796767;
