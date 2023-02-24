@@ -407,13 +407,7 @@ const weatherDescription = document.querySelector('.weather-description');
 const humidity = document.querySelector('.humidity');
 const wind = document.querySelector('.wind');
 const city = document.querySelector('.city');
-// if(!localStorage.getItem('city')){
-//     city.textContent = 'Мiнск';
-// }else {
-//     city.textContent = localStorage.getItem('city');
-// }
-// console.log(localStorage.getItem('city'))
-city.textContent = localStorage.getItem('city') || 'Минск'
+city.textContent = 'Минск'
 async function getWeather(city, lang = 'be') {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=${lang}&appid=260d225c65e849f7ad9e4bef2b25de91&units=metric`;
     const res = await fetch(url);
