@@ -134,7 +134,7 @@ body {
 }
 
 .angle {
-    background-image: url("../assets/img/angle-down-white.png");
+    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/angle-down-white.png");
     color: transparent;
     width: 20px;
     height: 20px;
@@ -352,7 +352,7 @@ body {
     background-color: transparent;
     border: 1px solid white;
     margin-right: 10px;
-    background-image: url("../assets/img/play-icon.png");
+    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/play-icon.png");
     background-size: cover;
     vertical-align: baseline;
     transition: all .7s linear;
@@ -368,7 +368,7 @@ body {
     background-color: #f6d1d1;
     border: 1px solid white;
     margin-right: 10px;
-    background-image: url("../assets/img/pause-icon.png");
+    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/pause-icon.png");
     background-size: cover;
     vertical-align: baseline;
     transition: all .7s linear;
@@ -565,7 +565,7 @@ body {
     left: 10px;
     width: 25px;
     height: 25px;
-    background-image: url("../assets/img/set.png");
+    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/set.png");
     background-position: center;
     background-size: cover;
     cursor: pointer;
@@ -606,7 +606,7 @@ body {
     position: absolute;
     right: 15px;
     bottom: 15px;
-    background-image: url("../assets/img/angle-down-white.png");
+    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/angle-down-white.png");
     background-size: 100%;
     background-repeat: no-repeat;
     transform: rotate(90deg);
@@ -883,7 +883,7 @@ body {
 .todoMenu {
     display: grid;
     align-self: center;
-    background-image: url("../assets/img/menu-icon.png");
+    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/menu-icon.png");
     background-size: 80%;
     background-repeat: no-repeat;
     background-position: center;
