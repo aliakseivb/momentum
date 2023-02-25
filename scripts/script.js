@@ -355,9 +355,12 @@ function showTime() {
 showTime();
 
 document.getElementById('optic').addEventListener('click', () => {
-    document.getElementById('optic').classList.remove('name-optic');
+    if (document.getElementById('optic').value.length !== 0) {
+        document.getElementById('optic').classList.remove('name-optic');
+    }else {
+        document.getElementById('optic').classList.add('name-optic');
+    }
 });
-
 const winWidth = {
     '2': 2.2,
     '3': 1.7,
@@ -405,7 +408,7 @@ function setLocalStorage() {
 window.addEventListener('beforeunload', setLocalStorage);
 
 function getLocalStorage() {
-    if (localStorage.getItem('name') || localStorage.getItem('city')) {
+    if (localStorage.getItem('name')) {
         document.getElementById('optic').value = localStorage.getItem('name');
         document.querySelector('.city').value = localStorage.getItem('city');
         document.getElementById('optic').classList.remove('name-optic');
@@ -560,7 +563,7 @@ const weatherDescription = document.querySelector('.weather-description');
 const humidity = document.querySelector('.humidity');
 const wind = document.querySelector('.wind');
 const city = document.querySelector('.city');
-city.textContent = 'Минск';
+city.placeholder = 'Минск';
 
 async function getWeather(cit = 'Минск', language = 'be') {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${cit}&lang=${language}&appid=260d225c65e849f7ad9e4bef2b25de91&units=metric`;
@@ -574,7 +577,7 @@ async function getWeather(cit = 'Минск', language = 'be') {
     humidity.textContent = `${conditions[1]}: ${data.main.humidity}%`;
 }
 
-getWeather(city.textContent);
+getWeather();
 
 
 city.addEventListener('change', function () {
@@ -794,19 +797,7 @@ document.querySelector('.play-list').addEventListener('click', function (event) 
         })
     }
 })
-// event.target.classList.contains('play__list__item')) {
-// document.querySelector('.play').classList.add('pause');
-// playList.forEach(function (e, i) {
-//     if (e["title"] === document.querySelector('.active').textContent) {
-//         document.querySelector('.active').classList.remove('active');
-//         event.target.textContent === e["title"]
-//         currentTime = 0;
-//         playAudio(i);
-//         isPlay = !isPlay;
-//         event.target.classList.add('active')
-//     }
-//
-//
+
 function colorText() {
     for (let i = 0; i <= playList.length - 1; i++) {
         if (i === playNum) {
@@ -842,7 +833,6 @@ document.querySelector('.volume').addEventListener('click', (e) => {
         document.querySelector('.volume').classList.add('off');
     }
 });
-
 
 
 
