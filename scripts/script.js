@@ -562,8 +562,8 @@ const wind = document.querySelector('.wind');
 const city = document.querySelector('.city');
 city.textContent = 'Минск';
 
-async function getWeather(city = 'Минск', language = 'be') {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=${language}&appid=260d225c65e849f7ad9e4bef2b25de91&units=metric`;
+async function getWeather(cit = 'Минск', language = 'be') {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cit}&lang=${language}&appid=260d225c65e849f7ad9e4bef2b25de91&units=metric`;
     const res = await fetch(url);
     const data = await res.json();
     weatherIcon.className = 'weather-icon owf';
