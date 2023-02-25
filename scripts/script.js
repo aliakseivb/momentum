@@ -1,17 +1,17 @@
 let days
 let months
 let conditions
-let toDo
 let timeOfDay
 let enter
-let language = localStorage.getItem('language');
+let language = localStorage.getItem('language') || 'be';
 const timeNow = document.querySelector('.time')
 const day = document.querySelector('.date');
 const greeting = document.querySelector('.greeting');
 
-const setbtn = document.createElement('div');
-setbtn.classList.add('set-btn');
-document.querySelector('.footer').append(setbtn);
+
+const setBtn = document.createElement('div');
+setBtn.classList.add('setBtn');
+document.querySelector('.footer').append(setBtn);
 const set = document.createElement('div');
 set.classList.add('set');
 document.querySelector('.footer').append(set);
@@ -26,10 +26,11 @@ document.querySelector('.set').append(wrapLanguage);
 wrapLanguage.addEventListener('click', (e) => {
     language = e.target.textContent;
     changeGreetingLang(language);
+    getWeather(localStorage.getItem('city'), e.target.textContent);
+    getQuotes();
     wrapLanguage.classList.toggle('lang-opacity');
     languageEl.classList.toggle('lang-active');
-
-})
+});
 languageEl.addEventListener('click', function (e) {
     wrapLanguage.classList.toggle('lang-opacity');
     languageEl.classList.toggle('lang-active');
@@ -63,14 +64,118 @@ sourceEl.addEventListener('click', function (e) {
     sourceEl.classList.toggle('source-active');
     wrapLanguage.classList.remove('lang-opacity');
     languageEl.classList.remove('lang-active');
-    todoEl.classList.remove('todo-active');
-})
+    todoEl.classList.remove('todoEl-active');
+});
 
-
+const textContainer = document.createElement('div')
+textContainer.classList.add('textContainer')
+document.querySelector('.footer').append(textContainer);
 const todoEl = document.createElement('div');
 todoEl.classList.add('todoEl');
 todoEl.textContent = 'ToDo';
 document.querySelector('.set').append(todoEl);
+
+const todoButton = document.createElement('div');
+todoButton.classList.add('todoButton');
+todoButton.textContent = 'ToDo';
+document.querySelector('.footer').append(todoButton);
+
+todoButton.addEventListener('click', () => {
+    todoContainer.classList.toggle('todoopen');
+})
+
+const todoContainer = document.createElement('div')
+todoContainer.classList.add('todoContainer');
+document.querySelector('.footer').append(todoContainer);
+const todoInnerOptions = document.createElement('div')
+todoInnerOptions.classList.add('todoInnerOptions');
+document.querySelector('.todoContainer').append(todoInnerOptions);
+const todoViewCompleted = document.createElement('div')
+todoViewCompleted.classList.add('todoViewCompleted');
+todoViewCompleted.textContent = 'See completed';
+document.querySelector('.todoInnerOptions').append(todoViewCompleted);
+const todoViewAll = document.createElement('div')
+todoViewAll.classList.add('todoViewAll');
+todoViewAll.textContent = 'See all';
+document.querySelector('.todoInnerOptions').append(todoViewAll);
+const todoDeleteCompleted = document.createElement('div')
+todoDeleteCompleted.classList.add('todoDeleteCompleted');
+todoDeleteCompleted.textContent = 'Delete completed'
+document.querySelector('.todoInnerOptions').append(todoDeleteCompleted);
+const todoDeleteAll = document.createElement('div')
+todoDeleteAll.classList.add('todoDeleteAll');
+todoDeleteAll.textContent = 'Delete all'
+document.querySelector('.todoInnerOptions').append(todoDeleteAll);
+
+const todoOptions = document.createElement('div')
+todoOptions.classList.add('todoOptions');
+document.querySelector('.todoContainer').append(todoOptions);
+const today = document.createElement('div');
+today.classList.add('today');
+today.textContent = 'Today';
+document.querySelector('.todoOptions').append(today);
+const before = document.createElement('div');
+before.classList.add('before');
+before.textContent = 'Before';
+document.querySelector('.todoOptions').append(before);
+const todoMenu = document.createElement('div');
+todoMenu.classList.add('todoMenu');
+document.querySelector('.todoOptions').append(todoMenu);
+
+todoMenu.addEventListener('click', () => {
+    before.classList.toggle('close-at-menu');
+    today.classList.toggle('close-at-menu');
+    inputText.classList.toggle('close-at-menu');
+    todoGreetings.classList.add('close-at-menu');
+    todoInnerOptions.classList.toggle('open-at-menu-grow');
+})
+
+const todoGreetings = document.createElement('div');
+todoGreetings.classList.add('todoGreetings');
+todoGreetings.textContent = 'Make Your New ToDo';
+document.querySelector('.todoContainer').append(todoGreetings);
+todoGreetings.addEventListener('click', () => {
+    todoGreetings.classList.add('todoGreetings-hidden');
+    inputText.classList.add('inputText-active');
+    todoOptions.classList.add('visible')
+})
+const checkContainer = document.createElement('div');
+checkContainer.classList.add('checkContainer');
+document.querySelector('.todoContainer').append(checkContainer)
+const inputText = document.createElement('input');
+inputText.classList.add('inputText');
+inputText.setAttribute('type', 'text');
+inputText.setAttribute('id', 'todotext');
+inputText.setAttribute('placeholder', 'New ToDo');
+document.querySelector('.todoContainer').append(inputText)
+
+// работаем с ToDo
+let count = 0;
+let todoStart = [];
+let todoEnd = [];
+const clear = function(e) {
+    document.getElementById("todotext").value = "";
+}
+document.getElementById("todotext").addEventListener('change', ()=>{
+    let someText = document.getElementById("todotext").value
+    console.log(someText)
+    if(someText){
+        count++
+        let txt = `   ${someText}`
+        document.querySelector('.checkContainer').insertAdjacentHTML(`afterBegin`, `<label id=inp${count} class="lbl" "><input type="checkbox" class="inp-todo">${txt}</label>`);
+        console.log(todoStart)
+    }
+    clear();
+})
+
+document.querySelector('.todoEl').addEventListener('click', function () {
+    wrapSource.classList.remove('source-opacity');
+    sourceEl.classList.remove('source-active');
+    wrapLanguage.classList.remove('lang-opacity');
+    languageEl.classList.remove('lang-active');
+    todoEl.classList.toggle('todoEl-active');
+    todoContainer.classList.toggle('todoopen');
+})
 
 const setClose = document.createElement('div');
 setClose.classList.add('setClose');
@@ -101,20 +206,28 @@ document.addEventListener('click', e => {
         // let menu_is_active = set.classList.contains('open');
         // if (!its_menu && !its_hamburger && menu_is_active) {
         document.querySelector('.set').classList.remove('open');
-        document.querySelector('.set-btn').classList.remove('close');
+        document.querySelector('.setBtn').classList.remove('close');
         languageEl.classList.remove('lang-active');
+        wrapLanguage.classList.remove('lang-opacity');
+        sourceEl.classList.remove('source-active');
         wrapSource.classList.remove('source-opacity');
+        todoEl.classList.remove('todoEl-active');
     }
 })
-setbtn.addEventListener('click', e => {
+setBtn.addEventListener('click', e => {
     e.stopPropagation();
     document.querySelector('.set').classList.add('open');
-    document.querySelector('.set-btn').classList.add('close');
+    document.querySelector('.setBtn').classList.add('close');
 })
 
 setClose.addEventListener('click', () => {
     document.querySelector('.set').classList.remove('open')
-    document.querySelector('.set-btn').classList.remove('close');
+    document.querySelector('.setBtn').classList.remove('close');
+    wrapSource.classList.remove('source-opacity');
+    sourceEl.classList.remove('source-active');
+    wrapLanguage.classList.remove('lang-opacity');
+    languageEl.classList.remove('lang-active');
+    todoEl.classList.remove('todoEl-active');
 })
 
 const wrapOption = document.createElement('div');
@@ -153,7 +266,8 @@ window.onclick = function (event) {
         document.querySelector('.optionLanguage').addEventListener("click", function (e) {
             language = e.target.textContent;
             changeGreetingLang(language);
-            getWeather(localStorage.getItem('city'), localStorage.getItem('language'));
+            getQuotes();
+            getWeather(localStorage.getItem('city'), e.target.textContent);
             document.querySelector('.name').placeholder = enter;
             document.querySelector('.optionLanguage').classList.toggle('open')
         })
@@ -164,17 +278,22 @@ const greetingTranslation =
         'be': [
             ['Добрай ранiцы', 'Добры дзень', 'Добры вечар', 'Добрай ночы'],
             ['Вецер', 'Вiльготнасць'],
-            'Зрабiць',
+            'Дадайце Вашую нататку',
             ['Нядзеля', 'Панядзелак', 'Аўторак', 'Серада', 'Чацвер', 'Пятніца', 'Субота'],
             ['Cтудзень', 'Люты', 'Сакавік', 'Красавік', 'Май', 'Чэрвень', 'Ліпень', 'Жнівень', 'Верасень', 'Кастрычнік', 'Лістапад', 'Снежань'],
-            'назавiце сябе...'
+            'назавiце сябе...',
+            ['Змянiць мову', 'Крыніцы малюнкаў', 'Нататакi'],
+            ['Сёння', 'Раней', 'Глядзець завершанае', 'Глядзець ўсё', 'Выдаліць завершанае', 'Выдаліць ўсё', '',]
         ],
-        'en': [['Good morning', 'Good afternoon', 'Good evening', 'Good night'],
+        'en': [
+            ['Good morning', 'Good afternoon', 'Good evening', 'Good night'],
             ['Wind', 'Humidity'],
-            'Todo',
+            'Make Your New ToDo',
             ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
             ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            'enter your name...'
+            'enter your name...',
+            ['Select language', 'Image source', 'ToDo'],
+            ['Today', 'Before', 'See completed', 'See all', 'Delete completed', 'Delete all']
         ]
     }
 
@@ -183,16 +302,36 @@ function changeGreetingLang(lang = 'be') {
         days = greetingTranslation.en[3];
         months = greetingTranslation.en[4];
         conditions = greetingTranslation.en[1];
-        toDo = greetingTranslation.en[2];
         timeOfDay = greetingTranslation.en[0];
         enter = greetingTranslation.en[5];
+        languageEl.textContent = greetingTranslation.en[6][0];
+        sourceEl.textContent = greetingTranslation.en[6][1];
+        todoEl.textContent = greetingTranslation.en[6][2];
+        todoButton.textContent = greetingTranslation.en[6][2];
+        today.textContent = greetingTranslation.en[7][0];
+        before.textContent = greetingTranslation.en[7][1];
+        todoViewCompleted.textContent = greetingTranslation.en[7][2];
+        todoViewAll.textContent = greetingTranslation.en[7][3];
+        todoDeleteCompleted.textContent = greetingTranslation.en[7][4];
+        todoDeleteAll.textContent = greetingTranslation.en[7][5];
+        todoGreetings.textContent = greetingTranslation.en[2];
     } else {
         days = greetingTranslation.be[3];
         months = greetingTranslation.be[4];
         conditions = greetingTranslation.be[1];
-        toDo = greetingTranslation.be[2];
         timeOfDay = greetingTranslation.be[0];
         enter = greetingTranslation.be[5];
+        languageEl.textContent = greetingTranslation.be[6][0];
+        sourceEl.textContent = greetingTranslation.be[6][1];
+        todoEl.textContent = greetingTranslation.be[6][2];
+        todoButton.textContent = greetingTranslation.be[6][2];
+        today.textContent = greetingTranslation.be[7][0];
+        before.textContent = greetingTranslation.be[7][1];
+        todoViewCompleted.textContent = greetingTranslation.be[7][2];
+        todoViewAll.textContent = greetingTranslation.be[7][3];
+        todoDeleteCompleted.textContent = greetingTranslation.be[7][4];
+        todoDeleteAll.textContent = greetingTranslation.be[7][5];
+        todoGreetings.textContent = greetingTranslation.be[2];
     }
     getWeather(localStorage.getItem('city'), localStorage.getItem('language'));
 }
@@ -296,7 +435,6 @@ window.onresize = () => {
         } else if (window.innerWidth < 2000 && localStorage.getItem('name').length === parseInt(key)) {
             document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winSmall[key]}vw`
         }
-
     }
 };
 
@@ -328,42 +466,62 @@ function getTimeOfDay() {
 }
 
 function setBg() {
+    if (linkSource === 1) {
+        const img = new Image();
+        img.src = "https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/" + getTimeOfDay() + '/' + randomNum + ".webp";
+        img.onload = () => {
+            document.body.style.backgroundImage = "url(" + img.src + ")";
+        };
+    } else if (linkSource === 2) {
+        getLinkToImageSplash()
+    } else if (linkSource === 3) {
+        getLinkToImageFlickr()
+    }
+}
+
+
+/// работа с API
+let linkSource = 1;
+window.addEventListener('click', function (event) {
+    if (event.target === document.querySelector('.git')) {
+        linkSource = 1;
+        document.querySelector('.sourceEl').classList.remove('source-active');
+        document.querySelector('.wrapSource').classList.remove('source-opacity');
+        setBg()
+    } else if (event.target === document.querySelector('.unsplash')) {
+        linkSource = 2;
+        document.querySelector('.sourceEl').classList.remove('source-active');
+        document.querySelector('.wrapSource').classList.remove('source-opacity');
+        setBg()
+    } else if (event.target === document.querySelector('.flickr')) {
+        linkSource = 3;
+        document.querySelector('.sourceEl').classList.remove('source-active');
+        document.querySelector('.wrapSource').classList.remove('source-opacity');
+        setBg()
+    }
+})
+
+async function getLinkToImageSplash() {
+    const url = 'https://api.unsplash.com/photos/random?query=morning&client_id=5m3CSy9wnRfmqHju9qJz8XvuqDQMyNFcvSF3RqoKB8c';
+    const res = await fetch(url);
+    const data = await res.json();
     const img = new Image();
-    img.src = "https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/" + getTimeOfDay() + '/' + randomNum + ".webp";
+    img.src = data.tags[setQuote(0, data.tags.length)].source.cover_photo.urls.regular;
     img.onload = () => {
         document.body.style.backgroundImage = "url(" + img.src + ")";
     };
 }
 
-setBg();
-
-/// работа с API
-let linkSource = 1;
-window.addEventListener('click', function (event) {
-    if (event.target === document.querySelector('.unsplash')) {
-        linkSource = 2;
-        console.log(linkSource)
-    } else if (event.target === document.querySelector('.flickr')) {
-        linkSource = 3;
-        console.log(linkSource)
-    }
-})
-
-async function getLinkToImageSplash() {
-    const url = 'https://api.unsplash.com/photos/random?query=morning&client_id=zk44jRDumDM_lYXQWII3tA7WzyuDpAEzvaQWXY4241c';
-    const res = await fetch(url);
-    const data = await res.json();
-    console.log(data.urls.regular)
-}
-
 async function getLinkToImageFlickr() {
-    const url = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=cb7ce9acd1c422b0032c76710eee008e&tags=nature&extras=url_l&format=json&nojsoncallback=1';
+    const url = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=083fd94699507eb26b98c882993ea07d&tags=nature&extras=url_l&format=json&nojsoncallback=1';
     const res = await fetch(url);
     const data = await res.json();
-    console.log(data.urls.regular)
+    const img = new Image();
+    img.src = data.photos.photo[setQuote(0, data.photos.photo.length)].url_l;
+    img.onload = () => {
+        document.body.style.backgroundImage = "url(" + img.src + ")";
+    };
 }
-
-getLinkToImageFlickr()
 
 const prev = document.querySelector('.slide-prev');
 const next = document.querySelector('.slide-next');
@@ -382,23 +540,18 @@ prev.addEventListener('click', function getSlidePrev() {
     setBg();
 });
 next.addEventListener('click', function getSlideNext() {
-    if (linkSource === 1) {
-        if (parseInt(randomNum) < 10) {
-            randomNum = (parseInt(randomNum) + 1).toString();
-            if (randomNum.length === 1) {
-                randomNum = `0${randomNum}`;
-            }
-        } else {
-            randomNum = (parseInt(randomNum) + 1).toString();
+    if (parseInt(randomNum) < 10) {
+        randomNum = (parseInt(randomNum) + 1).toString();
+        if (randomNum.length === 1) {
+            randomNum = `0${randomNum}`;
         }
-        if (parseInt(randomNum) === 23) {
-            randomNum = 0 + (1).toString();
-        }
-        setBg();
-    } else if (linkSource === 2) {
-        getLinkToImage();
+    } else {
+        randomNum = (parseInt(randomNum) + 1).toString();
     }
-
+    if (parseInt(randomNum) === 23) {
+        randomNum = 0 + (1).toString();
+    }
+    setBg();
 });
 
 const weatherIcon = document.querySelector('.weather-icon');
@@ -407,9 +560,10 @@ const weatherDescription = document.querySelector('.weather-description');
 const humidity = document.querySelector('.humidity');
 const wind = document.querySelector('.wind');
 const city = document.querySelector('.city');
-city.textContent = 'Минск'
-async function getWeather(city, lang = 'be') {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=${lang}&appid=260d225c65e849f7ad9e4bef2b25de91&units=metric`;
+city.textContent = 'Минск';
+
+async function getWeather(city = 'Минск', language = 'be') {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=${language}&appid=260d225c65e849f7ad9e4bef2b25de91&units=metric`;
     const res = await fetch(url);
     const data = await res.json();
     weatherIcon.className = 'weather-icon owf';
@@ -420,11 +574,11 @@ async function getWeather(city, lang = 'be') {
     humidity.textContent = `${conditions[1]}: ${data.main.humidity}%`;
 }
 
-getWeather();
+// getWeather();
 
 
-city.addEventListener('change', function setCity() {
-    getWeather();
+city.addEventListener('change', function () {
+    getWeather(city.textContent);
 });
 
 // ---- > высказывания
@@ -524,7 +678,6 @@ document.querySelector('.bar').append(time);
 
 // логика воспроизведения - паузы + анимация
 document.querySelector('.play').addEventListener('click', () => {
-    console.log(1)
     if (!isPlay) {
         playAudio();
         isPlay = true;

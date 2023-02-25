@@ -558,7 +558,7 @@ body {
     min-height: 20px;
 }
 
-.set-btn {
+.setBtn {
     display: block;
     position: fixed;
     bottom: 10px;
@@ -569,10 +569,10 @@ body {
     background-position: center;
     background-size: cover;
     cursor: pointer;
-    transition: all .5s ease-out;
+    transition: all .9s ease-out;
 }
 
-.set-btn.close {
+.setBtn.close {
     transform: rotate(180deg);
     opacity: 0;
 }
@@ -583,21 +583,20 @@ body {
     justify-content: start;
     position: absolute;
     bottom: 10px;
-    left: -210px;
-    width: 170px;
-    height: 250px;
-    opacity: 0;
+    left: -220px;
+    width: 200px;
+    opacity: 100%;
     cursor: pointer;
     box-sizing: border-box;
     border: none;
     border-radius: 5px;
     transition: all .7s ease-out;
-    box-shadow: 0 0 20px 4px rgb(255 255 255 / 80%);
+    box-shadow: 0 0 10px 1px rgb(255 255 255 / 80%);
+    padding-bottom: 45px;
 }
 
 .set.open {
-    opacity: 80%;
-    transform: translateX(215px);
+    transform: translateX(230px);
 }
 
 .setClose {
@@ -605,15 +604,15 @@ body {
     height: 20px;
     display: block;
     position: absolute;
-    right: 20px;
-    bottom: 20px;
+    right: 15px;
+    bottom: 15px;
     background-image: url("../assets/img/angle-down-white.png");
     background-size: 100%;
     background-repeat: no-repeat;
     transform: rotate(90deg);
     opacity: 50%;
     cursor: pointer;
-    transition: all .3s ease-out;
+    transition: all .5s ease-out;
     border-radius: 50%;
 }
 
@@ -629,8 +628,8 @@ body {
     padding: 10px 10px;
     text-align: left;
     color: white;
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 600;
     box-sizing: border-box;
     border-bottom: 1px solid #2e3035;
     cursor: pointer;
@@ -681,15 +680,15 @@ body {
 
 .wrapBe:hover,
 .wrapEn:hover {
-    background: #796767;
+    background: #564949;
     color: white;
 }
 
 .wrapSource {
     position: relative;
     display: none;
-    grid-template-columns: 100px;
-    grid-template-rows: repeat(3, 30px);
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 25px);
     justify-content: center;
     transition: all 1s linear;
 }
@@ -706,12 +705,12 @@ body {
 .unsplash,
 .flickr {
     display: flex;
-    color: black;
+    color: #171616;
     padding: 10px 10px;
     align-items: center;
     justify-content: center;
     font-weight: 800;
-    font-size: 20px;
+    font-size: 16px;
     background: #f8e2e2;
 }
 
@@ -731,26 +730,14 @@ body {
 .git:hover,
 .unsplash:hover,
 .flickr:hover {
-    background: #796767;
+    background: #564949;
     color: white;
+    opacity: 80%;
 }
 
-
-/*const wrapSource = document.createElement('div');*/
-/*wrapSource.classList.add('wrap-source');*/
-/*document.querySelector('.set').append(wrapSource);*/
-/*const git = document.createElement('div');*/
-/*git.classList.add('git');*/
-/*document.querySelector('.wrapSource').append(git);*/
-/*git.textContent = 'GIT';*/
-/*const unsplash = document.createElement('div');*/
-/*unsplash.classList.add('unsplash');*/
-/*document.querySelector('.wrapSource').append(unsplash);*/
-/*unsplash.textContent = 'Unsplash';*/
-/*const flickr = document.createElement('div');*/
-/*flickr.classList.add('flickr');*/
-/*document.querySelector('.wrapSource').append(flickr);*/
-/*flickr.textContent = 'Flickr';*/
+.todoEl-active {
+    background: black;
+}
 
 @media (max-width: 768px) {
     .time {
@@ -772,3 +759,239 @@ body {
         padding: 5px;
     }
 }
+
+.todoButton {
+    display: block;
+    position: absolute;
+    background: transparent;
+    font-size: 22px;
+    color: #fde2e2;
+    bottom: 10px;
+    right: 15px;
+    cursor: pointer;
+}
+
+.todoContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    opacity: 0;
+    position: absolute;
+    bottom: 40px;
+    right: 15px;
+    width: 300px;
+    min-height: 150px;
+    max-height: 300px;
+    overflow: hidden;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 5px;
+    transition: all .7s ease-out;
+    box-shadow: 0 0 10px 1px rgb(255 255 255 / 80%);
+}
+
+.todoopen {
+    opacity: 100%;
+    display: flex;
+    transition: all .7s ease-out;
+}
+
+.todoGreetings {
+    position: absolute;
+    display: flex;
+    align-content: center;
+    width: 300px;
+    height: 150px;
+    padding: 50px 70px;
+    border-radius: 5px;
+    font-size: 19px;
+    transition: all .7s ease-in-out;
+    opacity: 30%;
+    color: #c9b4b4;
+    background: black;
+}
+
+.todoGreetings:hover {
+    color: white;
+    opacity: 50%;
+}
+
+.todoGreetings-hidden {
+    transform: translateX(-300px);
+}
+
+.checkContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: end;
+    padding: 5px;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.inputText {
+    outline: none;
+    border: none;
+    background: transparent;
+    min-height: 30px;
+    vertical-align: middle;
+    padding-left: 10px;
+    color: white;
+    display: inline-block;
+    opacity: 0;
+    transition: all .4s linear;
+    box-shadow: 0 0 8px 1px rgb(255 255 255 / 50%);
+}
+
+.inputText-active {
+    opacity: 100%;
+}
+
+.todoOptions {
+    display: grid;
+    grid-template-columns: 45% 45% 1fr;
+    align-content: center;
+    justify-content: center;
+    opacity: 0;
+}
+
+.visible {
+    opacity: 80%;
+}
+
+.today,
+.before {
+    border: none;
+    border-bottom: 1px solid transparent;
+    cursor: pointer;
+    transition: all .2s linear;
+    padding: 5px 0;
+    opacity: 50%;
+    box-sizing: border-box;
+    height: 30px;
+}
+
+.today:hover,
+.before:hover {
+    opacity: 100%;
+    transform: scale(1.05,1.05);
+}
+
+.todoMenu {
+    display: grid;
+    align-self: center;
+    background-image: url("../assets/img/menu-icon.png");
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 20px;
+    width: 20px;
+    opacity: 50%;
+    padding: 5px;
+    transition: all .4s ease-in;
+}
+
+.todoMenu:hover{
+    rotate: 360deg;
+    opacity: 100%;
+    transition: all .4s ease-out;
+}
+
+.todoInnerOptions {
+    padding: 15px 23px;
+    position: absolute;
+    left: -270px;
+    opacity: 0;
+    transition: all .4s ease-out;
+    cursor: pointer;
+    height: 150px;
+    width: 270px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-around;
+    z-index: 5;
+}
+
+.close-at-menu {
+    opacity: 0;
+    z-index: -1;
+}
+
+.open-at-menu {
+    opacity: 100%;
+    box-shadow:  0 0 4px 2px rgb(255 255 255 / 40%);
+}
+
+.open-at-menu-grow {
+    transform: translateX(270px);
+    opacity: 100%;
+}
+
+.todoViewCompleted,
+.todoViewAll,
+.todoDeleteCompleted,
+.todoDeleteAll {
+    text-align: left;
+    padding: 5px 0;
+    border-bottom: 1px solid transparent;
+    transition: all .5s ease-out;
+    color: white;
+    opacity: 50%;
+}
+
+.todoViewCompleted:hover,
+.todoViewAll:hover {
+    color: white;
+    opacity: 100%;
+}
+
+.todoDeleteCompleted:hover {
+    color: #fca2a2;
+    opacity: 100%;
+}
+
+.todoDeleteAll:hover{
+    color: red;
+    opacity: 100%;
+}
+
+.textContainer {
+    position: fixed;
+    display: block;
+    max-width: 50vw;
+    max-height: 50vh;
+    bottom: 10px;
+    right: 15px;
+    font-size: 16px;
+    color: black;
+    background: whitesmoke;
+    opacity: 100%;
+}
+
+.lbl {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 16px;
+    vertical-align: middle;
+    width: 100%;
+    text-align: start;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.inp-todo {
+    margin-right: 15px;
+}
+
+.inp-todo:checked + label {
+    text-decoration: line-through;
+}
+
+
+
