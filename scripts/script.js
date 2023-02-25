@@ -574,7 +574,7 @@ async function getWeather(city = 'Минск', language = 'be') {
     humidity.textContent = `${conditions[1]}: ${data.main.humidity}%`;
 }
 
-getWeather();
+getWeather(city.textContent);
 
 
 city.addEventListener('change', function () {
