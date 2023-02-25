@@ -581,7 +581,7 @@ getWeather();
 
 
 city.addEventListener('change', function () {
-    getWeather(city.textContent);
+    getWeather(city.value, language);
 });
 
 // ---- > высказывания
