@@ -825,8 +825,13 @@ async function getQuotes() {
 
 getQuotes();
 
-document.querySelector('.change-quote').addEventListener('click', () => {
-  document.querySelector('.change-quote').style.transform = "rotate(360deg)";
+const changeQuote = document.querySelector('.change-quote');
+changeQuote.addEventListener('click', () => {
+  changeQuote.classList.add('rotate');
+  setTimeout(()=> {
+    changeQuote.classList.remove('rotate');
+  }, 1000);
+
   getQuotes();
 });
 

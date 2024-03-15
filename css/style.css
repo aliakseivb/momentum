@@ -99,6 +99,16 @@ body {
   transform: scale(1.1);
 }
 
+.change-quote.rotate {
+  animation: rotate;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
 .play {
   width: 40px;
   height: 40px;
