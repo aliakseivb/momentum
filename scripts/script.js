@@ -213,10 +213,8 @@ if(localStorage.getItem('language') === 'en'){
 }else if(localStorage.getItem('language') === 'be'){
   inputText.setAttribute('placeholder', 'Дадаць запіс');
 }
-
 inputText.setAttribute('autocomplete', 'off');
 todoContainer.append(inputText);
-
 
 /*todo работаем с ToDo*/
 let count = 0;
@@ -657,7 +655,6 @@ showTime();
 function setLocalStorage() {
   localStorage.setItem('name', document.getElementById('optic').value);
   localStorage.setItem('city', document.querySelector('.city').value);
-  // localStorage.setItem('placeholder', enter);
   localStorage.setItem('language', language);
 }
 
@@ -669,10 +666,8 @@ function getLocalStorage() {
     document.querySelector('.city').value = localStorage.getItem('city');
     document.getElementById('optic').classList.remove('optic');
     getWeather(localStorage.getItem('city'), localStorage.getItem('language'));
-    // document.querySelector('.name').placeholder = localStorage.getItem('placeholder');
     changeGreetingLang(localStorage.getItem('language'));
   }
-  // localStorage.getItem('placeholder', enter);
   localStorage.setItem('language', language);
 }
 
@@ -813,7 +808,6 @@ async function getWeather(cit = 'Минск', language = 'be') {
     humidity.textContent = `${conditions[1]}: ${data['main']['humidity']}%`;
   }
 }
-
 getWeather();
 
 
@@ -830,8 +824,6 @@ async function getQuotes() {
 }
 
 getQuotes();
-
-let rotate = 0;
 
 document.querySelector('.change-quote').addEventListener('click', () => {
   document.querySelector('.change-quote').style.transform = "rotate(360deg)";
@@ -1045,7 +1037,6 @@ function colorText() {
     }
   }
 }
-
 
 const volumeChange = bar.querySelector('.volchange');
 volumeChange.addEventListener('click', e => {
