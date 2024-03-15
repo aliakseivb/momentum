@@ -1,996 +1,1062 @@
 @font-face {
-    font-family: 'Arial-MT', sans-serif;
-    src: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/fonts/Arial-MT.woff"); /* Путь к файлу со шрифтом */
+  font-family: 'Arial-MT', sans-serif;
+  src: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/fonts/Arial-MT.woff"); /* Путь к файлу со шрифтом */
 }
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    min-width: 480px;
-    min-height: 100vh;
-    font-size: 16px;
-    color: #fff;
-    text-align: center;
-    background: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/evening/21.webp") center/cover, rgba(0, 0, 0, 0.5);
-    background-blend-mode: multiply;
-    transition: background-image 1s ease-in-out;
+  position: relative;
+  min-height: 100vh;
+  font-size: 16px;
+  color: #fff;
+  text-align: center;
+  background: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/evening/21.webp") center/cover, rgba(0, 0, 0, 0.5);
+  background-blend-mode: multiply;
+  transition: background-image 1s ease-in-out;
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-    height: 30vh;
-    min-height: 220px;
-    padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  height: 30vh;
+  min-height: 220px;
+  padding: 20px;
 }
 
 
 .player-controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 120px;
-    margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 120px;
+  margin-bottom: 10px;
 }
 
 .play-list {
-    text-align: left;
+  text-align: left;
 }
 
 .play-item {
-    position: relative;
-    padding: 5px;
-    padding-left: 20px;
-    list-style: none;
-    opacity: .8;
-    cursor: pointer;
-    transition: .7s;
+  position: relative;
+  padding: 5px;
+  padding-left: 20px;
+  list-style: none;
+  opacity: .8;
+  cursor: pointer;
+  transition: .7s;
 }
 
 .play-item:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
 .play-item::before {
-    content: "\2713";
-    position: absolute;
-    left: 0;
-    top: 2px;
-    font-weight: 900;
+  content: "\2713";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  font-weight: 900;
 }
 
 .item-active::before {
-    color: #C5B358;
+  color: #C5B358;
 }
 
 .player-icon,
 .slider-icon,
 .change-quote {
-    width: 32px;
-    height: 32px;
-    background-size: 32px 32px;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    border: 0;
-    outline: 0;
-    opacity: .8;
-    cursor: pointer;
-    transition: .5s;
+  width: 32px;
+  height: 32px;
+  background-size: 32px 32px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  opacity: .8;
+  cursor: pointer;
+  transition: .5s;
 }
 
 .player-icon:hover,
 .slider-icon:hover,
 .change-quote:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
 .player-icon:active,
 .slider-icon:active,
 .change-quote:active {
-    border: 0;
-    outline: 0;
-    transform: scale(1.1);
+  border: 0;
+  outline: 0;
+  transform: scale(1.1);
 }
 
 .play {
-    width: 40px;
-    height: 40px;
-    background-size: 40px 40px;
-    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/play.svg");
+  width: 40px;
+  height: 40px;
+  background-size: 40px 40px;
+  background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/play.svg");
 }
 
 .pause {
-    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/pause.svg");
+  background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/pause.svg");
 }
 
 .play-prev {
-    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/play-prev.svg");
+  background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/play-prev.svg");
 }
 
 .play-next {
-    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/play-next.svg");
+  background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/play-next.svg");
 }
 
 .wrapOption {
-    display: flex;
-    position: fixed;
-    width: 200px;
-    height: 200px;
-    background: transparent;
-    top: 25px;
-    right: 250px;
+  display: flex;
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  background: transparent;
+  top: 25px;
+  right: 250px;
 }
 
 .wrapOption:hover .angle {
-    opacity: 50%;
-    transition: .6s ease-out;
+  opacity: 50%;
+  transition: .6s ease-out;
 }
 
 .angle {
-    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/angle-down-white.png");
-    color: transparent;
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    opacity: 10%;
-    right: 0;
-    cursor: pointer;
+  background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/angle-down-white.png");
+  color: transparent;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  opacity: 10%;
+  right: 0;
+  cursor: pointer;
 }
 
 .wrapOption .angle:hover {
-    opacity: 100%;
+  opacity: 100%;
 }
 
 .optionLanguage {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    position: absolute;
-    width: 50px;
-    height: 25px;
-    top: 30px;
-    right: 0;
-    background: #f8e2e2;
-    box-sizing: border-box;
-    border-radius: 6px;
-    transition: all .3s ease-out;
-    opacity: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: absolute;
+  width: 50px;
+  height: 25px;
+  top: 30px;
+  right: 0;
+  background: #f8e2e2;
+  box-sizing: border-box;
+  border-radius: 6px;
+  transition: all .3s ease-out;
+  opacity: 0;
 }
 
 .open {
-    opacity: 100%;
+  opacity: 100%;
 }
 
 .optionLanguageBe,
 .optionLanguageEn {
-    font-size: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: transparent;
-    order: 2;
-    box-sizing: border-box;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: transparent;
+  order: 2;
+  box-sizing: border-box;
 }
 
 .optionLanguageEn {
-    border-left: 1px solid #796767;
-    color: #796767;
+  border-left: 1px solid #796767;
+  color: #796767;
 }
 
 .optionLanguageBe {
-    border-right: 1px solid #796767;
-    color: #796767;
+  border-right: 1px solid #796767;
+  color: #796767;
 }
 
 .optionLanguageBe:hover {
-    background: #1b1b1c;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    color: white;
+  background: #1b1b1c;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  color: white;
 }
 
 .optionLanguageEn:hover {
-    background: #1b1b1c;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    color: white;
+  background: #1b1b1c;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: white;
 }
 
 
 .bar {
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    width: 120px;
-    background: transparent;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  width: 120px;
+  background: transparent;
+  position: relative;
 }
 
 .playLine {
-    background: transparent;
-    width: 120px;
-    height: 4px;
-    transition: all 1s linear;
-    display: flex;
-    vertical-align: middle;
-    cursor: pointer;
-    justify-items: start;
-    position: relative;
-    margin-top: 5px;
-    margin-bottom: 3px;
+  background: transparent;
+  width: 120px;
+  height: 4px;
+  transition: all 1s linear;
+  display: flex;
+  vertical-align: middle;
+  cursor: pointer;
+  justify-items: start;
+  position: relative;
+  margin-top: 5px;
+  margin-bottom: 3px;
 }
 
 .pres {
-    display: flex;
-    width: 120px;
-    height: 11px;
-    justify-content: left;
-    font-size: 10px;
-    background: transparent;
-    color: #f6d1d1;
-    transition: all 1s linear;
+  display: flex;
+  width: 120px;
+  height: 11px;
+  justify-content: left;
+  font-size: 10px;
+  background: transparent;
+  color: #f6d1d1;
+  transition: all 1s linear;
 }
 
 .volume-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    width: 40%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  width: 40%;
 }
 
 .volume {
-    display: inline-block;
-    width: 11px;
-    height: 10px;
-    background-size: cover;
-    transition: all 1s linear;
-    cursor: pointer;
+  display: inline-block;
+  width: 11px;
+  height: 10px;
+  background-size: cover;
+  transition: all 1s linear;
+  cursor: pointer;
 }
 
 .volume.visible {
-    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/sound-on.png");
+  background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/sound-on.png");
 }
 
 .volume.off {
-    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/sound-off.png");
+  background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/sound-off.png");
 }
 
 .volchange {
-    display: inline-block;
-    width: 35px;
-    background: transparent;
-    height: 4px;
-    cursor: pointer;
-    transition: all .2s ease-out;
+  display: inline-block;
+  width: 35px;
+  background: transparent;
+  height: 4px;
+  cursor: pointer;
+  transition: all .2s ease-out;
 }
 
 .volume-container:hover .volchange {
-    background: #f6d1d1;
+  background: #f6d1d1;
 }
 
 .change {
-    background: transparent;
-    height: 100%;
-    width: 75%;
-    position: relative;
+  background: transparent;
+  height: 100%;
+  width: 75%;
+  position: relative;
 }
 
 .volume-container:hover .change {
-    background: #3d3535;
+  background: #3d3535;
 }
 
 .playLine.visible {
-    background: #f6d1d1;
+  /*background: #f6d1d1;*/
+  border: 1px solid #ffffff;
 }
 
 .play-time {
-    font-size: 10px;
-    color: transparent;
-    display: flex;
-    vertical-align: middle;
-    transition: all 1s linear;
-    position: relative;
-    bottom: 9px;
-    height: 10px;
-    left: 72px;
+  font-size: 10px;
+  color: transparent;
+  display: flex;
+  vertical-align: middle;
+  transition: all 1s linear;
+  position: relative;
+  bottom: 9px;
+  height: 10px;
+  left: 72px;
 }
 
 .play-time.visible {
-    color: #f6d1d1;
+  color: #f6d1d1;
 }
 
 .progress {
-    display: block;
-    outline: none;
-    max-width: 100%;
-    height: 4px;
-    cursor: pointer;
-    vertical-align: middle;
+  display: block;
+  outline: none;
+  max-width: 100%;
+  height: 4px;
+  cursor: pointer;
+  vertical-align: middle;
 }
 
 .progress.visible {
-    background: #796767;
+  background: #f6d1d1;
+  height: 100%;
 }
 
 .play-list {
-    list-style: none;
-    margin-top: 5px;
-    position: relative;
-    order: 1;
+  list-style: none;
+  margin-top: 5px;
+  position: relative;
+  order: 1;
 }
 
 .play__list__item {
-    /*margin-bottom: 3px;*/
-    vertical-align: middle;
-    transition: all .7s linear;
-    cursor: pointer;
+  vertical-align: middle;
+  transition: all .7s linear;
+  cursor: pointer;
 }
 
 .play__list__item.active {
-    text-shadow: 0 0 10px white;
-    color: #f6d1d1;
+  text-shadow: 0 0 10px white;
+  color: #f6d1d1;
 }
 
 .play__list__item::before {
-    display: inline-block;
-    content: '';
-    width: 12px;
-    height: 12px;
-    outline: none;
-    border-radius: 50%;
-    background-color: transparent;
-    border: 1px solid white;
-    margin-right: 10px;
-    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/play-icon.png");
-    background-size: cover;
-    vertical-align: baseline;
-    transition: all .7s linear;
+  display: inline-block;
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid white;
+  margin-right: 10px;
+  background-image: url(https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/play-icon.png);
+  background-size: cover;
+  transition: all .7s linear;
+  position: relative;
+  top: 1px;
 }
 
 .active::before {
-    display: inline-block;
-    content: '';
-    width: 12px;
-    height: 12px;
-    outline: none;
-    border-radius: 50%;
-    background-color: #f6d1d1;
-    border: 1px solid white;
-    margin-right: 10px;
-    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/pause-icon.png");
-    background-size: cover;
-    vertical-align: baseline;
-    transition: all .7s linear;
+  display: inline-block;
+  content: '';
+  width: 12px;
+  height: 12px;
+  outline: none;
+  border-radius: 50%;
+  background-color: #f6d1d1;
+  border: 1px solid white;
+  margin-right: 10px;
+  background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/pause-icon.png");
+  background-size: cover;
+  vertical-align: baseline;
+  transition: all .7s linear;
 }
 
 .weather {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    row-gap: 5px;
-    width: 180px;
-    min-height: 180px;
-    text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  row-gap: 5px;
+  width: 180px;
+  min-height: 180px;
+  text-align: left;
 }
 
 .weather-error {
-    margin-top: -10px;
+  margin-top: -10px;
 }
 
 .description-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    column-gap: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 12px;
 }
 
 .weather-icon {
-    font-size: 44px;
+  font-size: 44px;
 }
 
 .city {
-    width: 170px;
-    height: 34px;
-    padding: 5px;
-    font-size: 20px;
-    line-height: 24px;
-    color: #fff;
-    border: 0;
-    outline: 0;
-    border-bottom: 1px solid #fff;
-    background-color: transparent;
+  width: 170px;
+  height: 34px;
+  padding: 5px;
+  font-size: 20px;
+  line-height: 24px;
+  color: #fff;
+  border: 0;
+  outline: 0;
+  border-bottom: 1px solid #fff;
+  background-color: transparent;
 }
 
 .city::placeholder {
-    font-size: 20px;
-    color: #fff;
-    opacity: .6;
+  font-size: 20px;
+  color: #fff;
+  opacity: .6;
 }
 
 .main {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 40vh;
-    min-height: 260px;
-    padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 40vh;
+  min-height: 260px;
+  padding: 20px;
 }
 
 .slider-icon {
-    position: absolute;
-    top: 50%;
-    margin-top: -16px;
-    cursor: pointer;
+  position: absolute;
+  top: 50%;
+  margin-top: -16px;
+  cursor: pointer;
 }
 
 .slide-prev {
-    left: 20px;
-    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/slider-prev.svg");
+  left: 20px;
+  background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/slider-prev.svg");
 }
 
 .slide-next {
-    right: 20px;
-    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/slider-next.svg");
+  right: 20px;
+  background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/slider-next.svg");
 }
 
 .time {
-    min-height: 124px;
-    margin-bottom: 10px;
-    font-size: 150px;
-    letter-spacing: -4px;
+  min-height: 124px;
+  margin-bottom: 10px;
+  font-size: 150px;
+  letter-spacing: -4px;
 }
 
 .date {
-    min-height: 28px;
-    font-size: 45px;
-    margin: 10px 0 20px;
+  min-height: 28px;
+  font-size: 45px;
+  margin: 10px 0 20px;
 }
 
 .greeting-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: stretch;
-    align-items: center;
-    min-height: 48px;
-    width: 100vw;
-    font-size: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 60px;
 }
 
 .greeting {
-    flex: 1;
-    padding: 10px;
-    text-align: right;
+  /*flex: 1;*/
+  /*padding: 10px;*/
+  text-align: right;
+  margin-right: 10px;
 }
 
 .name {
-    flex: 1;
-    max-width: 50%;
-    padding: 10px;
-    font-size: 60px;
-    text-align: left;
-    color: #f8e0e0;
-    background-color: transparent;
-    border: 0;
-    outline: 0;
+  display: inline-block;
+  /*padding-left: 10px;*/
+  /*flex: 1;*/
+  /*max-width: 50%;*/
+  /*padding: 10px;*/
+  font-family: "Times New Roman", sans-serif;
+  font-size: 60px;
+  text-align: left;
+  color: #f8e0e0;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
 }
 
-.name-optic {
-    animation: optic 3s ease-in-out infinite;
+.optic {
+  animation: optic 3s ease-in-out infinite;
 }
 
 .name::placeholder {
-    color: #e0c3c3;
-    opacity: .7;
-    font-size: 60px;
+  color: #e0c3c3;
+  opacity: .7;
+  font-size: 60px;
 }
 
-.name:hover {
-    animation: none;
+.name:hover,
+.name:focus {
+  animation: none;
 }
 
 
 @keyframes optic {
-    81% {
-        opacity: .3;
-    }
-    85% {
-        opacity: .7;
-    }
-    91% {
-        opacity: 0;
-    }
-    94% {
-        opacity: .6;
-    }
-    96% {
-        opacity: 0;
-    }
-    97% {
-        opacity: .2;
-    }
-    98% {
-        opacity: .3;
-    }
-    99% {
-        opacity: .4;
-    }
+  81% {
+    opacity: .3;
+  }
+  85% {
+    opacity: .7;
+  }
+  91% {
+    opacity: 0;
+  }
+  94% {
+    opacity: .6;
+  }
+  96% {
+    opacity: 0;
+  }
+  97% {
+    opacity: .2;
+  }
+  98% {
+    opacity: .3;
+  }
+  99% {
+    opacity: .4;
+  }
 }
 
 .footer {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-    height: 30vh;
-    min-height: 160px;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 30vh;
+  min-height: 160px;
+  padding: 20px;
 }
 
 .change-quote {
-    margin-bottom: 30px;
-    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/reload.svg");
-    transition: all .7s linear;
+  margin-bottom: 30px;
+  background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/svg/reload.svg");
+  transition: all .7s linear;
 }
 
 .quote {
-    min-height: 32px;
-    font-size: 18px;
+  min-height: 32px;
+  font-size: 18px;
 }
 
 .author {
-    min-height: 20px;
+  min-height: 20px;
 }
 
 .setBtn {
-    display: block;
-    position: fixed;
-    bottom: 10px;
-    left: 10px;
-    width: 25px;
-    height: 25px;
-    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/set.png");
-    background-position: center;
-    background-size: cover;
-    cursor: pointer;
-    transition: all .9s ease-out;
+  display: block;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  width: 25px;
+  height: 25px;
+  background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/set.png");
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
+  transition: all .9s ease-out;
 }
 
 .setBtn.close {
-    transform: rotate(180deg);
-    opacity: 0;
+  transform: rotate(180deg);
+  opacity: 0;
 }
 
 .set {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    position: absolute;
-    bottom: 10px;
-    left: -220px;
-    width: 200px;
-    opacity: 100%;
-    cursor: pointer;
-    box-sizing: border-box;
-    border: none;
-    border-radius: 5px;
-    transition: all .7s ease-out;
-    box-shadow: 0 0 10px 1px rgb(255 255 255 / 80%);
-    padding-bottom: 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  position: absolute;
+  bottom: 10px;
+  left: -220px;
+  width: 200px;
+  opacity: 100%;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 5px;
+  transition: all .7s ease-out;
+  box-shadow: 0 0 10px 1px rgb(255 255 255 / 80%);
+  padding-bottom: 45px;
 }
 
 .set.open {
-    transform: translateX(230px);
+  transform: translateX(230px);
 }
 
 .setClose {
-    width: 20px;
-    height: 20px;
-    display: block;
-    position: absolute;
-    right: 15px;
-    bottom: 15px;
-    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/angle-down-white.png");
-    background-size: 100%;
-    background-repeat: no-repeat;
-    transform: rotate(90deg);
-    opacity: 50%;
-    cursor: pointer;
-    transition: all .5s ease-out;
-    border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: block;
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/angle-down-white.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  transform: rotate(90deg);
+  opacity: 50%;
+  cursor: pointer;
+  transition: all .5s ease-out;
+  border-radius: 50%;
 }
 
 .setClose:hover {
-    opacity: 100%;
-    transform: rotate(-270deg);
+  opacity: 100%;
+  transform: rotate(-270deg);
 }
 
 .languageEl,
 .sourceEl,
 .todoEl {
-    width: 100%;
-    padding: 10px 10px;
-    text-align: left;
-    color: white;
-    font-size: 18px;
-    font-weight: 600;
-    box-sizing: border-box;
-    border-bottom: 1px solid #2e3035;
-    cursor: pointer;
+  width: 100%;
+  padding: 10px 10px;
+  text-align: left;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  box-sizing: border-box;
+  border-bottom: 1px solid #2e3035;
+  cursor: pointer;
 }
 
 .languageEl:hover {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    background: black;
-    color: white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background: black;
+  color: white;
 }
 
 .lang-active {
-    background: black;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+  background: black;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .sourceEl:hover,
 .todoEl:hover {
-    background: black;
-    color: white;
+  background: black;
+  color: white;
 }
 
 .wrapLanguage {
-    position: relative;
-    display: none;
-    grid-template-columns: 1fr 1fr;
-    justify-content: center;
-    background: #f8e2e2;
-    height: 30px;
+  position: relative;
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  background: #f8e2e2;
+  height: 30px;
 }
 
 .lang-opacity {
-    display: grid;
+  display: grid;
 }
 
 .wrapBe,
 .wrapEn {
-    display: flex;
-    border-right: 1px solid #2e3035;
-    color: black;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 16px;
+  display: flex;
+  border-right: 1px solid #2e3035;
+  color: black;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
 }
 
 .wrapBe:hover,
 .wrapEn:hover {
-    background: #564949;
-    color: white;
+  background: #564949;
+  color: white;
 }
 
 .wrapSource {
-    position: relative;
-    display: none;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(3, 25px);
-    justify-content: center;
-    transition: all 1s linear;
+  position: relative;
+  display: none;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, 25px);
+  justify-content: center;
+  transition: all 1s linear;
 }
 
 .source-active {
-    background: black;
+  background: black;
 }
 
 .source-opacity {
-    display: grid;
+  display: grid;
 }
 
 .git,
 .unsplash,
 .flickr {
-    display: flex;
-    color: #171616;
-    padding: 10px 10px;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 16px;
-    background: #f8e2e2;
+  display: flex;
+  color: #171616;
+  padding: 10px 10px;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 16px;
+  background: #f8e2e2;
 }
 
 .git {
-    border-bottom: 1px solid #2e3035;
+  border-bottom: 1px solid #2e3035;
 }
 
 .unsplash {
-    border-top: 1px solid #2e3035;
-    border-bottom: 1px solid #2e3035;
+  border-top: 1px solid #2e3035;
+  border-bottom: 1px solid #2e3035;
 }
 
 .flickr {
-    border-top: 1px solid #2e3035;
+  border-top: 1px solid #2e3035;
 }
 
 .git:hover,
 .unsplash:hover,
 .flickr:hover {
-    background: #564949;
-    color: white;
-    opacity: 80%;
+  background: #564949;
+  color: white;
+  opacity: 80%;
 }
 
 .todoEl-active {
-    background: black;
+  background: black;
 }
 
 @media (max-width: 768px) {
-    .time {
-        min-height: 80px;
-        font-size: 72px;
-    }
+  .time {
+    min-height: 80px;
+    font-size: 72px;
+  }
 
-    .greeting-container {
-        min-height: 40px;
-        font-size: 32px;
-    }
+  .greeting-container {
+    min-height: 40px;
+    font-size: 32px;
+  }
 
-    .greeting {
-        padding: 5px;
-    }
+  .greeting {
+    padding: 5px;
+  }
 
-    .name {
-        font-size: 32px;
-        padding: 5px;
-    }
+  .name {
+    font-size: 32px;
+    padding: 5px;
+  }
 }
 
 .todoButton {
-    display: block;
-    position: absolute;
-    background: transparent;
-    font-size: 22px;
-    color: #fde2e2;
-    bottom: 10px;
-    right: 15px;
-    cursor: pointer;
+  display: block;
+  position: absolute;
+  background: transparent;
+  font-size: 22px;
+  color: #fde2e2;
+  bottom: 10px;
+  right: 15px;
+  cursor: pointer;
 }
 
 .todoContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    opacity: 0;
-    position: absolute;
-    bottom: 40px;
-    right: 15px;
-    width: 300px;
-    min-height: 150px;
-    max-height: 300px;
-    overflow: hidden;
-    cursor: pointer;
-    box-sizing: border-box;
-    border: none;
-    border-radius: 5px;
-    transition: all .7s ease-out;
-    box-shadow: 0 0 10px 1px rgb(255 255 255 / 80%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0;
+  position: absolute;
+  bottom: 40px;
+  right: 15px;
+  width: 300px;
+  min-height: 150px;
+  max-height: 300px;
+  overflow: hidden;
+  /*cursor: pointer;*/
+  box-sizing: border-box;
+  border: none;
+  border-radius: 5px;
+  transition: all .7s ease-out;
+  box-shadow: 0 0 10px 1px rgb(255 255 255 / 80%);
+}
+
+.completedToDo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 400px;
+  right: 15px;
+  width: 300px;
+  max-height: 300px;
+  overflow-y: auto;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 5px;
+  transition: all .5s;
+  box-shadow: 0 0 10px 1px rgb(255 255 255 / 80%);
+  padding: 20px 10px 10px;
+}
+
+.closeCompleted {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  background-image: url("../assets/svg/cross.svg");
+  /*background-position: center center;*/
+  /*background-repeat: no-repeat;*/
+  background-size: cover;
+  transition: .5s;
+  border-radius: 50%;
+}
+
+.closeCompleted:hover {
+  transform: rotate(180deg);
 }
 
 .todoopen {
-    opacity: 100%;
-    display: flex;
-    transition: all .7s ease-out;
+  opacity: 100%;
+  display: flex;
+  transition: all .7s ease-out;
 }
 
 .todoGreetings {
-    position: absolute;
-    display: flex;
-    align-content: center;
-    width: 300px;
-    height: 150px;
-    padding: 50px 70px;
-    border-radius: 5px;
-    font-size: 19px;
-    transition: all .7s ease-in-out;
-    opacity: 30%;
-    color: #c9b4b4;
-    background: black;
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  height: 100%;
+  font-size: 19px;
+  transition: all .7s ease-in-out;
+  color: #c9b4b4;
+  z-index: 2;
 }
 
 .todoGreetings:hover {
-    color: white;
-    opacity: 50%;
+  color: white;
+  opacity: 50%;
 }
 
 .todoGreetings-hidden {
-    transform: translateX(-300px);
+  transform: translateX(300px);
 }
 
 .checkContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: end;
-    padding: 5px;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 5px 10px;
+  height: 100%;
+  overflow: hidden auto;
+  position: relative;
+  opacity: 100;
+  z-index: 0;
+  transition: 0.5s;
+}
+
+.checkContainer.fade {
+  opacity: 0;
+  z-index: -1;
 }
 
 .inputText {
-    outline: none;
-    border: none;
-    background: transparent;
-    min-height: 30px;
-    vertical-align: middle;
-    padding-left: 10px;
-    color: white;
-    display: inline-block;
-    opacity: 0;
-    transition: all .4s linear;
-    box-shadow: 0 0 8px 1px rgb(255 255 255 / 50%);
+  outline: none;
+  border: none;
+  background: transparent;
+  min-height: 30px;
+  vertical-align: middle;
+  padding: 0 10px;
+  color: white;
+  display: inline-block;
+  opacity: 0;
+  transition: all .4s linear;
+  box-shadow: 0 0 8px 1px rgb(255 255 255 / 50%);
 }
 
 .inputText-active {
-    opacity: 100%;
+  opacity: 100%;
 }
 
 .todoOptions {
-    display: grid;
-    grid-template-columns: 45% 45% 1fr;
-    align-content: center;
-    justify-content: center;
-    opacity: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 25%) 1fr;
+  column-gap: 5%;
+  align-content: center;
+  justify-content: center;
+  opacity: 0;
+  padding: 5px 5px 0;
 }
 
-.visible {
-    opacity: 80%;
+.todoOptions.visible {
+  opacity: 80%;
 }
 
 .today,
-.before {
-    border: none;
-    border-bottom: 1px solid transparent;
-    cursor: pointer;
-    transition: all .2s linear;
-    padding: 5px 0;
-    opacity: 50%;
-    box-sizing: border-box;
-    height: 30px;
+.before,
+.all {
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+  transition: all .2s linear;
+  padding-top: 5px;
+  opacity: 30%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*height: 30px;*/
 }
 
 .today:hover,
-.before:hover {
-    opacity: 100%;
-    transform: scale(1.05,1.05);
+.before:hover,
+.all:hover {
+  opacity: 100%;
+  background: #ffffff;
+  color: black;
+}
+
+.today.show,
+.before.show,
+.all.show {
+  background: #ffffff;
+  color: black;
+  border-radius: 2px;
 }
 
 .todoMenu {
-    display: grid;
-    align-self: center;
-    background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/menu-icon.png");
-    background-size: 80%;
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 20px;
-    width: 20px;
-    opacity: 50%;
-    padding: 5px;
-    transition: all .4s ease-in;
+  display: grid;
+  align-self: center;
+  background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/menu-icon.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 20px;
+  width: 20px;
+  opacity: 50%;
+  transition: all .4s ease-in;
 }
 
-.todoMenu:hover{
-    rotate: 360deg;
-    opacity: 100%;
-    transition: all .4s ease-out;
+.todoMenu:hover {
+  rotate: 360deg;
+  opacity: 100%;
+  transition: all .4s ease-out;
 }
 
 .todoInnerOptions {
-    padding: 15px 23px;
-    position: absolute;
-    left: -270px;
-    opacity: 0;
-    transition: all .4s ease-out;
-    cursor: pointer;
-    height: 150px;
-    width: 270px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: space-around;
-    z-index: 5;
+  padding: 15px 23px;
+  position: absolute;
+  transition: all .4s ease-out;
+  cursor: pointer;
+  height: 100%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-around;
+  left: -270px;
+  opacity: 0;
+  z-index: -1;
 }
 
 .close-at-menu {
-    opacity: 0;
-    z-index: -1;
+  opacity: 0;
+  z-index: -1;
 }
 
 .open-at-menu {
-    opacity: 100%;
-    box-shadow:  0 0 4px 2px rgb(255 255 255 / 40%);
+  opacity: 100%;
+  box-shadow: 0 0 4px 2px rgb(255 255 255 / 40%);
 }
 
 .open-at-menu-grow {
-    transform: translateX(270px);
-    opacity: 100%;
+  transform: translateX(270px);
+  opacity: 100%;
+  z-index: 5;
 }
 
 .todoViewCompleted,
 .todoViewAll,
 .todoDeleteCompleted,
 .todoDeleteAll {
-    text-align: left;
-    padding: 5px 0;
-    border-bottom: 1px solid transparent;
-    transition: all .5s ease-out;
-    color: white;
-    opacity: 50%;
+  text-align: left;
+  padding: 5px 0;
+  border-bottom: 1px solid transparent;
+  transition: all .5s ease-out;
+  color: white;
+  opacity: 50%;
 }
 
 .todoViewCompleted:hover,
 .todoViewAll:hover {
-    color: white;
-    opacity: 100%;
+  color: white;
+  opacity: 100%;
 }
 
 .todoDeleteCompleted:hover {
-    color: #fca2a2;
-    opacity: 100%;
+  color: #fca2a2;
+  opacity: 100%;
 }
 
-.todoDeleteAll:hover{
-    color: red;
-    opacity: 100%;
+.todoDeleteAll:hover {
+  color: red;
+  opacity: 100%;
 }
 
 .textContainer {
-    position: fixed;
-    display: block;
-    max-width: 50vw;
-    max-height: 50vh;
-    bottom: 10px;
-    right: 15px;
-    font-size: 16px;
-    color: black;
-    background: whitesmoke;
-    opacity: 100%;
+  position: fixed;
+  display: block;
+  max-width: 50vw;
+  max-height: 50vh;
+  bottom: 10px;
+  right: 15px;
+  font-size: 16px;
+  color: black;
+  background: whitesmoke;
+  opacity: 100%;
 }
 
 .lbl {
-    display: flex;
-    align-items: center;
-    color: white;
-    font-size: 16px;
-    vertical-align: middle;
-    width: 100%;
-    text-align: start;
-    cursor: pointer;
-    margin-left: 5px;
-    margin-bottom: 5px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  max-width: 100%;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.lbl span {
+  padding-left: 5px;
+  overflow-wrap: anywhere;
+  text-align: left;
 }
 
 .inp-todo {
-    margin-right: 15px;
+  margin: 0 10px 0 0;
+  position: relative;
+  top: 1px;
 }
 
 .inp-todo:checked + label {
-    text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 

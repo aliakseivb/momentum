@@ -1,0 +1,46 @@
+{
+  "coord": {
+    "lon": 27.5667,
+    "lat": 53.9
+  },
+  "weather": [
+    {
+      "id": 801,
+      "main": "Clouds",
+      "description": "few clouds",
+      "icon": "02d"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 3.86,
+    "feels_like": 1.26,
+    "temp_min": 3.86,
+    "temp_max": 3.86,
+    "pressure": 1021,
+    "humidity": 53,
+    "sea_level": 1021,
+    "grnd_level": 993
+  },
+  "visibility": 10000,
+  "wind": {
+    "speed": 2.84,
+    "deg": 173,
+    "gust": 3.57
+  },
+  "clouds": {
+    "all": 13
+  },
+  "dt": 1710405196,
+  "sys": {
+    "type": 1,
+    "id": 8939,
+    "country": "BY",
+    "sunrise": 1710390384,
+    "sunset": 1710432687
+  },
+  "timezone": 10800,
+  "id": 625144,
+  "name": "Minsk",
+  "cod": 200
+}

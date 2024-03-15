@@ -7,6 +7,52 @@ let language = localStorage.getItem('language') || 'be';
 const timeNow = document.querySelector('.time')
 const day = document.querySelector('.date');
 const greeting = document.querySelector('.greeting');
+const userName = document.querySelector('.name');
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  let name = localStorage.getItem('name');
+  count = getToDoData() ? getToDoData().count : 0;
+  all.classList.add('show');
+  if (name) {
+    userName.value = name;
+    userName.style.width = (userName.value.length * 30) + 'px';
+    return
+  }
+  userName.style.maxWidth = (userName.placeholder.length * 30) + 'px';
+
+});
+
+userName.addEventListener('change', () => {
+  if (!userName.value) {
+    userName.classList.add('optic');
+    userName.style.width = (userName.placeholder.length) * 30 + 'px';
+    return
+  }
+  userName.classList.remove('optic');
+  userName.style.width = ((userName.value.length) * 30) + 'px';
+});
+
+userName.addEventListener('input', () => {
+  if (!userName.value) {
+    userName.style.width = (userName.placeholder.length) * 30 + 'px';
+    return
+  }
+  userName.classList.remove('optic');
+  userName.style.width = ((userName.value.length) * 30) + 10 + 'px';
+});
+
+userName.addEventListener('keydown', () => {
+  userName.style.width = ((userName.value.length + 1) * 30) + 'px';
+});
+userName.addEventListener('blur', () => {
+  if (!userName.value) {
+    userName.classList.add('optic');
+    userName.style.width = (userName.placeholder.length) * 30 + 'px';
+    return
+  }
+  userName.style.width = ((userName.value.length) * 30) + 'px';
+});
 
 
 const setBtn = document.createElement('div');
@@ -24,19 +70,19 @@ const wrapLanguage = document.createElement('div');
 wrapLanguage.classList.add('wrapLanguage');
 document.querySelector('.set').append(wrapLanguage);
 wrapLanguage.addEventListener('click', (e) => {
-    language = e.target.textContent;
-    changeGreetingLang(language);
-    getWeather(localStorage.getItem('city'), e.target.textContent);
-    getQuotes();
-    wrapLanguage.classList.toggle('lang-opacity');
-    languageEl.classList.toggle('lang-active');
+  language = e.target.textContent;
+  changeGreetingLang(language);
+  getWeather(localStorage.getItem('city'), e.target.textContent);
+  getQuotes();
+  wrapLanguage.classList.toggle('lang-opacity');
+  languageEl.classList.toggle('lang-active');
 });
 languageEl.addEventListener('click', function (e) {
-    wrapLanguage.classList.toggle('lang-opacity');
-    languageEl.classList.toggle('lang-active');
-    wrapSource.classList.remove('source-opacity');
-    sourceEl.classList.remove('source-active');
-    todoEl.classList.remove('todo-active');
+  wrapLanguage.classList.toggle('lang-opacity');
+  languageEl.classList.toggle('lang-active');
+  wrapSource.classList.remove('source-opacity');
+  sourceEl.classList.remove('source-active');
+  todoEl.classList.remove('todo-active');
 })
 
 const sourceEl = document.createElement('div');
@@ -60,11 +106,11 @@ flickr.textContent = 'Flickr';
 document.querySelector('.wrapSource').append(flickr);
 
 sourceEl.addEventListener('click', function (e) {
-    wrapSource.classList.toggle('source-opacity');
-    sourceEl.classList.toggle('source-active');
-    wrapLanguage.classList.remove('lang-opacity');
-    languageEl.classList.remove('lang-active');
-    todoEl.classList.remove('todoEl-active');
+  wrapSource.classList.toggle('source-opacity');
+  sourceEl.classList.toggle('source-active');
+  wrapLanguage.classList.remove('lang-opacity');
+  languageEl.classList.remove('lang-active');
+  todoEl.classList.remove('todoEl-active');
 });
 
 const textContainer = document.createElement('div')
@@ -81,7 +127,7 @@ todoButton.textContent = 'ToDo';
 document.querySelector('.footer').append(todoButton);
 
 todoButton.addEventListener('click', () => {
-    todoContainer.classList.toggle('todoopen');
+  todoContainer.classList.toggle('todoopen');
 })
 
 const todoContainer = document.createElement('div')
@@ -89,92 +135,344 @@ todoContainer.classList.add('todoContainer');
 document.querySelector('.footer').append(todoContainer);
 const todoInnerOptions = document.createElement('div')
 todoInnerOptions.classList.add('todoInnerOptions');
-document.querySelector('.todoContainer').append(todoInnerOptions);
+todoContainer.append(todoInnerOptions);
 const todoViewCompleted = document.createElement('div')
 todoViewCompleted.classList.add('todoViewCompleted');
+todoViewCompleted.dataset['name'] = 'seeCompleted';
 todoViewCompleted.textContent = 'See completed';
 document.querySelector('.todoInnerOptions').append(todoViewCompleted);
 const todoViewAll = document.createElement('div')
 todoViewAll.classList.add('todoViewAll');
+todoViewAll.dataset['name'] = 'seeAll';
 todoViewAll.textContent = 'See all';
 document.querySelector('.todoInnerOptions').append(todoViewAll);
 const todoDeleteCompleted = document.createElement('div')
 todoDeleteCompleted.classList.add('todoDeleteCompleted');
+todoDeleteCompleted.dataset['name'] = 'deleteCompleted';
 todoDeleteCompleted.textContent = 'Delete completed'
 document.querySelector('.todoInnerOptions').append(todoDeleteCompleted);
 const todoDeleteAll = document.createElement('div')
 todoDeleteAll.classList.add('todoDeleteAll');
+todoDeleteAll.dataset['name'] = 'deleteAll';
 todoDeleteAll.textContent = 'Delete all'
 document.querySelector('.todoInnerOptions').append(todoDeleteAll);
 
-const todoOptions = document.createElement('div')
+const todoOptions = document.createElement('div');
 todoOptions.classList.add('todoOptions');
-document.querySelector('.todoContainer').append(todoOptions);
+todoContainer.append(todoOptions);
 const today = document.createElement('div');
-today.classList.add('today');
+today.className = 'whatShow today';
+today.dataset['name'] = 'today';
 today.textContent = 'Today';
 document.querySelector('.todoOptions').append(today);
 const before = document.createElement('div');
-before.classList.add('before');
+before.className = 'whatShow before';
+before.dataset['name'] = 'before';
 before.textContent = 'Before';
 document.querySelector('.todoOptions').append(before);
+const all = document.createElement('div');
+all.className = 'whatShow all';
+all.dataset['name'] = 'all';
+all.textContent = 'All';
+document.querySelector('.todoOptions').append(all);
 const todoMenu = document.createElement('div');
 todoMenu.classList.add('todoMenu');
 document.querySelector('.todoOptions').append(todoMenu);
 
-todoMenu.addEventListener('click', () => {
-    before.classList.toggle('close-at-menu');
-    today.classList.toggle('close-at-menu');
-    inputText.classList.toggle('close-at-menu');
-    todoGreetings.classList.add('close-at-menu');
-    todoInnerOptions.classList.toggle('open-at-menu-grow');
-})
+todoMenu.addEventListener('click', (e) => {
+  const toDoData = getToDoData();
+  e.stopPropagation()
+  before.classList.toggle('close-at-menu');
+  today.classList.toggle('close-at-menu');
+  all.classList.toggle('close-at-menu');
+  inputText.classList.toggle('close-at-menu');
+  todoInnerOptions.classList.toggle('open-at-menu-grow');
+  checkContainer.classList.toggle('fade');
+  checkContainer.innerHTML = '';
+  if (document.querySelector('.completedToDo')) {
+    document.querySelector('.completedToDo').remove();
+  }
+  if (document.querySelector('.closeCompleted')) {
+    document.querySelector('.closeCompleted').removeEventListener('click', close);
+  }
+  toDoData.toDoItemArray.forEach(item => {
+    checkContainer.insertAdjacentHTML(`beforeend`, `<label id=${item.id} class="lbl"><input type="checkbox" ${item.done ? 'checked' : ''} class="inp-todo"><span>${item.text}</span></label>`);
+  });
+});
 
-const todoGreetings = document.createElement('div');
-todoGreetings.classList.add('todoGreetings');
-todoGreetings.textContent = 'Make Your New ToDo';
-document.querySelector('.todoContainer').append(todoGreetings);
-todoGreetings.addEventListener('click', () => {
-    todoGreetings.classList.add('todoGreetings-hidden');
-    inputText.classList.add('inputText-active');
-    todoOptions.classList.add('visible')
-})
+
 const checkContainer = document.createElement('div');
 checkContainer.classList.add('checkContainer');
-document.querySelector('.todoContainer').append(checkContainer)
+todoContainer.append(checkContainer);
 const inputText = document.createElement('input');
 inputText.classList.add('inputText');
 inputText.setAttribute('type', 'text');
 inputText.setAttribute('id', 'todotext');
-inputText.setAttribute('placeholder', 'New ToDo');
-document.querySelector('.todoContainer').append(inputText)
-
-// работаем с ToDo
-let count = 0;
-let todoStart = [];
-let todoEnd = [];
-const clear = function(e) {
-    document.getElementById("todotext").value = "";
+if(localStorage.getItem('language') === 'en'){
+  inputText.setAttribute('placeholder', 'New ToDo');
+}else if(localStorage.getItem('language') === 'be'){
+  inputText.setAttribute('placeholder', 'Дадаць запіс');
 }
-document.getElementById("todotext").addEventListener('change', ()=>{
-    let someText = document.getElementById("todotext").value
-    console.log(someText)
-    if(someText){
-        count++
-        let txt = `   ${someText}`
-        document.querySelector('.checkContainer').insertAdjacentHTML(`afterBegin`, `<label id=inp${count} class="lbl" "><input type="checkbox" class="inp-todo">${txt}</label>`);
-        console.log(todoStart)
+
+inputText.setAttribute('autocomplete', 'off');
+todoContainer.append(inputText);
+
+
+/*todo работаем с ToDo*/
+let count = 0;
+
+function setToDoData(data) {
+  localStorage.setItem('toDoData', JSON.stringify(data));
+}
+
+function getToDoData() {
+  return JSON.parse(localStorage.getItem('toDoData'))
+}
+
+/*todo если в локал-стораж не вносились тудушки, или длина листа-тудушек равна 0 - показываем приветственное окно*/
+if (!getToDoData() || !getToDoData().toDoItemArray || !getToDoData().toDoItemArray.length) {
+  const todoGreetings = document.createElement('div');
+  todoGreetings.classList.add('todoGreetings');
+  todoGreetings.textContent = 'Make Your New ToDo';
+  todoContainer.append(todoGreetings);
+  if (todoGreetings) {
+    todoGreetings.addEventListener('click', () => {
+      todoGreetings.classList.add('todoGreetings-hidden');
+      inputText.classList.add('inputText-active');
+      todoOptions.classList.add('visible');
+    });
+  }
+  /*todo если тудушки уже есть, рисуем их и устанавливаем счетчик всех тудушек в значение из локал-стоража*/
+} else {
+  inputText.classList.add('inputText-active');
+  todoOptions.classList.add('visible');
+  const toDoData = getToDoData();
+  toDoData.toDoItemArray.forEach(item => {
+    checkContainer.insertAdjacentHTML(`beforeend`, `<label id=${item.id} class="lbl"><input type="checkbox" ${item.done ? 'checked' : ''} class="inp-todo"><span>${item.text}</span></label>`);
+  });
+}
+
+/*todo слушаем клик по чекбоксу */
+checkContainer.addEventListener('click', (e) => {
+  if (e.target.tagName.toLowerCase() === 'input') {
+    const toDoData = getToDoData();
+    toDoData.toDoItemArray.forEach(item => {
+      if (e.target.parentElement.id === item.id) {
+        if (item['done'] === true) {
+          item['done'] = false;
+        } else if (item['done'] === false) {
+          item['done'] = true;
+        }
+      }
+    });
+    setToDoData(toDoData);
+  }
+});
+
+
+if (todoOptions) {
+  todoOptions.addEventListener('click', ev => {
+    if (ev.target.classList.contains('whatShow')) {
+      ev.stopPropagation()
+      document.querySelectorAll('.whatShow').forEach(item => {
+        item.classList.remove('show');
+      });
+      ev.target.classList.add('show');
+      const toDoData = getToDoData();
+      checkContainer.innerHTML = '';
+      switch (ev.target.dataset.name) {
+        case 'all': {
+          toDoData.toDoItemArray.forEach(item => {
+            checkContainer.insertAdjacentHTML(`beforeend`, `<label id=${item.id} class="lbl"><input type="checkbox" ${item.done ? 'checked' : ''} class="inp-todo"><span>${item.text}</span></label>`);
+          });
+          break;
+        }
+        case 'today': {
+          toDoData.toDoItemArray.forEach(item => {
+            if (item.date === new Date().toLocaleDateString()) {
+              checkContainer.insertAdjacentHTML(`beforeend`, `<label id=${item.id} class="lbl"><input type="checkbox" ${item.done ? 'checked' : ''} class="inp-todo"><span>${item.text}</span></label>`);
+            }
+          });
+          break;
+        }
+        case 'before': {
+          toDoData.toDoItemArray.forEach(item => {
+            if (item.date !== new Date().toLocaleDateString()) {
+              checkContainer.insertAdjacentHTML(`beforeend`, `<label id=${item.id} class="lbl"><input type="checkbox" ${item.done ? 'checked' : ''} class="inp-todo"><span>${item.text}</span></label>`);
+            }
+          });
+          break;
+        }
+      }
     }
-    clear();
+  });
+}
+
+if (todoInnerOptions) {
+  todoInnerOptions.addEventListener('click', ev => {
+    const toDoData = getToDoData();
+    if (!toDoData || !toDoData.toDoItemArray || !toDoData.toDoItemArray.length) {
+      before.classList.toggle('close-at-menu');
+      today.classList.toggle('close-at-menu');
+      all.classList.toggle('close-at-menu');
+      inputText.classList.toggle('close-at-menu');
+      todoInnerOptions.classList.toggle('open-at-menu-grow');
+      checkContainer.classList.toggle('fade');
+      return
+    }
+    switch (ev.target.dataset.name) {
+      case 'seeCompleted': {
+        if (document.querySelector('.completedToDo')) {
+          return;
+        }
+        const completed = document.createElement('div');
+        completed.className = 'completedToDo';
+        toDoData.toDoItemArray.forEach(item => {
+          if (item.done) {
+            completed.insertAdjacentHTML(`beforeend`, `<label id=${item.id} class="lbl"><input type="checkbox" ${item.done ? 'checked' : ''} class="inp-todo"><span>${item.text}</span></label>`);
+          }
+        });
+        if (completed.children.length < 1) {
+          if (localStorage.getItem('language') === 'en') {
+            completed.innerText = 'no entries';
+          } else {
+            completed.innerText = 'нічога не знойдзена';
+          }
+        }
+        const cross = document.createElement('div');
+        cross.className = 'closeCompleted';
+        completed.append(cross);
+        document.querySelector('.body').append(completed);
+        const close = () => {
+          completed.remove();
+        }
+        completed.addEventListener('click', e => {
+          if (e.target.tagName.toLowerCase() === 'input') {
+            toDoData.toDoItemArray.forEach(item => {
+              if (e.target.parentElement.id === item.id) {
+                if (item['done'] === true) {
+                  item['done'] = false;
+                } else if (item['done'] === false) {
+                  item['done'] = true;
+                }
+              }
+            });
+            setToDoData(toDoData);
+          }
+        })
+        cross.addEventListener('click', close);
+        break;
+      }
+      case 'seeAll': {
+        before.classList.toggle('close-at-menu');
+        today.classList.toggle('close-at-menu');
+        all.classList.toggle('close-at-menu');
+        document.querySelectorAll('.whatShow').forEach(item => {
+          item.classList.remove('show');
+        });
+        all.classList.add('show');
+        inputText.classList.toggle('close-at-menu');
+        todoInnerOptions.classList.toggle('open-at-menu-grow');
+        checkContainer.innerHTML = '';
+        checkContainer.classList.toggle('fade');
+        if (document.querySelector('.completedToDo')) {
+          document.querySelector('.completedToDo').remove();
+        }
+        if (document.querySelector('.closeCompleted')) {
+          document.querySelector('.closeCompleted').removeEventListener('click', close);
+        }
+        toDoData.toDoItemArray.forEach(item => {
+          checkContainer.insertAdjacentHTML(`beforeend`, `<label id=${item.id} class="lbl"><input type="checkbox" ${item.done ? 'checked' : ''} class="inp-todo"><span>${item.text}</span></label>`);
+        });
+        break;
+      }
+      case 'deleteCompleted': {
+        toDoData.toDoItemArray = toDoData.toDoItemArray.filter(item => item.done === false);
+        toDoData.toDoItemArray.forEach((item, index) => {
+          item['id'] = item.id.split('-')[0] + '-' + (index + 1);
+        })
+        toDoData.count = toDoData.toDoItemArray.length;
+        checkContainer.innerHTML = '';
+        setToDoData(toDoData);
+        if (document.querySelector('.completedToDo')) {
+          document.querySelector('.completedToDo').remove();
+        }
+        if (document.querySelector('.closeCompleted')) {
+          document.querySelector('.closeCompleted').removeEventListener('click', close);
+        }
+        break;
+      }
+      case 'deleteAll': {
+        count = 0;
+        localStorage.removeItem('toDoData');
+        before.classList.toggle('close-at-menu');
+        today.classList.toggle('close-at-menu');
+        all.classList.toggle('close-at-menu');
+        document.querySelectorAll('.whatShow').forEach(item => {
+          item.classList.remove('show');
+        });
+        all.classList.add('show');
+        inputText.classList.toggle('close-at-menu');
+        todoInnerOptions.classList.toggle('open-at-menu-grow');
+        checkContainer.innerHTML = '';
+        checkContainer.classList.toggle('fade');
+        if (document.querySelector('.completedToDo')) {
+          document.querySelector('.completedToDo').remove();
+        }
+        if (document.querySelector('.closeCompleted')) {
+          document.querySelector('.closeCompleted').removeEventListener('click', close);
+        }
+        break;
+      }
+    }
+  });
+}
+
+function clear() {
+  inputText.value = "";
+}
+
+/*todo добавляем новые todo в todo контейнер и локал-стораж*/
+inputText.addEventListener('change', () => {
+  count++
+  if (inputText.value) {
+    const toDoData = {
+      count: count
+    }
+    checkContainer.insertAdjacentHTML(`beforeend`, `<label id=todo-${count} class="lbl"><input type="checkbox" class="inp-todo"><span>${inputText.value}</span></label>`);
+    if (!getToDoData() || !getToDoData().toDoItemArray || !getToDoData().toDoItemArray.length) {
+      toDoData.toDoItemArray = [];
+      const toDoItem = {
+        id: checkContainer.children[checkContainer.children.length - 1].id,
+        done: !!checkContainer.children[checkContainer.children.length - 1].children[0].checked,
+        text: checkContainer.children[checkContainer.children.length - 1].children[1].innerText,
+        date: new Date().toLocaleDateString(),
+      }
+      toDoData.toDoItemArray.push(toDoItem);
+      setToDoData(toDoData);
+    } else {
+      const data = getToDoData();
+      const toDoItem = {
+        id: checkContainer.children[checkContainer.children.length - 1].id,
+        done: !!checkContainer.children[checkContainer.children.length - 1].children[0].checked,
+        text: checkContainer.children[checkContainer.children.length - 1].children[1].innerText,
+        date: new Date().toLocaleDateString()
+      }
+      data.count = count;
+      data.toDoItemArray.push(toDoItem);
+      setToDoData(data);
+    }
+  }
+  clear();
 })
 
 document.querySelector('.todoEl').addEventListener('click', function () {
-    wrapSource.classList.remove('source-opacity');
-    sourceEl.classList.remove('source-active');
-    wrapLanguage.classList.remove('lang-opacity');
-    languageEl.classList.remove('lang-active');
-    todoEl.classList.toggle('todoEl-active');
-    todoContainer.classList.toggle('todoopen');
+  wrapSource.classList.remove('source-opacity');
+  sourceEl.classList.remove('source-active');
+  wrapLanguage.classList.remove('lang-opacity');
+  languageEl.classList.remove('lang-active');
+  todoEl.classList.toggle('todoEl-active');
+  todoContainer.classList.toggle('todoopen');
 })
 
 const setClose = document.createElement('div');
@@ -196,38 +494,32 @@ document.querySelector('.footer').append(todo);
 
 // закрыть меню по клику вне его
 document.addEventListener('click', e => {
-    if (!e.target === set || !e.target === set.contains(e.target)
-        && !(e.target === setClose)
-        && set.classList.contains('open')) {
-        //!!!!!!!!!!!!!!!!!!!!!!!! --- >>>>>   то же самое но другими словами
-        // let target = e.target;
-        // let its_menu = target === set || set.contains(target);
-        // let its_hamburger = target === setClose;
-        // let menu_is_active = set.classList.contains('open');
-        // if (!its_menu && !its_hamburger && menu_is_active) {
-        document.querySelector('.set').classList.remove('open');
-        document.querySelector('.setBtn').classList.remove('close');
-        languageEl.classList.remove('lang-active');
-        wrapLanguage.classList.remove('lang-opacity');
-        sourceEl.classList.remove('source-active');
-        wrapSource.classList.remove('source-opacity');
-        todoEl.classList.remove('todoEl-active');
-    }
+  if (!e.target === set || !e.target === set.contains(e.target)
+      && !(e.target === setClose)
+      && set.classList.contains('open')) {
+    document.querySelector('.set').classList.remove('open');
+    document.querySelector('.setBtn').classList.remove('close');
+    languageEl.classList.remove('lang-active');
+    wrapLanguage.classList.remove('lang-opacity');
+    sourceEl.classList.remove('source-active');
+    wrapSource.classList.remove('source-opacity');
+    todoEl.classList.remove('todoEl-active');
+  }
 })
 setBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    document.querySelector('.set').classList.add('open');
-    document.querySelector('.setBtn').classList.add('close');
+  e.stopPropagation();
+  document.querySelector('.set').classList.add('open');
+  document.querySelector('.setBtn').classList.add('close');
 })
 
 setClose.addEventListener('click', () => {
-    document.querySelector('.set').classList.remove('open')
-    document.querySelector('.setBtn').classList.remove('close');
-    wrapSource.classList.remove('source-opacity');
-    sourceEl.classList.remove('source-active');
-    wrapLanguage.classList.remove('lang-opacity');
-    languageEl.classList.remove('lang-active');
-    todoEl.classList.remove('todoEl-active');
+  document.querySelector('.set').classList.remove('open')
+  document.querySelector('.setBtn').classList.remove('close');
+  wrapSource.classList.remove('source-opacity');
+  sourceEl.classList.remove('source-active');
+  wrapLanguage.classList.remove('lang-opacity');
+  languageEl.classList.remove('lang-active');
+  todoEl.classList.remove('todoEl-active');
 })
 
 const wrapOption = document.createElement('div');
@@ -248,313 +540,256 @@ optionLanguageEn.classList.add('optionLanguageEn');
 document.querySelector('.optionLanguage').append(optionLanguageEn);
 optionLanguageEn.textContent = 'en';
 document.querySelector('.angle').addEventListener('click', function (e) {
-    document.querySelector('.optionLanguage').classList.toggle('open');
+  document.querySelector('.optionLanguage').classList.toggle('open');
 })
 
 
 //  еще один способ закрыть меню по клику вне его
 window.onclick = function (event) {
-    if (!event.target.matches('.angle')) {
-        let dropdowns = document.getElementsByClassName("optionLanguage");
-        for (let i = 0; i < dropdowns.length; i++) {
-            let openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('open')) {
-                openDropdown.classList.remove('open');
-            }
-        }
-    } else {
-        document.querySelector('.optionLanguage').addEventListener("click", function (e) {
-            language = e.target.textContent;
-            changeGreetingLang(language);
-            getQuotes();
-            getWeather(localStorage.getItem('city'), e.target.textContent);
-            document.querySelector('.name').placeholder = enter;
-            document.querySelector('.optionLanguage').classList.toggle('open')
-        })
+  if (!event.target.matches('.angle')) {
+    let dropdowns = document.getElementsByClassName("optionLanguage");
+    for (let i = 0; i < dropdowns.length; i++) {
+      let openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('open')) {
+        openDropdown.classList.remove('open');
+      }
     }
+  } else {
+    document.querySelector('.optionLanguage').addEventListener("click", function (e) {
+      language = e.target.textContent;
+      changeGreetingLang(language);
+      getQuotes();
+      getWeather(localStorage.getItem('city'), e.target.textContent);
+      document.querySelector('.name').placeholder = enter;
+      document.querySelector('.optionLanguage').classList.toggle('open')
+    })
+  }
 }
 const greetingTranslation =
     {
-        'be': [
-            ['Добрай ранiцы', 'Добры дзень', 'Добры вечар', 'Добрай ночы'],
-            ['Вецер', 'Вiльготнасць'],
-            'Дадайце Вашую нататку',
-            ['Нядзеля', 'Панядзелак', 'Аўторак', 'Серада', 'Чацвер', 'Пятніца', 'Субота'],
-            ['Cтудзень', 'Люты', 'Сакавік', 'Красавік', 'Май', 'Чэрвень', 'Ліпень', 'Жнівень', 'Верасень', 'Кастрычнік', 'Лістапад', 'Снежань'],
-            'назавiце сябе...',
-            ['Змянiць мову', 'Крыніцы малюнкаў', 'Нататкi'],
-            ['Сёння', 'Раней', 'Глядзець завершанае', 'Глядзець ўсё', 'Выдаліць завершанае', 'Выдаліць ўсё', '',]
-        ],
-        'en': [
-            ['Good morning', 'Good afternoon', 'Good evening', 'Good night'],
-            ['Wind', 'Humidity'],
-            'Make Your New ToDo',
-            ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-            ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            'enter your name...',
-            ['Select language', 'Image source', 'ToDo'],
-            ['Today', 'Before', 'See completed', 'See all', 'Delete completed', 'Delete all']
-        ]
+      'be': [
+        ['Добрай ранiцы', 'Добры дзень', 'Добры вечар', 'Добрай ночы'],
+        ['Вецер', 'Вiльготнасць'],
+        'Дадаць запіс',
+        ['Нядзеля', 'Панядзелак', 'Аўторак', 'Серада', 'Чацвер', 'Пятніца', 'Субота'],
+        ['Cтудзень', 'Люты', 'Сакавік', 'Красавік', 'Май', 'Чэрвень', 'Ліпень', 'Жнівень', 'Верасень', 'Кастрычнік', 'Лістапад', 'Снежань'],
+        'назавiце сябе...',
+        ['Змянiць мову', 'Крыніцы малюнкаў', 'Нататкi'],
+        ['Сёння', 'Раней', 'Ўсё', 'Глядзець завершанае', 'Глядзець ўсё', 'Выдаліць завершанае', 'Выдаліць ўсё', '',]
+      ],
+      'en': [
+        ['Good morning', 'Good afternoon', 'Good evening', 'Good night'],
+        ['Wind', 'Humidity'],
+        'Add New ToDo',
+        ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        'enter your name...',
+        ['Select language', 'Image source', 'ToDo'],
+        ['Today', 'Before', 'All', 'See completed', 'See all', 'Delete completed', 'Delete all']
+      ]
     }
 
 function changeGreetingLang(lang = 'be') {
-    if (lang === 'en') {
-        days = greetingTranslation.en[3];
-        months = greetingTranslation.en[4];
-        conditions = greetingTranslation.en[1];
-        timeOfDay = greetingTranslation.en[0];
-        enter = greetingTranslation.en[5];
-        languageEl.textContent = greetingTranslation.en[6][0];
-        sourceEl.textContent = greetingTranslation.en[6][1];
-        todoEl.textContent = greetingTranslation.en[6][2];
-        todoButton.textContent = greetingTranslation.en[6][2];
-        today.textContent = greetingTranslation.en[7][0];
-        before.textContent = greetingTranslation.en[7][1];
-        todoViewCompleted.textContent = greetingTranslation.en[7][2];
-        todoViewAll.textContent = greetingTranslation.en[7][3];
-        todoDeleteCompleted.textContent = greetingTranslation.en[7][4];
-        todoDeleteAll.textContent = greetingTranslation.en[7][5];
-        todoGreetings.textContent = greetingTranslation.en[2];
-    } else {
-        days = greetingTranslation.be[3];
-        months = greetingTranslation.be[4];
-        conditions = greetingTranslation.be[1];
-        timeOfDay = greetingTranslation.be[0];
-        enter = greetingTranslation.be[5];
-        languageEl.textContent = greetingTranslation.be[6][0];
-        sourceEl.textContent = greetingTranslation.be[6][1];
-        todoEl.textContent = greetingTranslation.be[6][2];
-        todoButton.textContent = greetingTranslation.be[6][2];
-        today.textContent = greetingTranslation.be[7][0];
-        before.textContent = greetingTranslation.be[7][1];
-        todoViewCompleted.textContent = greetingTranslation.be[7][2];
-        todoViewAll.textContent = greetingTranslation.be[7][3];
-        todoDeleteCompleted.textContent = greetingTranslation.be[7][4];
-        todoDeleteAll.textContent = greetingTranslation.be[7][5];
-        todoGreetings.textContent = greetingTranslation.be[2];
+  localStorage.setItem('language', lang);
+  if (lang === 'en') {
+    days = greetingTranslation.en[3];
+    months = greetingTranslation.en[4];
+    conditions = greetingTranslation.en[1];
+    timeOfDay = greetingTranslation.en[0];
+    enter = greetingTranslation.en[5];
+    languageEl.textContent = greetingTranslation.en[6][0];
+    sourceEl.textContent = greetingTranslation.en[6][1];
+    todoEl.textContent = greetingTranslation.en[6][2];
+    todoButton.textContent = greetingTranslation.en[6][2];
+    today.textContent = greetingTranslation.en[7][0];
+    before.textContent = greetingTranslation.en[7][1];
+    all.textContent = greetingTranslation.en[7][2];
+    todoViewCompleted.textContent = greetingTranslation.en[7][3];
+    todoViewAll.textContent = greetingTranslation.en[7][4];
+    todoDeleteCompleted.textContent = greetingTranslation.en[7][5];
+    todoDeleteAll.textContent = greetingTranslation.en[7][6];
+    if (document.querySelector('.todoGreetings')) {
+      document.querySelector('.todoGreetings').textContent = greetingTranslation.en[2];
     }
-    getWeather(localStorage.getItem('city'), localStorage.getItem('language'));
+  } else {
+    days = greetingTranslation.be[3];
+    months = greetingTranslation.be[4];
+    conditions = greetingTranslation.be[1];
+    timeOfDay = greetingTranslation.be[0];
+    enter = greetingTranslation.be[5];
+    languageEl.textContent = greetingTranslation.be[6][0];
+    sourceEl.textContent = greetingTranslation.be[6][1];
+    todoEl.textContent = greetingTranslation.be[6][2];
+    todoButton.textContent = greetingTranslation.be[6][2];
+    today.textContent = greetingTranslation.be[7][0];
+    before.textContent = greetingTranslation.be[7][1];
+    all.textContent = greetingTranslation.be[7][2];
+    todoViewCompleted.textContent = greetingTranslation.be[7][3];
+    todoViewAll.textContent = greetingTranslation.be[7][4];
+    todoDeleteCompleted.textContent = greetingTranslation.be[7][5];
+    todoDeleteAll.textContent = greetingTranslation.be[7][6];
+    if (document.querySelector('.todoGreetings')) {
+      document.querySelector('.todoGreetings').textContent = greetingTranslation.be[2];
+    }
+
+  }
+  getWeather(localStorage.getItem('city'), localStorage.getItem('language'));
 }
 
-changeGreetingLang()
+changeGreetingLang();
 
 function showTime() {
-    const date = new Date();
-    timeNow.textContent = date.toLocaleTimeString();
-    let options = {day: 'numeric'};
-    day.textContent = `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.toLocaleDateString('be-Be', options)}`;
-    setTimeout(showTime, 1000);
-    date.getHours() >= 0 && date.getHours() < 6 ? greeting.textContent = `${timeOfDay[3]}, `
-        : date.getHours() >= 6 && date.getHours() < 12 ? greeting.textContent = `${timeOfDay[0]}, `
-            : date.getHours() >= 12 && date.getHours() < 18 ? greeting.textContent = `${timeOfDay[1]}, `
-                : greeting.textContent = `${timeOfDay[2]}, `;
+  const date = new Date();
+  timeNow.textContent = date.toLocaleTimeString();
+  let options = {day: 'numeric'};
+  day.textContent = `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.toLocaleDateString('be-Be', options)}`;
+  setTimeout(showTime, 1000);
+  date.getHours() >= 0 && date.getHours() < 6 ? greeting.textContent = `${timeOfDay[3]}, `
+      : date.getHours() >= 6 && date.getHours() < 12 ? greeting.textContent = `${timeOfDay[0]}, `
+          : date.getHours() >= 12 && date.getHours() < 18 ? greeting.textContent = `${timeOfDay[1]}, `
+              : greeting.textContent = `${timeOfDay[2]}, `;
 
-    window.partOfDay = Math.ceil(date.getHours() / 6);
+  window.partOfDay = Math.ceil(date.getHours() / 6);
 }
 
 showTime();
 
-document.getElementById('optic').addEventListener('click', () => {
-    if (document.getElementById('optic').value.length !== 0) {
-        document.getElementById('optic').classList.remove('name-optic');
-    }else {
-        document.getElementById('optic').classList.add('name-optic');
-    }
-});
-const winWidth = {
-    '2': 2.2,
-    '3': 1.7,
-    '4': 1.1,
-    '5': 0.8,
-    '6': 0.6,
-    '7': 0.45,
-    '8': 0.31,
-    '9': 0.25,
-    '10': 0.15,
-    '11': 0.12
-};
-const winMid = {
-    '2': 2.8,
-    '3': 2,
-    '4': 1.4,
-    '5': 1,
-    '6': 0.8,
-    '7': 0.55,
-    '8': 0.45,
-    '9': 0.35,
-    '10': 0.24,
-    '11': 0.17
-};
-const winSmall = {
-    '2': 4,
-    '3': 2.3,
-    '4': 1.5,
-    '5': 1.2,
-    '6': 0.9,
-    '7': 0.5,
-    '8': 0.5,
-    '9': 0.4,
-    '10': 0.17,
-    '11': 0.14
-};
-
 function setLocalStorage() {
-    localStorage.setItem('name', document.getElementById('optic').value);
-    localStorage.setItem('city', document.querySelector('.city').value);
-    localStorage.setItem('placeholder', enter);
-    localStorage.setItem('language', language);
+  localStorage.setItem('name', document.getElementById('optic').value);
+  localStorage.setItem('city', document.querySelector('.city').value);
+  // localStorage.setItem('placeholder', enter);
+  localStorage.setItem('language', language);
 }
 
 window.addEventListener('beforeunload', setLocalStorage);
 
 function getLocalStorage() {
-    if (localStorage.getItem('name')) {
-        document.getElementById('optic').value = localStorage.getItem('name');
-        document.querySelector('.city').value = localStorage.getItem('city');
-        document.getElementById('optic').classList.remove('name-optic');
-        getWeather(localStorage.getItem('city'), localStorage.getItem('language'));
-        document.querySelector('.name').placeholder = localStorage.getItem('placeholder');
-        changeGreetingLang(localStorage.getItem('language'))
-        for (let key in winWidth) {
-            if (window.innerWidth > 2500 && localStorage.getItem('name').length === parseInt(key)) {
-                document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winWidth[key]}vw`
-            } else if (window.innerWidth > 2000 && window.innerWidth < 2500 && localStorage.getItem('name').length === parseInt(key)) {
-                document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winMid[key]}vw`;
-            } else if (window.innerWidth < 2000 && localStorage.getItem('name').length === parseInt(key)) {
-                document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winSmall[key]}vw`
-            }
-        }
-    }
-    localStorage.getItem('placeholder', enter);
-    localStorage.setItem('language', language);
+  if (localStorage.getItem('name')) {
+    document.getElementById('optic').value = localStorage.getItem('name');
+    document.querySelector('.city').value = localStorage.getItem('city');
+    document.getElementById('optic').classList.remove('optic');
+    getWeather(localStorage.getItem('city'), localStorage.getItem('language'));
+    // document.querySelector('.name').placeholder = localStorage.getItem('placeholder');
+    changeGreetingLang(localStorage.getItem('language'));
+  }
+  // localStorage.getItem('placeholder', enter);
+  localStorage.setItem('language', language);
 }
-
-window.onresize = () => {
-    for (let key in winWidth) {
-        if (window.innerWidth > 2500 && localStorage.getItem('name').length === parseInt(key)) {
-            document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winWidth[key]}vw`
-        } else if (window.innerWidth > 2000 && window.innerWidth < 2500 && localStorage.getItem('name').length === parseInt(key)) {
-            document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winMid[key]}vw`;
-        } else if (window.innerWidth < 2000 && localStorage.getItem('name').length === parseInt(key)) {
-            document.querySelector('.name').style.maxWidth = `${50 - localStorage.getItem('name').length * winSmall[key]}vw`
-        }
-    }
-};
 
 window.addEventListener('load', getLocalStorage)
 let randomNum = 0;
 
 function getRandomNum(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    randomNum = (Math.floor(Math.random() * (max - min)) + min).toString();
-    if (randomNum.length === 1) {
-        randomNum = `0${randomNum}`;
-    }
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  randomNum = (Math.floor(Math.random() * (max - min)) + min).toString();
+  if (randomNum.length === 1) {
+    randomNum = `0${randomNum}`;
+  }
 }
 
 getRandomNum(1, 23);
 
 function getTimeOfDay() {
-    const date = new Date();
-    if (date.getHours() >= 0 && date.getHours() < 6) {
-        return 'night'
-    } else if (date.getHours() >= 6 && date.getHours() < 12) {
-        return 'morning'
-    } else if (date.getHours() >= 12 && date.getHours() < 18) {
-        return 'afternoon'
-    } else {
-        return 'evening'
-    }
+  const date = new Date();
+  if (date.getHours() >= 0 && date.getHours() < 6) {
+    return 'night'
+  } else if (date.getHours() >= 6 && date.getHours() < 12) {
+    return 'morning'
+  } else if (date.getHours() >= 12 && date.getHours() < 18) {
+    return 'afternoon'
+  } else {
+    return 'evening'
+  }
 }
 
 function setBg() {
-    if (linkSource === 1) {
-        const img = new Image();
-        img.src = "https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/" + getTimeOfDay() + '/' + randomNum + ".webp";
-        img.onload = () => {
-            document.body.style.backgroundImage = "url(" + img.src + ")";
-        };
-    } else if (linkSource === 2) {
-        getLinkToImageSplash()
-    } else if (linkSource === 3) {
-        getLinkToImageFlickr()
-    }
+  if (linkSource === 1) {
+    const img = new Image();
+    img.src = "https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/" + getTimeOfDay() + '/' + randomNum + ".webp";
+    img.onload = () => {
+      document.body.style.backgroundImage = "url(" + img.src + ")";
+    };
+  } else if (linkSource === 2) {
+    getLinkToImageSplash();
+  } else if (linkSource === 3) {
+    getLinkToImageFlickr();
+  }
 }
 
 
-/// работа с API
+/*todo работа с API погоды*/
 let linkSource = 1;
 window.addEventListener('click', function (event) {
-    if (event.target === document.querySelector('.git')) {
-        linkSource = 1;
-        document.querySelector('.sourceEl').classList.remove('source-active');
-        document.querySelector('.wrapSource').classList.remove('source-opacity');
-        setBg()
-    } else if (event.target === document.querySelector('.unsplash')) {
-        linkSource = 2;
-        document.querySelector('.sourceEl').classList.remove('source-active');
-        document.querySelector('.wrapSource').classList.remove('source-opacity');
-        setBg()
-    } else if (event.target === document.querySelector('.flickr')) {
-        linkSource = 3;
-        document.querySelector('.sourceEl').classList.remove('source-active');
-        document.querySelector('.wrapSource').classList.remove('source-opacity');
-        setBg()
-    }
+  if (event.target === document.querySelector('.git')) {
+    linkSource = 1;
+    document.querySelector('.sourceEl').classList.remove('source-active');
+    document.querySelector('.wrapSource').classList.remove('source-opacity');
+    setBg()
+  } else if (event.target === document.querySelector('.unsplash')) {
+    linkSource = 2;
+    document.querySelector('.sourceEl').classList.remove('source-active');
+    document.querySelector('.wrapSource').classList.remove('source-opacity');
+    setBg()
+  } else if (event.target === document.querySelector('.flickr')) {
+    linkSource = 3;
+    document.querySelector('.sourceEl').classList.remove('source-active');
+    document.querySelector('.wrapSource').classList.remove('source-opacity');
+    setBg()
+  }
 })
 
 async function getLinkToImageSplash() {
-    const url = 'https://api.unsplash.com/photos/random?query=morning&client_id=5m3CSy9wnRfmqHju9qJz8XvuqDQMyNFcvSF3RqoKB8c';
-    const res = await fetch(url);
-    const data = await res.json();
-    const img = new Image();
-    img.src = data.tags[setQuote(0, data.tags.length)].source.cover_photo.urls.regular;
-    img.onload = () => {
-        document.body.style.backgroundImage = "url(" + img.src + ")";
-    };
+  const url = 'https://api.unsplash.com/photos/random?query=morning&client_id=5m3CSy9wnRfmqHju9qJz8XvuqDQMyNFcvSF3RqoKB8c';
+  const res = await fetch(url);
+  const data = await res.json();
+  const img = new Image();
+  img.src = data.tags[setQuote(0, data.tags.length)].source.cover_photo.urls.regular;
+  img.onload = () => {
+    document.body.style.backgroundImage = "url(" + img.src + ")";
+  };
 }
 
 async function getLinkToImageFlickr() {
-    const url = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=083fd94699507eb26b98c882993ea07d&tags=nature&extras=url_l&format=json&nojsoncallback=1';
-    const res = await fetch(url);
-    const data = await res.json();
-    const img = new Image();
-    img.src = data.photos.photo[setQuote(0, data.photos.photo.length)].url_l;
-    img.onload = () => {
-        document.body.style.backgroundImage = "url(" + img.src + ")";
-    };
+  const url = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=083fd94699507eb26b98c882993ea07d&tags=nature&extras=url_l&format=json&nojsoncallback=1';
+  const res = await fetch(url);
+  const data = await res.json();
+  const img = new Image();
+  img.src = data.photos.photo[setQuote(0, data.photos.photo.length)].url_l;
+  img.onload = () => {
+    document.body.style.backgroundImage = "url(" + img.src + ")";
+  };
 }
 
 const prev = document.querySelector('.slide-prev');
 const next = document.querySelector('.slide-next');
 prev.addEventListener('click', function getSlidePrev() {
-    if (parseInt(randomNum) < 10) {
-        randomNum = (parseInt(randomNum) - 1).toString();
-        if (randomNum.length === 1) {
-            randomNum = `0${randomNum}`;
-        }
-    } else {
-        randomNum = (parseInt(randomNum) - 1).toString();
+  if (parseInt(randomNum) < 10) {
+    randomNum = (parseInt(randomNum) - 1).toString();
+    if (randomNum.length === 1) {
+      randomNum = `0${randomNum}`;
     }
-    if (parseInt(randomNum) === 0) {
-        randomNum = (22).toString();
-    }
-    setBg();
+  } else {
+    randomNum = (parseInt(randomNum) - 1).toString();
+  }
+  if (parseInt(randomNum) === 0) {
+    randomNum = (22).toString();
+  }
+  setBg();
 });
 next.addEventListener('click', function getSlideNext() {
-    if (parseInt(randomNum) < 10) {
-        randomNum = (parseInt(randomNum) + 1).toString();
-        if (randomNum.length === 1) {
-            randomNum = `0${randomNum}`;
-        }
-    } else {
-        randomNum = (parseInt(randomNum) + 1).toString();
+  if (parseInt(randomNum) < 10) {
+    randomNum = (parseInt(randomNum) + 1).toString();
+    if (randomNum.length === 1) {
+      randomNum = `0${randomNum}`;
     }
-    if (parseInt(randomNum) === 23) {
-        randomNum = 0 + (1).toString();
-    }
-    setBg();
+  } else {
+    randomNum = (parseInt(randomNum) + 1).toString();
+  }
+  if (parseInt(randomNum) === 23) {
+    randomNum = 0 + (1).toString();
+  }
+  setBg();
 });
 
 const weatherIcon = document.querySelector('.weather-icon');
@@ -566,31 +801,32 @@ const city = document.querySelector('.city');
 city.placeholder = 'Минск';
 
 async function getWeather(cit = 'Минск', language = 'be') {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cit}&lang=${language}&appid=260d225c65e849f7ad9e4bef2b25de91&units=metric`;
-    const res = await fetch(url);
-    const data = await res.json();
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${cit}&lang=${language}&appid=fcab25aa13ff1f57dc7fb3c098fd5113&units=metric`;
+  const res = await fetch(url);
+  const data = await res.json();
+  if (data) {
     weatherIcon.className = 'weather-icon owf';
-    weatherIcon.classList.add(`owf-${data.weather[0].id}`);
-    temperature.textContent = Math.ceil(`${data.main.temp}`) + '°C';
-    weatherDescription.textContent = data.weather[0].description;
-    wind.textContent = `${conditions[0]}: ${data.wind.speed} m/s`;
-    humidity.textContent = `${conditions[1]}: ${data.main.humidity}%`;
+    weatherIcon.classList.add(`owf-${data['weather'][0].id}`);
+    temperature.textContent = Math.ceil(Number(`${data['main']['temp']}`)) + '°C';
+    weatherDescription.textContent = data['weather'][0].description;
+    wind.textContent = `${conditions[0]}: ${data['wind'].speed} m/s`;
+    humidity.textContent = `${conditions[1]}: ${data['main']['humidity']}%`;
+  }
 }
 
 getWeather();
 
 
 city.addEventListener('change', function () {
-    getWeather(city.value, language);
+  getWeather(city.value, language);
 });
 
-// ---- > высказывания
-
+/*todo ---- > высказывания*/
 async function getQuotes() {
-    const quotes = 'https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/date.json';
-    const res = await fetch(quotes);
-    const data = await res.json();
-    setText(data);
+  const quotes = 'https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/date.json';
+  const res = await fetch(quotes);
+  const data = await res.json();
+  setText(data);
 }
 
 getQuotes();
@@ -598,34 +834,32 @@ getQuotes();
 let rotate = 0;
 
 document.querySelector('.change-quote').addEventListener('click', () => {
-    rotate += 360;
-    document.querySelector('.change-quote').style.transform = "rotate(" + rotate + "deg)";
-    getQuotes();
+  document.querySelector('.change-quote').style.transform = "rotate(360deg)";
+  getQuotes();
 });
 
 function setQuote(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    randomNum = (Math.floor(Math.random() * (max - min)) + min).toString();
-    return randomNum
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  randomNum = (Math.floor(Math.random() * (max - min)) + min).toString();
+  return randomNum
 }
 
 function setText(data) {
-    if (language === 'en') {
-        let textNum = setQuote(0, Object.keys(data[0]).length);
-        document.querySelector('.quote').textContent = `"${data[1][textNum].text}"`;
-        document.querySelector('.author').textContent = data[1][textNum].author;
-    } else {
-        let textNum = setQuote(0, Object.keys(data[1]).length);
-        document.querySelector('.quote').textContent = `"${data[0][textNum].text}"`;
-        document.querySelector('.author').textContent = data[0][textNum].author;
-    }
-
+  if (language === 'en') {
+    let textNum = setQuote(0, Object.keys(data[0]).length);
+    document.querySelector('.quote').textContent = `"${data[1][textNum].text}"`;
+    document.querySelector('.author').textContent = data[1][textNum].author;
+  } else {
+    let textNum = setQuote(0, Object.keys(data[1]).length);
+    document.querySelector('.quote').textContent = `"${data[0][textNum].text}"`;
+    document.querySelector('.author').textContent = data[0][textNum].author;
+  }
 }
 
 
-// --- > ПЛЕЕР
-import playList from './playList.js';  // импортируем дынные по названию трека, его местоположении и продолжительности
+/*todo --- > ПЛЕЕР */
+import playList from './playList.js'; // импортируем дынные по названию трека, его местоположении и продолжительности
 
 let isPlay = false; // устанавливаем начальный флаг для логики стар/стоп
 const audio = new Audio(); // создаем объект
@@ -633,10 +867,10 @@ let playNum = 0; // выбор - стартовый номер трека пос
 
 // средствами JS создаем элементы HTML для отображения предустановленного плейлиста
 playList.forEach(el => {
-    const li = document.createElement('li');
-    document.querySelector('.play-list').append(li);
-    li.classList.add('play__list__item');
-    li.textContent = el["title"];
+  const li = document.createElement('li');
+  document.querySelector('.play-list').append(li);
+  li.classList.add('play__list__item');
+  li.textContent = el["title"];
 })
 const lastElem = document.querySelector('.player').lastChild.previousSibling;
 // bar
@@ -681,163 +915,158 @@ document.querySelector('.bar').append(time);
 
 // логика воспроизведения - паузы + анимация
 document.querySelector('.play').addEventListener('click', () => {
-    if (!isPlay) {
-        playAudio();
-        isPlay = true;
-    } else if (document.querySelector('.play').classList.contains('pause')) {
-        pauseAudio();
-    }
-    document.querySelector('.play').classList.toggle('pause');
+  if (!isPlay) {
+    playAudio();
+    isPlay = true;
+  } else if (document.querySelector('.play').classList.contains('pause')) {
+    pauseAudio();
+  }
+  document.querySelector('.play').classList.toggle('pause');
 });
 
 const timeChange = bar.querySelector('.playLine');
 let currentTime = 0;
 timeChange.addEventListener('click', e => {
-    const sliderWidth = window.getComputedStyle(timeChange).width;
-    audio.currentTime = e.offsetX /
-        parseInt(sliderWidth) * (parseInt(playList[playNum].duration.split(':')[0]) * 60 + parseInt(playList[playNum].duration.split(':')[1]));
-    bar.querySelector(".progress").style.width = e.offsetX + '%';
-    currentTime = audio.currentTime;
+  const sliderWidth = window.getComputedStyle(timeChange).width;
+  audio.currentTime = e.offsetX /
+      parseInt(sliderWidth) * (parseInt(playList[playNum].duration.split(':')[0]) * 60 + parseInt(playList[playNum].duration.split(':')[1]));
+  bar.querySelector(".progress").style.width = e.offsetX + '%';
+  currentTime = audio.currentTime;
 }, false);
 
 function playAudio() {
-    audio.src = playList[playNum].src;
-    audio.play(playNum);
-    audio.currentTime = currentTime;
-    colorText(playNum);
-    let outTime
-    audio.addEventListener('timeupdate', () => {
-        audio.currentTime.toFixed(0) < 10 ?
-            outTime = `0:0${audio.currentTime.toFixed(0)}`
-            : audio.currentTime.toFixed(0) < 60 ?
-                outTime = `0:${audio.currentTime.toFixed(0)}`
-                : outTime = `${Math.floor((audio.currentTime.toFixed(0) / 60)).toString()}:${(audio.currentTime.toFixed(0) % 60).toString().padStart(2, '0')}`
-        time.textContent = `${outTime} / ${playList[playNum].duration}`;
-        progress.style.width = `${audio.currentTime.toFixed(0) / (parseInt(playList[playNum].duration.split(':')[0]) * 60 + parseInt(playList[playNum].duration.split(':')[1])) * 100}%`;
-        if (progress.style.width === '100%') {
-            playNext();
-        }
-    });
-    document.querySelector('.play-time').classList.add('visible');
-    document.querySelector('.progress').classList.add('visible');
-    document.querySelector('.playLine').classList.add('visible');
-    document.querySelector('.pres').classList.add('visible');
-    document.querySelector('.pres').textContent = playList[playNum].title;
-    document.querySelector('.volume').classList.add('visible');
-    isPlay = true;
+  audio.src = playList[playNum].src;
+  audio.play(playNum);
+  audio.currentTime = currentTime;
+  colorText(playNum);
+  let outTime
+  audio.addEventListener('timeupdate', () => {
+    audio.currentTime.toFixed(0) < 10 ?
+        outTime = `0:0${audio.currentTime.toFixed(0)}`
+        : audio.currentTime.toFixed(0) < 60 ?
+            outTime = `0:${audio.currentTime.toFixed(0)}`
+            : outTime = `${Math.floor((audio.currentTime.toFixed(0) / 60)).toString()}:${(audio.currentTime.toFixed(0) % 60).toString().padStart(2, '0')}`
+    time.textContent = `${outTime} / ${playList[playNum].duration}`;
+    progress.style.width = `${audio.currentTime.toFixed(0) / (parseInt(playList[playNum].duration.split(':')[0]) * 60 + parseInt(playList[playNum].duration.split(':')[1])) * 100}%`;
+    if (progress.style.width === '100%') {
+      playNext();
+    }
+  });
+  document.querySelector('.play-time').classList.add('visible');
+  document.querySelector('.progress').classList.add('visible');
+  document.querySelector('.playLine').classList.add('visible');
+  document.querySelector('.pres').classList.add('visible');
+  document.querySelector('.pres').textContent = playList[playNum].title;
+  document.querySelector('.volume').classList.add('visible');
+  isPlay = true;
 }
 
 function pauseAudio() {
-    audio.pause();
-    document.querySelector('.play-list').children[playNum].classList.remove('active');
-    document.querySelector('.play-list').children[playNum].style.color = 'white';
-    document.querySelector('.play-list').children[playNum].style.textShadow = "none";
-    isPlay = false;
+  audio.pause();
+  document.querySelector('.play-list').children[playNum].classList.remove('active');
+  document.querySelector('.play-list').children[playNum].style.color = 'white';
+  document.querySelector('.play-list').children[playNum].style.textShadow = "none";
+  isPlay = false;
 }
 
 document.querySelector('.play-next').addEventListener('click', () => {
-    playNext();
+  playNext();
 });
 document.querySelector('.play-prev').addEventListener('click', () => {
-    playPrev();
+  playPrev();
 });
 
 function playNext() {
-    if (isPlay) {
-        if (playNum === playList.length - 1) {
-            playNum = 0;
-        } else {
-            playNum += 1;
-        }
-        currentTime = 0;
-        playAudio(playNum);
-        colorText(playNum);
+  if (isPlay) {
+    if (playNum === playList.length - 1) {
+      playNum = 0;
+    } else {
+      playNum += 1;
     }
+    currentTime = 0;
+    playAudio(playNum);
+    colorText(playNum);
+  }
 }
 
 function playPrev() {
-    if (isPlay) {
-        if (playNum === 0) {
-            playNum = playList.length - 1;
-        } else {
-            playNum -= 1;
-        }
-        currentTime = 0;
-        playAudio(playNum);
-        colorText(playNum);
+  if (isPlay) {
+    if (playNum === 0) {
+      playNum = playList.length - 1;
+    } else {
+      playNum -= 1;
     }
+    currentTime = 0;
+    playAudio(playNum);
+    colorText(playNum);
+  }
 }
 
 document.querySelector('.play-list').addEventListener('click', function (event) {
-    if (event.target.classList.contains('active')
-        || (event.target.classList.contains('active') && (event.target.classList.contains('pause')))) {
-        pauseAudio();
-        document.querySelector('.play').classList.remove('pause');
-        document.querySelector('.active').classList.remove('active');
-    } else if (!event.target.classList.contains('active') && !document.querySelector('.play').classList.contains('pause')) {
-        playList.forEach(function (e, i) {
-            if (e["title"] === event.target.textContent) {
-                event.target.classList.add('active');
-                document.querySelector('.play').classList.add('pause');
-                document.querySelector('.pres').textContent = event.target.textContent;
-                currentTime = 0;
-                playNum = i;
-                playAudio(playNum);
-            }
-        })
-    } else if (!event.target.classList.contains('active') && document.querySelector('.play').classList.contains('pause')) {
-        playList.forEach(function (e, i) {
-            if (e["title"] === event.target.textContent) {
-                event.target.classList.add('active');
-                document.querySelector('.pres').textContent = event.target.textContent;
-                currentTime = 0;
-                playNum = i;
-                playAudio(playNum);
-            }
-        })
-    }
+  if (event.target.classList.contains('active')
+      || (event.target.classList.contains('active') && (event.target.classList.contains('pause')))) {
+    pauseAudio();
+    document.querySelector('.play').classList.remove('pause');
+    document.querySelector('.active').classList.remove('active');
+  } else if (!event.target.classList.contains('active') && !document.querySelector('.play').classList.contains('pause')) {
+    playList.forEach(function (e, i) {
+      if (e["title"] === event.target.textContent) {
+        event.target.classList.add('active');
+        document.querySelector('.play').classList.add('pause');
+        document.querySelector('.pres').textContent = event.target.textContent;
+        currentTime = 0;
+        playNum = i;
+        playAudio(playNum);
+      }
+    })
+  } else if (!event.target.classList.contains('active') && document.querySelector('.play').classList.contains('pause')) {
+    playList.forEach(function (e, i) {
+      if (e["title"] === event.target.textContent) {
+        event.target.classList.add('active');
+        document.querySelector('.pres').textContent = event.target.textContent;
+        currentTime = 0;
+        playNum = i;
+        playAudio(playNum);
+      }
+    })
+  }
 })
 
 function colorText() {
-    for (let i = 0; i <= playList.length - 1; i++) {
-        if (i === playNum) {
-            document.querySelector('.play-list').children[i].style.color = '#f6d1d1';
-            document.querySelector('.play-list').children[i].style.textShadow = "0 0 10px white";
-            document.querySelector('.play-list').children[i].classList.add('active');
-        } else {
-            document.querySelector('.play-list').children[i].style.color = 'white';
-            document.querySelector('.play-list').children[i].style.textShadow = "none";
-            document.querySelector('.play-list').children[i].classList.remove('active');
-        }
+  for (let i = 0; i <= playList.length - 1; i++) {
+    if (i === playNum) {
+      document.querySelector('.play-list').children[i].style.color = '#f6d1d1';
+      document.querySelector('.play-list').children[i].style.textShadow = "0 0 10px white";
+      document.querySelector('.play-list').children[i].classList.add('active');
+    } else {
+      document.querySelector('.play-list').children[i].style.color = 'white';
+      document.querySelector('.play-list').children[i].style.textShadow = "none";
+      document.querySelector('.play-list').children[i].classList.remove('active');
     }
+  }
 }
 
 
 const volumeChange = bar.querySelector('.volchange');
 volumeChange.addEventListener('click', e => {
-    audio.volume = .75;
-    const sliderWidth = window.getComputedStyle(volumeChange).width;
-    const newVolume = e.offsetX / parseInt(sliderWidth);
-    audio.volume = newVolume;
-    bar.querySelector(".change").style.width = newVolume * 100 + '%';
+  audio.volume = .75;
+  const sliderWidth = window.getComputedStyle(volumeChange).width;
+  const newVolume = e.offsetX / parseInt(sliderWidth);
+  audio.volume = newVolume;
+  bar.querySelector(".change").style.width = newVolume * 100 + '%';
 }, false)
 
 document.querySelector('.volume').addEventListener('click', (e) => {
-    if (e.target.classList.contains('off')) {
-        audio.volume = .75;
-        bar.querySelector(".change").style.width = '75%';
-        document.querySelector('.volume').classList.remove('off');
-    } else {
-        audio.volume = 0;
-        bar.querySelector(".change").style.width = '0%';
-        document.querySelector('.volume').classList.add('off');
-    }
+  if (e.target.classList.contains('off')) {
+    audio.volume = .75;
+    bar.querySelector(".change").style.width = '75%';
+    document.querySelector('.volume').classList.remove('off');
+  } else {
+    audio.volume = 0;
+    bar.querySelector(".change").style.width = '0%';
+    document.querySelector('.volume').classList.add('off');
+  }
 });
-
-
-
-
-
 
 
 
