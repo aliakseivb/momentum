@@ -808,7 +808,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   position: fixed;
-  bottom: 400px;
+  bottom: calc(50% - 100px);
   right: 15px;
   width: 300px;
   max-height: 300px;
