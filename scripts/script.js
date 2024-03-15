@@ -8,50 +8,73 @@ const timeNow = document.querySelector('.time')
 const day = document.querySelector('.date');
 const greeting = document.querySelector('.greeting');
 const userName = document.querySelector('.name');
+let widthInput = 0;
 
+
+window.addEventListener('beforeunload', setLocalStorage);
 
 document.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('name').length) {
+    document.getElementById('optic').value = localStorage.getItem('name');
+    document.querySelector('.city').value = localStorage.getItem('city');
+    document.getElementById('optic').classList.remove('optic');
+    getWeather(localStorage.getItem('city'), localStorage.getItem('language'));
+    changeGreetingLang(localStorage.getItem('language'));
+  }
+  // localStorage.setItem('language', language);
   let name = localStorage.getItem('name');
+
   count = getToDoData() ? getToDoData().count : 0;
   all.classList.add('show');
   if (name) {
     userName.value = name;
-    userName.style.width = (userName.value.length * 30) + 'px';
+    widthInput = returnWidth(userName.value);
+    userName.style.width = widthInput + 'px';
+    widthInput = 0;
     return
   }
-  userName.style.maxWidth = (userName.placeholder.length * 30) + 'px';
-
+  widthInput = returnWidth(userName.placeholder);
+  userName.style.maxWidth = widthInput + 'px';
+  widthInput = 0;
 });
+
+function returnWidth(str) {
+  const shadowElem = document.createElement('span');
+  shadowElem.innerText = str;
+  shadowElem.style.fontSize = '60px';
+  document.body.append(shadowElem);
+  widthInput = shadowElem.offsetWidth;
+  shadowElem.remove()
+  return widthInput;
+}
 
 userName.addEventListener('change', () => {
   if (!userName.value) {
     userName.classList.add('optic');
-    userName.style.width = (userName.placeholder.length) * 30 + 'px';
+    userName.style.width = returnWidth(userName.placeholder) + 'px';
     return
   }
   userName.classList.remove('optic');
-  userName.style.width = ((userName.value.length) * 30) + 'px';
+  userName.style.width = returnWidth(userName.value) + 'px';
 });
 
 userName.addEventListener('input', () => {
   if (!userName.value) {
-    userName.style.width = (userName.placeholder.length) * 30 + 'px';
+    userName.style.width = returnWidth(userName.placeholder) + 'px';
     return
   }
   userName.classList.remove('optic');
-  userName.style.width = ((userName.value.length) * 30) + 10 + 'px';
+  userName.style.width = returnWidth(userName.value) + 'px';
 });
 
-userName.addEventListener('keydown', () => {
-  userName.style.width = ((userName.value.length + 1) * 30) + 'px';
-});
 userName.addEventListener('blur', () => {
   if (!userName.value) {
     userName.classList.add('optic');
-    userName.style.width = (userName.placeholder.length) * 30 + 'px';
+    userName.style.width = returnWidth(userName.placeholder) + 'px';
     return
   }
-  userName.style.width = ((userName.value.length) * 30) + 'px';
+  userName.classList.remove('optic');
+  userName.style.width = returnWidth(userName.value) + 'px';
 });
 
 
@@ -195,9 +218,13 @@ todoMenu.addEventListener('click', (e) => {
   if (document.querySelector('.closeCompleted')) {
     document.querySelector('.closeCompleted').removeEventListener('click', close);
   }
-  toDoData.toDoItemArray.forEach(item => {
-    checkContainer.insertAdjacentHTML(`beforeend`, `<label id=${item.id} class="lbl"><input type="checkbox" ${item.done ? 'checked' : ''} class="inp-todo"><span>${item.text}</span></label>`);
-  });
+  if (toDoData) {
+    toDoData.toDoItemArray.forEach(item => {
+      checkContainer.insertAdjacentHTML(`beforeend`, `<label id=${item.id} class="lbl"><input type="checkbox" ${item.done ? 'checked' : ''} class="inp-todo"><span>${item.text}</span></label>`);
+    });
+  } else {
+   // some code here
+  }
 });
 
 
@@ -208,9 +235,9 @@ const inputText = document.createElement('input');
 inputText.classList.add('inputText');
 inputText.setAttribute('type', 'text');
 inputText.setAttribute('id', 'todotext');
-if(localStorage.getItem('language') === 'en'){
+if (localStorage.getItem('language') === 'en') {
   inputText.setAttribute('placeholder', 'New ToDo');
-}else if(localStorage.getItem('language') === 'be'){
+} else if (localStorage.getItem('language') === 'be') {
   inputText.setAttribute('placeholder', 'Дадаць запіс');
 }
 inputText.setAttribute('autocomplete', 'off');
@@ -277,6 +304,9 @@ if (todoOptions) {
       });
       ev.target.classList.add('show');
       const toDoData = getToDoData();
+      if (!toDoData) {
+        return
+      }
       checkContainer.innerHTML = '';
       switch (ev.target.dataset.name) {
         case 'all': {
@@ -658,20 +688,18 @@ function setLocalStorage() {
   localStorage.setItem('language', language);
 }
 
-window.addEventListener('beforeunload', setLocalStorage);
+// function getLocalStorage() {
+//   if (localStorage.getItem('name')) {
+//     document.getElementById('optic').value = localStorage.getItem('name');
+//     document.querySelector('.city').value = localStorage.getItem('city');
+//     document.getElementById('optic').classList.remove('optic');
+//     getWeather(localStorage.getItem('city'), localStorage.getItem('language'));
+//     changeGreetingLang(localStorage.getItem('language'));
+//   }
+//   localStorage.setItem('language', language);
+// }
 
-function getLocalStorage() {
-  if (localStorage.getItem('name')) {
-    document.getElementById('optic').value = localStorage.getItem('name');
-    document.querySelector('.city').value = localStorage.getItem('city');
-    document.getElementById('optic').classList.remove('optic');
-    getWeather(localStorage.getItem('city'), localStorage.getItem('language'));
-    changeGreetingLang(localStorage.getItem('language'));
-  }
-  localStorage.setItem('language', language);
-}
 
-window.addEventListener('load', getLocalStorage)
 let randomNum = 0;
 
 function getRandomNum(min, max) {
@@ -793,10 +821,14 @@ const weatherDescription = document.querySelector('.weather-description');
 const humidity = document.querySelector('.humidity');
 const wind = document.querySelector('.wind');
 const city = document.querySelector('.city');
-city.placeholder = 'Минск';
+if (!localStorage.getItem('city').length) {
+  city.value = 'Минск';
+}
+getWeather();
 
-async function getWeather(cit = 'Минск', language = 'be') {
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${cit}&lang=${language}&appid=fcab25aa13ff1f57dc7fb3c098fd5113&units=metric`;
+
+async function getWeather(town = 'Минск', language = 'be') {
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${town}&lang=${language}&appid=fcab25aa13ff1f57dc7fb3c098fd5113&units=metric`;
   const res = await fetch(url);
   const data = await res.json();
   if (data) {
@@ -808,7 +840,6 @@ async function getWeather(cit = 'Минск', language = 'be') {
     humidity.textContent = `${conditions[1]}: ${data['main']['humidity']}%`;
   }
 }
-getWeather();
 
 
 city.addEventListener('change', function () {
@@ -828,7 +859,7 @@ getQuotes();
 const changeQuote = document.querySelector('.change-quote');
 changeQuote.addEventListener('click', () => {
   changeQuote.classList.add('rotate');
-  setTimeout(()=> {
+  setTimeout(() => {
     changeQuote.classList.remove('rotate');
   }, 1000);
 
