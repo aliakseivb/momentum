@@ -3,25 +3,36 @@ let months
 let conditions
 let timeOfDay
 let enter
+let widthInput = 0;
 let language = localStorage.getItem('language') || 'be';
 const timeNow = document.querySelector('.time')
 const day = document.querySelector('.date');
 const greeting = document.querySelector('.greeting');
 const userName = document.querySelector('.name');
-let widthInput = 0;
+const weatherIcon = document.querySelector('.weather-icon');
+const temperature = document.querySelector('.temperature');
+const weatherDescription = document.querySelector('.weather-description');
+const humidity = document.querySelector('.humidity');
+const wind = document.querySelector('.wind');
+const city = document.querySelector('.city');
 
 
 window.addEventListener('beforeunload', setLocalStorage);
 
 document.addEventListener('DOMContentLoaded', () => {
   if (localStorage.getItem('name').length) {
-    document.getElementById('optic').value = localStorage.getItem('name');
-    document.querySelector('.city').value = localStorage.getItem('city');
-    document.getElementById('optic').classList.remove('optic');
-    getWeather(localStorage.getItem('city'), localStorage.getItem('language'));
+    userName.classList.remove('optic');
+    userName.value = localStorage.getItem('name');
+    city.value = localStorage.getItem('city');
+    getWeather(localStorage.getItem('city'), localStorage.getItem('language') || 'be');
     changeGreetingLang(localStorage.getItem('language'));
+  } else {
+    if (!localStorage.getItem('city').length) {
+      city.value = 'Минск';
+    }
+    getWeather();
+
   }
-  // localStorage.setItem('language', language);
   let name = localStorage.getItem('name');
 
   count = getToDoData() ? getToDoData().count : 0;
@@ -37,11 +48,40 @@ document.addEventListener('DOMContentLoaded', () => {
   userName.style.maxWidth = widthInput + 'px';
   widthInput = 0;
 });
+window.addEventListener('resize', () => {
+  let name = localStorage.getItem('name');
+  if (window.innerWidth <= 768 && window.innerWidth > 400) {
+    if (userName.value) {
+      userName.value = name;
+      widthInput = returnWidth(userName.value, 32);
+      userName.style.width = widthInput + 'px';
+      widthInput = 0;
+      return
+    }
+  }
+  if (window.innerWidth <= 400) {
+    if (userName.value) {
+      userName.value = name;
+      widthInput = returnWidth(userName.value, 22);
+      userName.style.width = widthInput + 'px';
+      widthInput = 0;
+      return
+    }
+  }
+  if (userName.value) {
+    userName.value = name;
+    widthInput = returnWidth(userName.value, 60);
+    userName.style.width = widthInput + 'px';
+    widthInput = 0;
+    return
+  }
+});
 
-function returnWidth(str) {
+function returnWidth(str, size = 60) {
   const shadowElem = document.createElement('span');
+
+  shadowElem.style.fontSize = size + 'px';
   shadowElem.innerText = str;
-  shadowElem.style.fontSize = '60px';
   document.body.append(shadowElem);
   widthInput = shadowElem.offsetWidth;
   shadowElem.remove()
@@ -223,7 +263,7 @@ todoMenu.addEventListener('click', (e) => {
       checkContainer.insertAdjacentHTML(`beforeend`, `<label id=${item.id} class="lbl"><input type="checkbox" ${item.done ? 'checked' : ''} class="inp-todo"><span>${item.text}</span></label>`);
     });
   } else {
-   // some code here
+    // some code here
   }
 });
 
@@ -572,7 +612,6 @@ document.querySelector('.angle').addEventListener('click', function (e) {
 })
 
 
-//  еще один способ закрыть меню по клику вне его
 window.onclick = function (event) {
   if (!event.target.matches('.angle')) {
     let dropdowns = document.getElementsByClassName("optionLanguage");
@@ -590,7 +629,7 @@ window.onclick = function (event) {
       getWeather(localStorage.getItem('city'), e.target.textContent);
       document.querySelector('.name').placeholder = enter;
       document.querySelector('.optionLanguage').classList.toggle('open')
-    })
+    });
   }
 }
 const greetingTranslation =
@@ -636,6 +675,7 @@ function changeGreetingLang(lang = 'be') {
     todoViewAll.textContent = greetingTranslation.en[7][4];
     todoDeleteCompleted.textContent = greetingTranslation.en[7][5];
     todoDeleteAll.textContent = greetingTranslation.en[7][6];
+    inputText.setAttribute('placeholder', greetingTranslation.en[2]);
     if (document.querySelector('.todoGreetings')) {
       document.querySelector('.todoGreetings').textContent = greetingTranslation.en[2];
     }
@@ -656,6 +696,7 @@ function changeGreetingLang(lang = 'be') {
     todoViewAll.textContent = greetingTranslation.be[7][4];
     todoDeleteCompleted.textContent = greetingTranslation.be[7][5];
     todoDeleteAll.textContent = greetingTranslation.be[7][6];
+    inputText.setAttribute('placeholder', greetingTranslation.be[2]);
     if (document.querySelector('.todoGreetings')) {
       document.querySelector('.todoGreetings').textContent = greetingTranslation.be[2];
     }
@@ -683,8 +724,8 @@ function showTime() {
 showTime();
 
 function setLocalStorage() {
-  localStorage.setItem('name', document.getElementById('optic').value);
-  localStorage.setItem('city', document.querySelector('.city').value);
+  localStorage.setItem('name', userName.value);
+  localStorage.setItem('city', city.value);
   localStorage.setItem('language', language);
 }
 
@@ -814,17 +855,6 @@ next.addEventListener('click', function getSlideNext() {
   }
   setBg();
 });
-
-const weatherIcon = document.querySelector('.weather-icon');
-const temperature = document.querySelector('.temperature');
-const weatherDescription = document.querySelector('.weather-description');
-const humidity = document.querySelector('.humidity');
-const wind = document.querySelector('.wind');
-const city = document.querySelector('.city');
-if (!localStorage.getItem('city').length) {
-  city.value = 'Минск';
-}
-getWeather();
 
 
 async function getWeather(town = 'Минск', language = 'be') {

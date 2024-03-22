@@ -18,6 +18,7 @@ body {
   background: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/evening/21.webp") center/cover, rgba(0, 0, 0, 0.5);
   background-blend-mode: multiply;
   transition: background-image 1s ease-in-out;
+  overflow: hidden;
 }
 
 .header {
@@ -30,6 +31,10 @@ body {
   padding: 20px;
 }
 
+.player {
+  position: relative;
+  z-index: 5;
+}
 
 .player-controls {
   display: flex;
@@ -39,14 +44,9 @@ body {
   margin-bottom: 10px;
 }
 
-.play-list {
-  text-align: left;
-}
-
 .play-item {
   position: relative;
-  padding: 5px;
-  padding-left: 20px;
+  padding: 5px 5px 5px 20px;
   list-style: none;
   opacity: .8;
   cursor: pointer;
@@ -74,7 +74,7 @@ body {
 .change-quote {
   width: 32px;
   height: 32px;
-  background-size: 32px 32px;
+  background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-color: transparent;
@@ -85,17 +85,16 @@ body {
   transition: .5s;
 }
 
+.play.player-icon {
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+}
+
 .player-icon:hover,
 .slider-icon:hover,
 .change-quote:hover {
   opacity: 1;
-}
-
-.player-icon:active,
-.slider-icon:active,
-.change-quote:active {
-  border: 0;
-  outline: 0;
   transform: scale(1.1);
 }
 
@@ -104,11 +103,13 @@ body {
   animation-duration: 1s;
   animation-fill-mode: forwards;
 }
+
 @keyframes rotate {
   to {
     transform: rotate(360deg);
   }
 }
+
 .play {
   width: 40px;
   height: 40px;
@@ -130,17 +131,12 @@ body {
 
 .wrapOption {
   display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   position: fixed;
-  width: 200px;
-  height: 200px;
   background: transparent;
   top: 25px;
-  right: 250px;
-}
-
-.wrapOption:hover .angle {
-  opacity: 50%;
-  transition: .6s ease-out;
+  right: 220px;
 }
 
 .angle {
@@ -148,13 +144,12 @@ body {
   color: transparent;
   width: 20px;
   height: 20px;
-  position: absolute;
   background-size: cover;
   background-repeat: no-repeat;
   background-color: transparent;
-  opacity: 10%;
-  right: 0;
+  opacity: 20%;
   cursor: pointer;
+  margin-bottom: 10px;
 }
 
 .wrapOption .angle:hover {
@@ -164,11 +159,8 @@ body {
 .optionLanguage {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  position: absolute;
   width: 50px;
   height: 25px;
-  top: 30px;
-  right: 0;
   background: #f8e2e2;
   box-sizing: border-box;
   border-radius: 6px;
@@ -337,9 +329,8 @@ body {
 
 .play-list {
   list-style: none;
-  margin-top: 5px;
   position: relative;
-  order: 1;
+  text-align: left;
 }
 
 .play__list__item {
@@ -390,8 +381,7 @@ body {
   justify-content: space-between;
   align-items: flex-start;
   row-gap: 5px;
-  width: 180px;
-  min-height: 180px;
+  width: 170px;
   text-align: left;
 }
 
@@ -412,11 +402,9 @@ body {
 }
 
 .city {
-  width: 170px;
-  height: 34px;
+  width: 100%;
   padding: 5px;
   font-size: 20px;
-  line-height: 24px;
   color: #fff;
   border: 0;
   outline: 0;
@@ -480,18 +468,12 @@ body {
 }
 
 .greeting {
-  /*flex: 1;*/
-  /*padding: 10px;*/
   text-align: right;
   margin-right: 10px;
 }
 
 .name {
   display: inline-block;
-  /*padding-left: 10px;*/
-  /*flex: 1;*/
-  /*max-width: 50%;*/
-  /*padding: 10px;*/
   font-family: "Times New Roman", sans-serif;
   font-size: 60px;
   text-align: left;
@@ -515,7 +497,6 @@ body {
 .name:focus {
   animation: none;
 }
-
 
 @keyframes optic {
   81% {
@@ -552,7 +533,7 @@ body {
   width: 100%;
   height: 30vh;
   min-height: 160px;
-  padding: 20px;
+  padding: 20px 20px 40px;
 }
 
 .change-quote {
@@ -562,12 +543,13 @@ body {
 }
 
 .quote {
-  min-height: 32px;
+  margin: 0 auto 20px;
   font-size: 18px;
+  text-shadow: #f8e0e0 1px 0 10px;
 }
 
 .author {
-  min-height: 20px;
+  font-size: 18px;
 }
 
 .setBtn {
@@ -595,31 +577,34 @@ body {
   justify-content: start;
   position: absolute;
   bottom: 10px;
-  left: -220px;
-  width: 200px;
-  opacity: 100%;
+  left: -170px;
+  width: max-content;
+  opacity: 0;
   cursor: pointer;
   box-sizing: border-box;
   border: none;
   border-radius: 5px;
   transition: all .7s ease-out;
   box-shadow: 0 0 10px 1px rgb(255 255 255 / 80%);
-  padding-bottom: 45px;
+  padding-bottom: 25px;
+  z-index: 5;
 }
 
 .set.open {
-  transform: translateX(230px);
+  transform: translateX(180px);
+  opacity: 1;
 }
 
 .setClose {
-  width: 20px;
-  height: 20px;
+  width: 12px;
+  height: 12px;
   display: block;
   position: absolute;
-  right: 15px;
-  bottom: 15px;
+  right: 12px;
+  bottom: 8px;
   background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/angle-down-white.png");
-  background-size: 100%;
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
   transform: rotate(90deg);
   opacity: 50%;
@@ -637,10 +622,10 @@ body {
 .sourceEl,
 .todoEl {
   width: 100%;
-  padding: 10px 10px;
+  padding: 10px 15px;
   text-align: left;
   color: white;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
   box-sizing: border-box;
   border-bottom: 1px solid #2e3035;
@@ -650,19 +635,19 @@ body {
 .languageEl:hover {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  background: black;
+  background: #474747;
   color: white;
 }
 
 .lang-active {
-  background: black;
+  background: #474747;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
 
 .sourceEl:hover,
 .todoEl:hover {
-  background: black;
+  background: #474747;
   color: white;
 }
 
@@ -692,7 +677,7 @@ body {
 
 .wrapBe:hover,
 .wrapEn:hover {
-  background: #564949;
+  background: #474747;
   color: white;
 }
 
@@ -706,7 +691,7 @@ body {
 }
 
 .source-active {
-  background: black;
+  background: #474747;
 }
 
 .source-opacity {
@@ -718,7 +703,6 @@ body {
 .flickr {
   display: flex;
   color: #171616;
-  padding: 10px 10px;
   align-items: center;
   justify-content: center;
   font-weight: 800;
@@ -742,34 +726,13 @@ body {
 .git:hover,
 .unsplash:hover,
 .flickr:hover {
-  background: #564949;
+  background: #474747;
   color: white;
   opacity: 80%;
 }
 
 .todoEl-active {
   background: black;
-}
-
-@media (max-width: 768px) {
-  .time {
-    min-height: 80px;
-    font-size: 72px;
-  }
-
-  .greeting-container {
-    min-height: 40px;
-    font-size: 32px;
-  }
-
-  .greeting {
-    padding: 5px;
-  }
-
-  .name {
-    font-size: 32px;
-    padding: 5px;
-  }
 }
 
 .todoButton {
@@ -790,17 +753,22 @@ body {
   opacity: 0;
   position: absolute;
   bottom: 40px;
-  right: 15px;
-  width: 300px;
+  right: -305px;
+  width: 290px;
   min-height: 150px;
   max-height: 300px;
   overflow: hidden;
-  /*cursor: pointer;*/
   box-sizing: border-box;
   border: none;
   border-radius: 5px;
   transition: all .7s ease-out;
   box-shadow: 0 0 10px 1px rgb(255 255 255 / 80%);
+  z-index: 4;
+}
+
+.todoContainer.todoopen {
+  opacity: 100%;
+  transform: translateX(-315px);
 }
 
 .completedToDo {
@@ -830,8 +798,6 @@ body {
   height: 20px;
   background: white;
   background-image: url("../assets/svg/cross.svg");
-  /*background-position: center center;*/
-  /*background-repeat: no-repeat;*/
   background-size: cover;
   transition: .5s;
   border-radius: 50%;
@@ -839,12 +805,6 @@ body {
 
 .closeCompleted:hover {
   transform: rotate(180deg);
-}
-
-.todoopen {
-  opacity: 100%;
-  display: flex;
-  transition: all .7s ease-out;
 }
 
 .todoGreetings {
@@ -909,7 +869,7 @@ body {
 .todoOptions {
   display: grid;
   grid-template-columns: repeat(3, 25%) 1fr;
-  column-gap: 5%;
+  column-gap: 2%;
   align-content: center;
   justify-content: center;
   opacity: 0;
@@ -926,13 +886,12 @@ body {
   border-bottom: 1px solid transparent;
   cursor: pointer;
   transition: all .2s linear;
-  padding-top: 5px;
+  padding: 5px 0 3px;
   opacity: 30%;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  /*height: 30px;*/
 }
 
 .today:hover,
@@ -960,6 +919,7 @@ body {
   background-position: center;
   height: 20px;
   width: 20px;
+  margin-left: 20px;
   opacity: 50%;
   transition: all .4s ease-in;
 }
@@ -1054,7 +1014,6 @@ body {
 }
 
 .lbl span {
-  padding-left: 5px;
   overflow-wrap: anywhere;
   text-align: left;
 }
@@ -1070,4 +1029,230 @@ body {
 }
 
 
+@media screen and (max-width: 1290px) {
+  .player-controls {
+    width: 100px;
+  }
 
+  .player-icon,
+  .slider-icon,
+  .change-quote {
+    width: 28px;
+    height: 28px;
+    background-size: cover;
+  }
+
+  .play.player-icon {
+    width: 36px;
+    height: 36px;
+    background-size: cover;
+  }
+
+  .change-quote {
+    margin-bottom: 20px;
+  }
+
+  .quote {
+    margin: 0 auto 10px;
+    font-size: 16px;
+  }
+
+  .author {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 1150px) {
+  .todoContainer,
+  .set {
+    background: #121212;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .header {
+    padding: 20px 10px;
+  }
+
+  .player-controls {
+    width: 90px;
+  }
+
+  .player-icon,
+  .slider-icon,
+  .change-quote {
+    width: 24px;
+    height: 24px;
+  }
+
+  .play.player-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .wrapOption {
+    right: 170px;
+  }
+
+  .angle {
+    width: 15px;
+    height: 15px;
+  }
+
+  .weather {
+    width: 130px;
+  }
+
+  .weather-icon {
+    font-size: 32px;
+  }
+
+  .city {
+    font-size: 18px;
+  }
+
+  .city::placeholder {
+    font-size: 18px;
+    color: #fff;
+    opacity: .6;
+  }
+
+  .change-quote {
+    margin-bottom: 10px;
+  }
+
+  .slide-next {
+    right: 10px;
+  }
+
+  .slide-prev {
+    left: 10px;
+  }
+
+  .time {
+    min-height: 80px;
+    font-size: 72px;
+  }
+
+  .greeting-container {
+    min-height: 40px;
+    font-size: 32px;
+  }
+
+  .name {
+    font-size: 32px;
+  }
+
+  .quote {
+    margin: 0 auto 10px;
+    font-size: 16px;
+  }
+
+  .author {
+    font-size: 16px;
+  }
+
+  .setBtn {
+    bottom: 10px;
+    left: 10px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .todoButton {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 550px) {
+  .play__list__item {
+    font-size: 14px;
+  }
+
+  .play__list__item::before {
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+  }
+
+  .time {
+    font-size: 60px;
+    margin-bottom: 0;
+  }
+
+  .date {
+    font-size: 36px;
+    margin: 5px 0 10px;
+  }
+
+  .greeting {
+    margin-right: 5px;
+  }
+
+  .lbl {
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 2px;
+  }
+
+  .lbl span {
+    overflow-wrap: anywhere;
+    text-align: left;
+  }
+
+  .inp-todo {
+    margin: 0 10px 0 0;
+    position: relative;
+    top: 1px;
+    width: 12px;
+    height: 12px;
+  }
+
+}
+
+@media (max-width: 400px) {
+  .play__list__item {
+    font-size: 12px;
+  }
+
+  .play__list__item::before {
+    width: 8px;
+    height: 8px;
+    margin-right: 3px;
+  }
+
+  .wrapOption {
+    right: 130px;
+  }
+
+  .weather {
+    width: 110px;
+  }
+
+  .weather-icon {
+    font-size: 28px;
+  }
+
+  .city {
+    font-size: 16px;
+  }
+
+  .city::placeholder {
+    font-size: 16px;
+    color: #fff;
+    opacity: .6;
+  }
+
+  .date {
+    font-size: 28px;
+  }
+
+  .greeting-container {
+    font-size: 22px;
+  }
+
+  .name {
+    font-size: 22px;
+  }
+}
