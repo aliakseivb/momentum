@@ -28,7 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
     changeGreetingLang(localStorage.getItem('language'));
   } else {
     if (!localStorage.getItem('city').length) {
-      city.value = 'Минск';
+      city.placeholder = 'Минск';
+    }else {
+      city.value = localStorage.getItem('city');
     }
     getWeather();
 
@@ -50,19 +52,29 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 window.addEventListener('resize', () => {
   let name = localStorage.getItem('name');
-  if (window.innerWidth <= 768 && window.innerWidth > 400) {
+  if (window.innerWidth <= 800 && window.innerWidth > 450) {
     if (userName.value) {
       userName.value = name;
       widthInput = returnWidth(userName.value, 32);
       userName.style.width = widthInput + 'px';
       widthInput = 0;
       return
+    }else {
+      widthInput = returnWidth(userName.placeholder, 32);
+      userName.style.width = widthInput + 'px';
+      widthInput = 0;
+      return
     }
   }
-  if (window.innerWidth <= 400) {
+  if (window.innerWidth <= 450) {
     if (userName.value) {
       userName.value = name;
       widthInput = returnWidth(userName.value, 22);
+      userName.style.width = widthInput + 'px';
+      widthInput = 0;
+      return
+    }else {
+      widthInput = returnWidth(userName.placeholder, 22);
       userName.style.width = widthInput + 'px';
       widthInput = 0;
       return
@@ -71,6 +83,12 @@ window.addEventListener('resize', () => {
   if (userName.value) {
     userName.value = name;
     widthInput = returnWidth(userName.value, 60);
+    userName.style.width = widthInput + 'px';
+    widthInput = 0;
+    return
+  }
+  else {
+    widthInput = returnWidth(userName.placeholder, 60);
     userName.style.width = widthInput + 'px';
     widthInput = 0;
     return
