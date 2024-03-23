@@ -575,7 +575,7 @@ body {
   flex-direction: column;
   justify-content: start;
   position: absolute;
-  bottom: 10px;
+  bottom: 15px;
   left: -170px;
   width: max-content;
   opacity: 0;
@@ -590,7 +590,7 @@ body {
 }
 
 .set.open {
-  transform: translateX(180px);
+  transform: translateX(185px);
   opacity: 1;
 }
 
@@ -730,10 +730,6 @@ body {
   opacity: 80%;
 }
 
-.todoEl-active {
-  background: black;
-}
-
 .todoButton {
   display: block;
   position: absolute;
@@ -752,7 +748,7 @@ body {
   opacity: 0;
   position: absolute;
   bottom: 40px;
-  right: 20px;
+  right: 15px;
   width: 290px;
   min-height: 150px;
   max-height: 300px;
@@ -1261,9 +1257,5 @@ body {
 
   .name::placeholder {
     font-size: 22px;
-  }
-
-  .todoContainer {
-    width: 90%;
   }
 }

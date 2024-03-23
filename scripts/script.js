@@ -100,17 +100,17 @@ userName.addEventListener('blur', () => {
 const setBtn = document.createElement('div');
 setBtn.classList.add('setBtn');
 document.querySelector('.footer').append(setBtn);
-const set = document.createElement('div');
-set.classList.add('set');
-document.querySelector('.footer').append(set);
+const setElem = document.createElement('div');
+setElem.classList.add('set');
+document.querySelector('.footer').append(setElem);
 
 const languageEl = document.createElement('div');
 languageEl.classList.add('languageEl');
-document.querySelector('.set').append(languageEl);
+setElem.append(languageEl);
 languageEl.textContent = 'Select language';
 const wrapLanguage = document.createElement('div');
 wrapLanguage.classList.add('wrapLanguage');
-document.querySelector('.set').append(wrapLanguage);
+setElem.append(wrapLanguage);
 wrapLanguage.addEventListener('click', (e) => {
   language = e.target.textContent;
   changeGreetingLang(language);
@@ -129,11 +129,11 @@ languageEl.addEventListener('click', function (e) {
 
 const sourceEl = document.createElement('div');
 sourceEl.classList.add('sourceEl');
-document.querySelector('.set').append(sourceEl);
+setElem.append(sourceEl);
 sourceEl.textContent = 'Image source';
 const wrapSource = document.createElement('div');
 wrapSource.classList.add('wrapSource');
-document.querySelector('.set').append(wrapSource);
+setElem.append(wrapSource);
 const git = document.createElement('div');
 git.classList.add('git');
 git.textContent = 'GIT';
@@ -161,7 +161,7 @@ document.querySelector('.footer').append(textContainer);
 const todoEl = document.createElement('div');
 todoEl.classList.add('todoEl');
 todoEl.textContent = 'ToDo';
-document.querySelector('.set').append(todoEl);
+setElem.append(todoEl);
 
 const todoButton = document.createElement('div');
 todoButton.classList.add('todoButton');
@@ -245,7 +245,6 @@ todoMenu.addEventListener('click', (e) => {
     // some code here
   }
 });
-
 
 const checkContainer = document.createElement('div');
 checkContainer.classList.add('checkContainer');
@@ -513,18 +512,18 @@ inputText.addEventListener('change', () => {
   clear();
 })
 
-document.querySelector('.todoEl').addEventListener('click', function () {
-  wrapSource.classList.remove('source-opacity');
-  sourceEl.classList.remove('source-active');
-  wrapLanguage.classList.remove('lang-opacity');
-  languageEl.classList.remove('lang-active');
-  todoEl.classList.toggle('todoEl-active');
-  todoContainer.classList.toggle('todoopen');
-})
+// document.querySelector('.todoEl').addEventListener('click', function () {
+//   wrapSource.classList.remove('source-opacity');
+//   sourceEl.classList.remove('source-active');
+//   wrapLanguage.classList.remove('lang-opacity');
+//   languageEl.classList.remove('lang-active');
+//   todoEl.classList.toggle('todoEl-active');
+//   todoContainer.classList.toggle('todoopen');
+// })
 
 const setClose = document.createElement('div');
 setClose.classList.add('setClose');
-document.querySelector('.set').append(setClose);
+setElem.append(setClose);
 const wrapBe = document.createElement('div');
 wrapBe.classList.add('wrapBe');
 document.querySelector('.wrapLanguage').append(wrapBe);
@@ -541,26 +540,34 @@ document.querySelector('.footer').append(todo);
 
 // закрыть меню по клику вне его
 document.addEventListener('click', e => {
-  if (!e.target === set || !e.target === set.contains(e.target)
-      && !(e.target === setClose)
-      && set.classList.contains('open')) {
-    document.querySelector('.set').classList.remove('open');
-    document.querySelector('.setBtn').classList.remove('close');
-    languageEl.classList.remove('lang-active');
-    wrapLanguage.classList.remove('lang-opacity');
-    sourceEl.classList.remove('source-active');
-    wrapSource.classList.remove('source-opacity');
-    todoEl.classList.remove('todoEl-active');
+  if(setElem.classList.contains('open')){
+    if(setElem.contains(e.target) && e.target.classList.contains('todoEl')){
+      todoContainer.classList.add('todoopen');
+      setElem.classList.remove('open');
+      document.querySelector('.setBtn').classList.remove('close');
+      languageEl.classList.remove('lang-active');
+      wrapLanguage.classList.remove('lang-opacity');
+      sourceEl.classList.remove('source-active');
+      wrapSource.classList.remove('source-opacity');
+    }
+    if (!setElem.contains(e.target) && !(e.target === setClose) && setElem.classList.contains('open')) {
+      setElem.classList.remove('open');
+      document.querySelector('.setBtn').classList.remove('close');
+      languageEl.classList.remove('lang-active');
+      wrapLanguage.classList.remove('lang-opacity');
+      sourceEl.classList.remove('source-active');
+      wrapSource.classList.remove('source-opacity');
+    }
   }
-})
+});
 setBtn.addEventListener('click', e => {
   e.stopPropagation();
-  document.querySelector('.set').classList.add('open');
+  setElem.classList.add('open');
   document.querySelector('.setBtn').classList.add('close');
 })
 
 setClose.addEventListener('click', () => {
-  document.querySelector('.set').classList.remove('open')
+  setElem.classList.remove('open')
   document.querySelector('.setBtn').classList.remove('close');
   wrapSource.classList.remove('source-opacity');
   sourceEl.classList.remove('source-active');
