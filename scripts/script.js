@@ -23,24 +23,18 @@ document.addEventListener('DOMContentLoaded', () => {
   if (localStorage.getItem('name').length) {
     userName.classList.remove('optic');
     userName.value = localStorage.getItem('name');
-    city.value = localStorage.getItem('city');
-    getWeather(localStorage.getItem('city'), localStorage.getItem('language') || 'be');
+    getWeather(localStorage.getItem('city').length ? city.value = localStorage.getItem('city')
+        : false, localStorage.getItem('language') || 'be');
     changeGreetingLang(localStorage.getItem('language'));
   } else {
-    if (!localStorage.getItem('city').length) {
-      city.placeholder = 'Минск';
-    }else {
-      city.value = localStorage.getItem('city');
-    }
-    getWeather();
-
+    localStorage.getItem('city').length ? city.value = localStorage.getItem('city') : city.placeholder = "Минск";
+    getWeather(city.placeholder);
   }
-  let name = localStorage.getItem('name');
 
   count = getToDoData() ? getToDoData().count : 0;
   all.classList.add('show');
-  if (name) {
-    userName.value = name;
+  if (userName.value) {
+
     widthInput = returnWidth(userName.value);
     userName.style.width = widthInput + 'px';
     widthInput = 0;
@@ -51,53 +45,20 @@ document.addEventListener('DOMContentLoaded', () => {
   widthInput = 0;
 });
 window.addEventListener('resize', () => {
-  let name = localStorage.getItem('name');
-  if (window.innerWidth <= 800 && window.innerWidth > 450) {
-    if (userName.value) {
-      userName.value = name;
-      widthInput = returnWidth(userName.value, 32);
-      userName.style.width = widthInput + 'px';
-      widthInput = 0;
-      return
-    }else {
-      widthInput = returnWidth(userName.placeholder, 32);
-      userName.style.width = widthInput + 'px';
-      widthInput = 0;
-      return
-    }
-  }
-  if (window.innerWidth <= 450) {
-    if (userName.value) {
-      userName.value = name;
-      widthInput = returnWidth(userName.value, 22);
-      userName.style.width = widthInput + 'px';
-      widthInput = 0;
-      return
-    }else {
-      widthInput = returnWidth(userName.placeholder, 22);
-      userName.style.width = widthInput + 'px';
-      widthInput = 0;
-      return
-    }
-  }
   if (userName.value) {
-    userName.value = name;
-    widthInput = returnWidth(userName.value, 60);
+    widthInput = returnWidth(userName.value);
     userName.style.width = widthInput + 'px';
     widthInput = 0;
-    return
-  }
-  else {
-    widthInput = returnWidth(userName.placeholder, 60);
+  } else {
+    widthInput = returnWidth(userName.placeholder);
     userName.style.width = widthInput + 'px';
     widthInput = 0;
-    return
   }
 });
 
-function returnWidth(str, size = 60) {
+function returnWidth(str) {
+  let size = (window.innerWidth <= 800 && window.innerWidth > 450) ? 32 : (window.innerWidth <= 450) ? 22 : 60;
   const shadowElem = document.createElement('span');
-
   shadowElem.style.fontSize = size + 'px';
   shadowElem.innerText = str;
   document.body.append(shadowElem);
