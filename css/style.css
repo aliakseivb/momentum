@@ -15,7 +15,7 @@ body {
   font-size: 16px;
   color: #fff;
   text-align: center;
-  background: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/evening/21.webp") center/cover, rgba(0, 0, 0, 0.5);
+  background: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/evening/21.webp") center/cover no-repeat, rgba(0, 0, 0, 0.5);
   background-blend-mode: multiply;
   transition: background-image 1s ease-in-out;
 }
@@ -482,7 +482,7 @@ body {
   outline: 0;
 }
 
-.optic {
+.name.optic {
   animation: optic 3s ease-in-out infinite;
 }
 
@@ -553,9 +553,9 @@ body {
 
 .setBtn {
   display: block;
-  position: fixed;
+  position: absolute;
   bottom: 10px;
-  left: 10px;
+  left: 15px;
   width: 25px;
   height: 25px;
   background-image: url("https://raw.githubusercontent.com/AlexBoronin/momentum/main/assets/img/set.png");
@@ -1261,5 +1261,9 @@ body {
 
   .name::placeholder {
     font-size: 22px;
+  }
+
+  .todoContainer {
+    width: 90%;
   }
 }

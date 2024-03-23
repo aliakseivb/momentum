@@ -62,7 +62,7 @@ function returnWidth(str) {
   shadowElem.style.fontSize = size + 'px';
   shadowElem.innerText = str;
   document.body.append(shadowElem);
-  widthInput = shadowElem.offsetWidth;
+  widthInput = shadowElem.offsetWidth + 2;
   shadowElem.remove()
   return widthInput;
 }
