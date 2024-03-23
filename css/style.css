@@ -447,10 +447,7 @@ body {
 }
 
 .time {
-  min-height: 124px;
-  margin-bottom: 10px;
   font-size: 150px;
-  letter-spacing: -4px;
 }
 
 .date {
@@ -1126,7 +1123,6 @@ body {
   }
 
   .time {
-    min-height: 80px;
     font-size: 72px;
   }
 
@@ -1145,11 +1141,11 @@ body {
 
   .quote {
     margin: 0 auto 10px;
-    font-size: 16px;
+    font-size: 10px;
   }
 
   .author {
-    font-size: 16px;
+    font-size: 10px;
   }
 
   .setBtn {
@@ -1161,6 +1157,20 @@ body {
 
   .todoButton {
     font-size: 16px;
+  }
+  .lbl {
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  .inp-todo {
+    margin: 0 10px 0 0;
+    width: 12px;
+    height: 12px;
+  }
+  .whatShow,
+  .inputText {
+    font-size: 14px;
   }
 }
 
@@ -1177,12 +1187,11 @@ body {
 
   .time {
     font-size: 60px;
-    margin-bottom: 0;
   }
 
   .date {
     font-size: 36px;
-    margin: 5px 0 10px;
+    margin: 0 0 10px;
   }
 
   .greeting {
@@ -1190,24 +1199,21 @@ body {
   }
 
   .lbl {
-    font-size: 14px;
-    cursor: pointer;
+    font-size: 12px;
     margin-bottom: 2px;
   }
 
-  .lbl span {
-    overflow-wrap: anywhere;
-    text-align: left;
-  }
-
   .inp-todo {
-    margin: 0 10px 0 0;
+    margin: 0 8px 0 0;
     position: relative;
     top: 1px;
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
   }
-
+  .whatShow,
+  .inputText {
+    font-size: 12px;
+  }
 }
 
 @media (max-width: 450px) {
@@ -1227,6 +1233,7 @@ body {
 
   .weather {
     width: 110px;
+    font-size: 12px;
   }
 
   .weather-icon {
@@ -1234,7 +1241,7 @@ body {
   }
 
   .city {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .city::placeholder {
@@ -1243,6 +1250,9 @@ body {
     opacity: .6;
   }
 
+  .time {
+    font-size: 50px;
+  }
   .date {
     font-size: 28px;
   }

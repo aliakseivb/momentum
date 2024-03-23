@@ -1,3 +1,5 @@
+import playList from './playList.js';
+
 let days
 let months
 let conditions
@@ -715,18 +717,6 @@ function setLocalStorage() {
   localStorage.setItem('language', language);
 }
 
-// function getLocalStorage() {
-//   if (localStorage.getItem('name')) {
-//     document.getElementById('optic').value = localStorage.getItem('name');
-//     document.querySelector('.city').value = localStorage.getItem('city');
-//     document.getElementById('optic').classList.remove('optic');
-//     getWeather(localStorage.getItem('city'), localStorage.getItem('language'));
-//     changeGreetingLang(localStorage.getItem('language'));
-//   }
-//   localStorage.setItem('language', language);
-// }
-
-
 let randomNum = 0;
 
 function getRandomNum(min, max) {
@@ -903,8 +893,6 @@ function setText(data) {
 
 
 /*todo --- > ПЛЕЕР */
-import playList from './playList.js'; // импортируем дынные по названию трека, его местоположении и продолжительности
-
 let isPlay = false; // устанавливаем начальный флаг для логики стар/стоп
 const audio = new Audio(); // создаем объект
 let playNum = 0; // выбор - стартовый номер трека после загрузки страницы
